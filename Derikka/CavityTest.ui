@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>493</width>
+    <height>381</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="3" column="0">
+    <widget class="PyDMCheckbox" name="testCheckBox">
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="text">
+      <string>Check box to set PV=0        Uncheck box to set PV = 1</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="PyDMLineEdit" name="outputBox">
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="text">
+      <string>Checkbox output</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="PyDMPushButton" name="testButton">
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="text">
+      <string>Display PV value</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="PyDMLabel" name="PyDMLabel">
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="text">
+      <string>PV = SIOC:SYS0:ML07:AO010</string>
+     </property>
+     <property name="rules" stdset="0">
+      <string>[]</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="PyDMLineEdit" name="pvOutput">
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="text">
+      <string>Display PV value output</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="PyDMDrawingRectangle" name="PyDMDrawingRectangle">
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="rules" stdset="0">
+      <string>[{&quot;channels&quot;: [{&quot;trigger&quot;: true, &quot;channel&quot;: &quot;SIOC:SYS0:ML07:AO010&quot;}], &quot;property&quot;: &quot;Opacity&quot;, &quot;expression&quot;: &quot;np.abs(ch[0]) &lt; 1&quot;, &quot;name&quot;: &quot;Alarm&quot;}]</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PyDMLabel</class>
+   <extends>QLabel</extends>
+   <header>pydm.widgets.label</header>
+  </customwidget>
+  <customwidget>
+   <class>PyDMLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>pydm.widgets.line_edit</header>
+  </customwidget>
+  <customwidget>
+   <class>PyDMPushButton</class>
+   <extends>QPushButton</extends>
+   <header>pydm.widgets.pushbutton</header>
+  </customwidget>
+  <customwidget>
+   <class>PyDMDrawingRectangle</class>
+   <extends>QWidget</extends>
+   <header>pydm.widgets.drawing</header>
+  </customwidget>
+  <customwidget>
+   <class>PyDMCheckbox</class>
+   <extends>QCheckBox</extends>
+   <header>pydm.widgets.checkbox</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

@@ -9,36 +9,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>493</width>
-    <height>381</height>
+    <width>436</width>
+    <height>430</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="3" column="0">
-    <widget class="PyDMCheckbox" name="testCheckBox">
-     <property name="toolTip">
-      <string/>
-     </property>
-     <property name="text">
-      <string>Check box to set PV=0        Uncheck box to set PV = 1</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0">
-    <widget class="PyDMLineEdit" name="outputBox">
-     <property name="toolTip">
-      <string/>
-     </property>
-     <property name="text">
-      <string>Checkbox output</string>
-     </property>
-    </widget>
-   </item>
    <item row="5" column="0">
-    <widget class="PyDMPushButton" name="testButton">
+    <widget class="PyDMPushButton" name="Qt_pvPushButton">
      <property name="toolTip">
       <string/>
      </property>
@@ -47,7 +27,14 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item row="3" column="0">
+    <widget class="QRadioButton" name="Qt_radioButton0">
+     <property name="text">
+      <string>PV = 0</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
     <widget class="PyDMLabel" name="PyDMLabel">
      <property name="toolTip">
       <string/>
@@ -60,8 +47,8 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="0">
-    <widget class="PyDMLineEdit" name="pvOutput">
+   <item row="5" column="1">
+    <widget class="PyDMLineEdit" name="Qt_pvOutput">
      <property name="toolTip">
       <string/>
      </property>
@@ -70,13 +57,47 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="PyDMDrawingRectangle" name="PyDMDrawingRectangle">
+   <item row="4" column="0" colspan="2">
+    <widget class="PyDMLineEdit" name="Qt_radioOutput">
      <property name="toolTip">
       <string/>
      </property>
-     <property name="rules" stdset="0">
-      <string>[{&quot;channels&quot;: [{&quot;trigger&quot;: true, &quot;channel&quot;: &quot;SIOC:SYS0:ML07:AO010&quot;}], &quot;property&quot;: &quot;Opacity&quot;, &quot;expression&quot;: &quot;np.abs(ch[0]) &lt; 1&quot;, &quot;name&quot;: &quot;Alarm&quot;}]</string>
+     <property name="text">
+      <string>Radio Button output</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QRadioButton" name="Qt_radioButton1">
+     <property name="text">
+      <string>PV = 1</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_CM01">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color :rgb(227, 227, 227);
+color: rgb(50, 50, 50);</string>
+     </property>
+     <property name="text">
+      <string>CM01</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>
@@ -97,16 +118,6 @@
    <class>PyDMPushButton</class>
    <extends>QPushButton</extends>
    <header>pydm.widgets.pushbutton</header>
-  </customwidget>
-  <customwidget>
-   <class>PyDMDrawingRectangle</class>
-   <extends>QWidget</extends>
-   <header>pydm.widgets.drawing</header>
-  </customwidget>
-  <customwidget>
-   <class>PyDMCheckbox</class>
-   <extends>QCheckBox</extends>
-   <header>pydm.widgets.checkbox</header>
   </customwidget>
  </customwidgets>
  <resources/>

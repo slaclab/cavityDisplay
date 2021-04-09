@@ -65,26 +65,6 @@
     </item>
    </layout>
   </widget>
-  <widget class="PyDMLabel" name="CavityStatusBar">
-   <property name="geometry">
-    <rect>
-     <x>135</x>
-     <y>85</y>
-     <width>71</width>
-     <height>5</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string/>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color :rgb(227, 227, 227);
-color: rgb(50, 50, 50);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="PyDMLabel" name="CavityLabel">
    <property name="geometry">
     <rect>
@@ -287,10 +267,28 @@ color: rgb(255, 255, 255);
     <string>TLC</string>
    </property>
   </widget>
-  <zorder>BackgroundBox</zorder>
-  <zorder>horizontalLayoutWidget</zorder>
-  <zorder>CavityLabel</zorder>
-  <zorder>CavityStatusBar</zorder>
+  <widget class="PyDMDrawingRectangle" name="CavityStatusBar">
+   <property name="geometry">
+    <rect>
+     <x>135</x>
+     <y>85</y>
+     <width>71</width>
+     <height>5</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string/>
+   </property>
+   <property name="brush" stdset="0">
+    <brush brushstyle="SolidPattern">
+     <color alpha="255">
+      <red>184</red>
+      <green>184</green>
+      <blue>184</blue>
+     </color>
+    </brush>
+   </property>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>

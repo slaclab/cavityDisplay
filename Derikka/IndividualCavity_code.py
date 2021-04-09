@@ -43,13 +43,15 @@ class IndividualCavity(Display):
 
 # Change the color of status bar via .setStyleSheet
 	def statusBarColor(self):
-		self.green = "background-color: rgb(153, 255, 148);\n"
-		self.red = "background-color: rgb(255,92,92);\n"
+		green = QColor(0,255,0)
+		red = QColor(255,54,14)
 		Value = caget(self.Test_PV)
 		if Value == 1.0:
-			self.ui.CavityStatusBar.setStyleSheet( str(self.green))
+			self.ui.CavityStatusBar.brush.setColor(green)
+			self.ui.CavityStatusBar.update()
 		else:
-			self.ui.CavityStatusBar.setStyleSheet( str(self.red) )
+			self.ui.CavityStatusBar.brush.setColor(red)
+			self.ui.CavityStatusBar.update()
 
 		
 		

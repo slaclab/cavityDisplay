@@ -1,9 +1,13 @@
 from pydm import Display
-from PyQt5 import QtGui, QtCore, QtWidgets #, QPainter (Why this not work?) 
+from PyQt5 import QtGui, QtCore, QtWidgets 
 from PyQt5.QtGui import QPainter, QColor, QBrush, QPen
 from PyQt5.QtCore import Qt
 import epics
 from epics import caget, caput
+from PyQt5.QtWidgets import (QWidgetItem, QCheckBox, QPushButton, QLineEdit,
+                             QGroupBox, QHBoxLayout, QMessageBox, QWidget,
+                             QLabel, QFrame, QComboBox)
+from pydm.widgets import PyDMDrawingRectangle, PyDMLabel
 
 
 class IndividualCavity(Display):
@@ -30,7 +34,13 @@ class IndividualCavity(Display):
 		self.ui.cmON.value = 1
 		self.ui.cmON.toggled.connect(self.change_PV)
 
-#		self.statusBarColor()
+		print("--------------------------------------- rectangle list")
+		rectangleList = self.ui.EmbeddedCavity.findChildren(PyDMDrawingRectangle)
+		print(rectangleList)
+		
+		print("------------------------------------ label time")
+		labelList = self.ui.EmbeddedCavity.findChild(PyDMLabel)
+		print(labelList)
 
 	
 	# change pv value with caput command
@@ -38,7 +48,7 @@ class IndividualCavity(Display):
 		radioButton = self.sender() 
 		if radioButton.isChecked():
 			caput(radioButton.PV, radioButton.value)	
-		self.statusBarColor()
+#		self.statusBarColor()
 		
 
 # Change the color of status bar via .setStyleSheet

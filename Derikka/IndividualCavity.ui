@@ -54,7 +54,7 @@
       <string/>
      </property>
      <property name="filename" stdset="0">
-      <string>CavitySizing.ui</string>
+      <string>CavityTemplate.ui</string>
      </property>
     </widget>
    </item>

@@ -20,6 +20,7 @@ class Cavities(Display):
 		super(Cavities, self).__init__(parent=parent, args=args)
 
 		self.ui.EmbeddedCavity.loadWhenShown = False
+		self.ui.EmbeddedCavity.setStyleSheet("background-color:black\n")
 		
 		rectangleList = self.ui.EmbeddedCavity.findChildren(PyDMDrawingRectangle)
 		statusbar = rectangleList[0]	

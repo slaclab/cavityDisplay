@@ -24,6 +24,38 @@ faultList.append(PHJ)
 
 for elements in faultList:
 	print(elements.TLC, elements.severity)
+	
+displayList = []
+for elements in faultList:
+	displayList.append(elements.severity)
+
+displayList.sort()
+print(displayList)
+#print('Display List sorted: ', displayList)
+	
+	
+print("----------Dictionary --------------------")
+# Adding faults to a dict
+faults = {}
+faults['aru'] = {'Value': 1, 'TLC':'ARU', 'Severity': 1}
+faults['mnt'] = {'Value': 1, 'TLC':'MNT', 'Severity': 2}
+faults['hwi'] = {'Value': 1, 'TLC':'HWI', 'Severity': 3}
+faults['phj'] = {'Value': 1, 'TLC':'PHJ', 'Severity': 4}
+
+#print( faults['phj']['TLC'] )
+for elements in faults:
+	print(elements, faults[elements]['TLC'], faults[elements]['Severity'])
+	
+print(sorted(faults.items(), key=faults.get() ))
+
+
+displayList = []
+	
 
 
 
+
+
+
+
+	

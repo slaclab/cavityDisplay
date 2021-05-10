@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>420</width>
+    <height>259</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="5" column="0">
+    <widget class="PyDMPushButton" name="Qt_pvPushButton">
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="text">
+      <string>Display PV value</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QRadioButton" name="radioButtonPV0">
+     <property name="text">
+      <string>PV = 0</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="PyDMLabel" name="pvText">
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="text">
+      <string>PV = SIOC:SYS0:ML07:AO010</string>
+     </property>
+     <property name="rules" stdset="0">
+      <string>[]</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="PyDMLineEdit" name="Qt_pvOutput">
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="text">
+      <string>Display PV value output</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="2">
+    <widget class="PyDMLineEdit" name="Qt_radioOutput">
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="text">
+      <string>Radio Button output</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QRadioButton" name="radioButtonPV1">
+     <property name="text">
+      <string>PV = 1</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_CM01">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color :rgb(227, 227, 227);
+color: rgb(50, 50, 50);</string>
+     </property>
+     <property name="text">
+      <string>CM01</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PyDMLabel</class>
+   <extends>QLabel</extends>
+   <header>pydm.widgets.label</header>
+  </customwidget>
+  <customwidget>
+   <class>PyDMLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>pydm.widgets.line_edit</header>
+  </customwidget>
+  <customwidget>
+   <class>PyDMPushButton</class>
+   <extends>QPushButton</extends>
+   <header>pydm.widgets.pushbutton</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

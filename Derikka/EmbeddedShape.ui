@@ -71,7 +71,14 @@
       <string/>
      </property>
      <property name="text">
-      <string>TLC</string>
+      <string>${name}</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>

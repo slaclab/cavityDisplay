@@ -19,4 +19,4 @@ class cryomoduleTemplateRepeater(Display):
 		super(cryomoduleTemplateRepeater, self).__init__(parent=parent,args=args)
 		
 		self.ui.cmTemplate.loadWhenShown = False
-		 
+		

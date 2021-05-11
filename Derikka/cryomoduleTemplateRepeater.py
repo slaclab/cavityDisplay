@@ -6,7 +6,7 @@ import epics
 from epics import caget, caput
 from PyQt5.QtWidgets import (QWidgetItem, QCheckBox, QPushButton, QLineEdit,
                              QGroupBox, QHBoxLayout, QMessageBox, QWidget,
-                             QLabel, QFrame, QComboBox)
+                             QLabel, QFrame, QComboBox, QRadioButton)
 from pydm.widgets import PyDMDrawingRectangle, PyDMLabel
 from pydm.widgets.drawing import PyDMDrawingPolygon
 
@@ -34,11 +34,23 @@ class cryomoduleTemplateRepeater(Display):
 			else:
 				cavityTLCList.append(items)
 		
+		# BUTTON CONNECTIONS
+		radioButtonsList = self.ui.cmTemplate.findChildren(QRadioButton)
+		
+		GoodButton1 = radioButtonsList[0]
+		GoodButton1.toggled.connect(lambda:self.makeItGreen(shapeList[0]))
+		
+		WarningButton1 = radioButtonsList[1]
+		WarningButton1.toggled.connect(lambda:self.makeItYellow(shapeList[0]))
+		
+		AlarmButton1 = radioButtonsList[2]
+		AlarmButton1.toggled.connect(lambda:self.makeItRed(shapeList[0]))
+		
 		
 		# Practice changing a cavity shape color
-		self.makeItRed(shapeList[0])
-		self.makeItYellow(shapeList[2])
-		self.makeItGreen(shapeList[4])
+#		self.makeItRed(shapeList[0])
+#		self.makeItYellow(shapeList[2])
+#		self.makeItGreen(shapeList[4])
 
 # Change shape color to yellow warning
 	def makeItYellow(self, shape):
@@ -47,7 +59,7 @@ class cryomoduleTemplateRepeater(Display):
 		
 		shape.brush.setColor(yellow)
 		shape.penColor = neonYellow
-		shape.numberOfPoints = 4
+		shape.numberOfPoints = 3
 		shape.rotation = 0
 		shape.update()
 		

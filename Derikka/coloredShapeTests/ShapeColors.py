@@ -95,7 +95,7 @@ class DisplayWithShapes(Display):
 		
 		shape.brush.setColor(yellow)
 		shape.penColor = neonYellow
-		shape.numberOfPoints = 4
+		shape.numberOfPoints = 3
 		shape.rotation = 0
 		
 		shape.update()

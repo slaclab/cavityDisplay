@@ -32,6 +32,9 @@
      <property name="toolTip">
       <string/>
      </property>
+     <property name="accessibleName">
+      <string>${cryomoduleName}</string>
+     </property>
      <property name="text">
       <string>${cryoNum}</string>
      </property>

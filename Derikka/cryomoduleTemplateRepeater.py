@@ -5,7 +5,7 @@ from PyQt5.QtCore import Qt, QObject
 import epics
 from epics import caget, caput
 from PyQt5.QtWidgets import (QWidgetItem, QCheckBox, QPushButton, QLineEdit,
-                             QGroupBox, QHBoxLayout, QMessageBox, QWidget,
+                             QGroupBox, QVBoxLayout, QMessageBox, QWidget,
                              QLabel, QFrame, QComboBox, QRadioButton)
 from pydm.widgets import PyDMDrawingRectangle, PyDMLabel
 from pydm.widgets.drawing import PyDMDrawingPolygon
@@ -35,16 +35,41 @@ class cryomoduleTemplateRepeater(Display):
 				cavityTLCList.append(items)
 		
 		# BUTTON CONNECTIONS
+		#def setupButtons(self):
+		name2button = {} # type: Dict[str: QRadioButton]
+
+		# Grab radio buttons from template repeater and 
+		# name them according to cavities.json via accessible names
+		for button in self.ui.cmTemplate.findChildren(QRadioButton):
+			name2button[button.accessibleName()]= button #Fill the dictionary
+		print (name2button)
+		name2button["Good"].toggled.connect(lambda:self.makeItGreen(shapeList[0]))
+
 		radioButtonsList = self.ui.cmTemplate.findChildren(QRadioButton)
+#		for index, button in enumerate (radioButtonsList):
+#			if index%3 == 0:
+#				print(index, index%3,button,shapeList[index])
+#				button.toggled.connect(lambda:self.makeItGreen(shapeList[index]))
+#			if index%3 == 1:
+#				print(index, index%3,button,shapeList[index])
+#				button.toggled.connect(lambda:self.makeItYellow(shapeList[index]))
+#			if index%3 == 2:
+#				print(index, index%3,button,shapeList[index])
+#				button.toggled.connect(lambda:self.makeItYellow(shapeList[index]))
 		
-		GoodButton1 = radioButtonsList[0]
-		GoodButton1.toggled.connect(lambda:self.makeItGreen(shapeList[0]))
+		
+		
+#		GoodButton1 = radioButtonsList[0]
+#		GoodButton1.toggled.connect(lambda:self.makeItGreen(shapeList[0]))
 		
 		WarningButton1 = radioButtonsList[1]
 		WarningButton1.toggled.connect(lambda:self.makeItYellow(shapeList[0]))
-		
+
 		AlarmButton1 = radioButtonsList[2]
 		AlarmButton1.toggled.connect(lambda:self.makeItRed(shapeList[0]))
+
+
+			
 		
 		
 		# Practice changing a cavity shape color

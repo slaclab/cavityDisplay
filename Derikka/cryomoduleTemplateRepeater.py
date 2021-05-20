@@ -6,7 +6,7 @@ import epics
 from epics import caget, caput
 from PyQt5.QtWidgets import (QWidgetItem, QCheckBox, QPushButton, QLineEdit,
                              QGroupBox, QVBoxLayout, QMessageBox, QWidget,
-                             QLabel, QFrame, QComboBox, QRadioButton)
+                             QLabel, QFrame, QComboBox, QRadioButton, QGridLayout)
 from pydm.widgets import PyDMDrawingRectangle, PyDMLabel
 from pydm.widgets.drawing import PyDMDrawingPolygon
 
@@ -33,19 +33,22 @@ class cryomoduleTemplateRepeater(Display):
 				cavityNumberList.append(items)
 			else:
 				cavityTLCList.append(items)
+
+		for grid in self.ui.cmTemplate.findChildren(QGridLayout):
+			print(grid)
 		
 		# BUTTON CONNECTIONS
 		#def setupButtons(self):
-		name2button = {} # type: Dict[str: QRadioButton]
+#		name2button = {} # type: Dict[str: QRadioButton]
 
 		# Grab radio buttons from template repeater and 
 		# name them according to cavities.json via accessible names
-		for button in self.ui.cmTemplate.findChildren(QRadioButton):
-			name2button[button.accessibleName()]= button #Fill the dictionary
-		print (name2button)
-		name2button["Good"].toggled.connect(lambda:self.makeItGreen(shapeList[0]))
+#		for button in self.ui.cmTemplate.findChildren(QRadioButton):
+#			name2button[button.accessibleName()]= button #Fill the dictionary
+#		print (name2button)
+#		name2button["Good"].toggled.connect(lambda:self.makeItGreen(shapeList[0]))
 
-		radioButtonsList = self.ui.cmTemplate.findChildren(QRadioButton)
+#		radioButtonsList = self.ui.cmTemplate.findChildren(QRadioButton)
 #		for index, button in enumerate (radioButtonsList):
 #			if index%3 == 0:
 #				print(index, index%3,button,shapeList[index])
@@ -58,16 +61,14 @@ class cryomoduleTemplateRepeater(Display):
 #				button.toggled.connect(lambda:self.makeItYellow(shapeList[index]))
 		
 		
-		
 #		GoodButton1 = radioButtonsList[0]
 #		GoodButton1.toggled.connect(lambda:self.makeItGreen(shapeList[0]))
 		
-		WarningButton1 = radioButtonsList[1]
-		WarningButton1.toggled.connect(lambda:self.makeItYellow(shapeList[0]))
+#		WarningButton1 = radioButtonsList[1]
+#		WarningButton1.toggled.connect(lambda:self.makeItYellow(shapeList[0]))
 
-		AlarmButton1 = radioButtonsList[2]
-		AlarmButton1.toggled.connect(lambda:self.makeItRed(shapeList[0]))
-
+#		AlarmButton1 = radioButtonsList[2]
+#		AlarmButton1.toggled.connect(lambda:self.makeItRed(shapeList[0]))
 
 			
 		

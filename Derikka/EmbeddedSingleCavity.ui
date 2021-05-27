@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>381</width>
-    <height>277</height>
+    <width>506</width>
+    <height>314</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2">
+  <layout class="QFormLayout" name="formLayout">
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout">
      <item row="1" column="0">
@@ -133,7 +133,7 @@
           <string>${loadGoodButtonName}</string>
          </property>
          <property name="text">
-          <string>${loadGoodButtonName}</string>
+          <string>Good</string>
          </property>
         </widget>
        </item>
@@ -143,7 +143,7 @@
           <string>${loadWarningButtonName}</string>
          </property>
          <property name="text">
-          <string>${loadWarningButtonName}</string>
+          <string>Warning</string>
          </property>
         </widget>
        </item>
@@ -153,20 +153,13 @@
           <string>${loadAlarmButtonName}</string>
          </property>
          <property name="text">
-          <string>${loadAlarmButtonName}</string>
+          <string>Alarm</string>
          </property>
         </widget>
        </item>
       </layout>
      </item>
     </layout>
-   </item>
-   <item row="1" column="0">
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
    </item>
   </layout>
  </widget>

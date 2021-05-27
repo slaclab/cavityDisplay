@@ -1,8 +1,8 @@
-[ {"cavityNumber":1, "loadGoodButtonName": "Good", "loadWarningButtonName": "Warning", "loadAlarmButtonName": "Alarm"}, 
-{"cavityNumber":2,"loadGoodButtonName": "Good", "loadWarningButtonName": "Warning", "loadAlarmButtonName": "Alarm"},
-{"cavityNumber":3,"loadGoodButtonName": "Good", "loadWarningButtonName": "Warning", "loadAlarmButtonName": "Alarm"},
-{"cavityNumber":4,"loadGoodButtonName": "Good", "loadWarningButtonName": "Warning", "loadAlarmButtonName": "Alarm"},
-{"cavityNumber":5,"loadGoodButtonName": "Good", "loadWarningButtonName": "Warning", "loadAlarmButtonName": "Alarm"},
-{"cavityNumber":6,"loadGoodButtonName": "Good", "loadWarningButtonName": "Warning", "loadAlarmButtonName": "Alarm"},
-{"cavityNumber":7,"loadGoodButtonName": "Good", "loadWarningButtonName": "Warning", "loadAlarmButtonName": "Alarm"},
-{"cavityNumber":8,"loadGoodButtonName": "Good", "loadWarningButtonName": "Warning", "loadAlarmButtonName": "Alarm"} ]
+[ {"cavityNumber":1}, 
+{"cavityNumber":2},
+{"cavityNumber":3},
+{"cavityNumber":4},
+{"cavityNumber":5},
+{"cavityNumber":6},
+{"cavityNumber":7},
+{"cavityNumber":8} ]

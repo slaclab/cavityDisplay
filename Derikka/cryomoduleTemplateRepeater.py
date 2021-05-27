@@ -9,6 +9,7 @@ from PyQt5.QtWidgets import (QWidgetItem, QCheckBox, QPushButton, QLineEdit,
                              QLabel, QFrame, QComboBox, QRadioButton, QGridLayout)
 from pydm.widgets import PyDMDrawingRectangle, PyDMLabel
 from pydm.widgets.drawing import PyDMDrawingPolygon
+from functools import partial
 
 class cryomoduleTemplateRepeater(Display):
 
@@ -34,8 +35,22 @@ class cryomoduleTemplateRepeater(Display):
 			else:
 				cavityTLCList.append(items)
 
+#		for grid in self.ui.cmTemplate.findChildren(QGridLayout):
+#			print(grid)
+#			for columnIdx in range(grid.columnCount()):
+#				for rowIdx in range(grid.rowCount()):
+#					print(str(rowIdx)+','+str(columnIdx) +" " + str(grid.itemAtPosition(rowIdx, columnIdx)))
+
 		for grid in self.ui.cmTemplate.findChildren(QGridLayout):
-			print(grid)
+			goodButton = grid.itemAtPosition(1,1).itemAt(0).widget()
+			warningButton = grid.itemAtPosition(1,1,).itemAt(1).widget()
+			alarmButton = grid.itemAtPosition(1,1).itemAt(2).widget()
+			
+			shape = grid.itemAtPosition(1,0).widget()
+			
+			goodButton.toggled.connect(partial(self.makeItGreen, shape))
+			warningButton.toggled.connect(partial(self.makeItYellow, shape))
+			alarmButton.toggled.connect(partial(self.makeItRed, shape))
 		
 		# BUTTON CONNECTIONS
 		#def setupButtons(self):
@@ -77,6 +92,8 @@ class cryomoduleTemplateRepeater(Display):
 #		self.makeItRed(shapeList[0])
 #		self.makeItYellow(shapeList[2])
 #		self.makeItGreen(shapeList[4])
+
+
 
 # Change shape color to yellow warning
 	def makeItYellow(self, shape):

@@ -21,16 +21,10 @@ class cryomoduleTemplateRepeater(Display):
 		super(cryomoduleTemplateRepeater, self).__init__(parent=parent,args=args)
 		
 		# Define PVs for cavities 1 - 8
-		pvList = [PV('SIOC:SYS0:ML07:AO011'), PV('SIOC:SYS0:ML07:AO012'), PV('SIOC:SYS0:ML07:AO013'), PV('SIOC:SYS0:ML07:AO014'),PV('SIOC:SYS0:ML07:AO015'),PV('SIOC:SYS0:ML07:AO016'),PV('SIOC:SYS0:ML07:AO017'),PV('SIOC:SYS0:ML07:AO018')]
-		
-		#self.cav1_PV = PV('SIOC:SYS0:ML07:AO011')
-		#self.cav2_PV = 'SIOC:SYS0:ML07:AO012'	
-		#self.cav3_PV = 'SIOC:SYS0:ML07:AO013'
-		#self.cav4_PV = 'SIOC:SYS0:ML07:AO014'
-		#self.cav5_PV = 'SIOC:SYS0:ML07:AO015'
-		#self.cav6_PV = 'SIOC:SYS0:ML07:AO016'
-		#self.cav7_PV = 'SIOC:SYS0:ML07:AO017'
-		#self.cav8_PV = 'SIOC:SYS0:ML07:AO018'
+		pvList = [PV('SIOC:SYS0:ML07:AO011'), PV('SIOC:SYS0:ML07:AO012'), 
+			PV('SIOC:SYS0:ML07:AO013'), PV('SIOC:SYS0:ML07:AO014'),
+			PV('SIOC:SYS0:ML07:AO015'),PV('SIOC:SYS0:ML07:AO016'),
+			PV('SIOC:SYS0:ML07:AO017'),PV('SIOC:SYS0:ML07:AO018')]
 		
 		self.ui.cmTemplate.loadWhenShown = False
 		
@@ -67,16 +61,6 @@ class cryomoduleTemplateRepeater(Display):
 
 
 	def callback(self,shape,value):
-		#print(shape, value)
-		if value<0:
-			self.changeShapeColor(shape, "good")
-		elif value == 0:
-			self.changeShapeColor(shape, "warning")
-		elif value > 0:
-			self.changeShapeColor(shape, "alarm")
-
-		
-	def changeShapeColor(self, shape, status):
 		green = QColor(201,255,203)
 		neonGreenBorder = QColor(46,248,10)
 		
@@ -85,24 +69,23 @@ class cryomoduleTemplateRepeater(Display):
 
 		red = QColor(255,195,187)
 		neonRedBorder = QColor(255,0,0)
+
+		if value<0:
+			self.changeShapeColor(shape, green, neonGreenBorder, numPoints=4)
+		elif value == 0:
+			self.changeShapeColor(shape, yellow, neonYellowBorder, numPoints=3)
+		elif value > 0:
+			self.changeShapeColor(shape, red, neonRedBorder, numPoints=6)
+
 		
-		if (status == "good"):
-			shape.brush.setColor(green)
-			shape.penColor = neonGreenBorder
-			shape.numberOfPoints = 4
-			shape.rotation = 0
-		elif (status == "warning"):
-			shape.brush.setColor(yellow)
-			shape.penColor = neonYellowBorder
-			shape.numberOfPoints = 3
-			shape.rotation = 0
-		elif (status == "alarm"):
-			shape.brush.setColor(red)
-			shape.penColor = neonRedBorder
-			shape.numberOfPoints = 6
-			shape.rotation = 0
-			
+	def changeShapeColor(self, shape, fillColor, borderColor, numPoints):
+		shape.brush.setColor(fillColor)
+		shape.penColor = borderColor
+		shape.numberOfPoints = numPoints
+		shape.rotation = 0
+		
 		shape.update()
+
 
 
 

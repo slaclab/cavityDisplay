@@ -10,6 +10,7 @@ from PyQt5.QtWidgets import (QWidgetItem, QCheckBox, QPushButton, QLineEdit,
 from pydm.widgets import PyDMDrawingRectangle, PyDMLabel
 from pydm.widgets.drawing import PyDMDrawingPolygon
 from functools import partial
+from epics import PV
 
 class cryomoduleTemplateRepeater(Display):
 
@@ -18,6 +19,18 @@ class cryomoduleTemplateRepeater(Display):
 		
 	def __init__(self, parent = None, args = None):
 		super(cryomoduleTemplateRepeater, self).__init__(parent=parent,args=args)
+		
+		# Define PVs for cavities 1 - 8
+		pvList = [PV('SIOC:SYS0:ML07:AO011'), PV('SIOC:SYS0:ML07:AO012'), PV('SIOC:SYS0:ML07:AO013'), PV('SIOC:SYS0:ML07:AO014'),PV('SIOC:SYS0:ML07:AO015'),PV('SIOC:SYS0:ML07:AO016'),PV('SIOC:SYS0:ML07:AO017'),PV('SIOC:SYS0:ML07:AO018')]
+		
+		#self.cav1_PV = PV('SIOC:SYS0:ML07:AO011')
+		#self.cav2_PV = 'SIOC:SYS0:ML07:AO012'	
+		#self.cav3_PV = 'SIOC:SYS0:ML07:AO013'
+		#self.cav4_PV = 'SIOC:SYS0:ML07:AO014'
+		#self.cav5_PV = 'SIOC:SYS0:ML07:AO015'
+		#self.cav6_PV = 'SIOC:SYS0:ML07:AO016'
+		#self.cav7_PV = 'SIOC:SYS0:ML07:AO017'
+		#self.cav8_PV = 'SIOC:SYS0:ML07:AO018'
 		
 		self.ui.cmTemplate.loadWhenShown = False
 		
@@ -33,19 +46,36 @@ class cryomoduleTemplateRepeater(Display):
 				cavityTLCList.append(items)
 
 		# Find specific objects based on their location in single cavity's grid layout
-		for grid in self.ui.cmTemplate.findChildren(QGridLayout):
-			goodButton = grid.itemAtPosition(1,1).itemAt(0).widget()
-			warningButton = grid.itemAtPosition(1,1,).itemAt(1).widget()
-			alarmButton = grid.itemAtPosition(1,1).itemAt(2).widget()
+		for index, grid in enumerate(self.ui.cmTemplate.findChildren(QGridLayout)):
+			#goodButton = grid.itemAtPosition(1,1).itemAt(0).widget()
+			#warningButton = grid.itemAtPosition(1,1,).itemAt(1).widget()
+			#alarmButton = grid.itemAtPosition(1,1).itemAt(2).widget()
 			
+			#goodButton.toggled.connect(partial(self.changeShapeColor, shape, status = "good"))
+			#warningButton.toggled.connect(partial(self.changeShapeColor, shape, status = "warning"))
+			#alarmButton.toggled.connect(partial(self.changeShapeColor, shape, status = "alarm"))	
+					
 			shape = grid.itemAtPosition(1,0).widget()
+			print(index, shape)
 			
-			goodButton.toggled.connect(partial(self.changeShapeColor, shape, status = "good"))
-			warningButton.toggled.connect(partial(self.changeShapeColor, shape, status = "warning"))
-			alarmButton.toggled.connect(partial(self.changeShapeColor, shape, status = "alarm"))
+			def callBackFunction(value=None, **kw):
+				self.callback(shape,value)
+				print(shape, value)
+				
+			pvList[index].add_callback(callBackFunction)
+			
+
+
+	def callback(self,shape,value):
+		#print(shape, value)
+		if value<0:
+			self.changeShapeColor(shape, "good")
+		elif value == 0:
+			self.changeShapeColor(shape, "warning")
+		elif value > 0:
+			self.changeShapeColor(shape, "alarm")
+
 		
-
-
 	def changeShapeColor(self, shape, status):
 		green = QColor(201,255,203)
 		neonGreenBorder = QColor(46,248,10)

@@ -39,28 +39,16 @@ class cryomoduleTemplateRepeater(Display):
 			else:
 				cavityTLCList.append(items)
 
-		# Find specific objects based on their location in single cavity's grid layout
-		for index, grid in enumerate(self.ui.cmTemplate.findChildren(QGridLayout)):
-			#goodButton = grid.itemAtPosition(1,1).itemAt(0).widget()
-			#warningButton = grid.itemAtPosition(1,1,).itemAt(1).widget()
-			#alarmButton = grid.itemAtPosition(1,1).itemAt(2).widget()
-			
-			#goodButton.toggled.connect(partial(self.changeShapeColor, shape, status = "good"))
-			#warningButton.toggled.connect(partial(self.changeShapeColor, shape, status = "warning"))
-			#alarmButton.toggled.connect(partial(self.changeShapeColor, shape, status = "alarm"))	
-					
-			shape = grid.itemAtPosition(1,0).widget()
-			print(index, shape)
-			
-			def callBackFunction(value=None, **kw):
-				self.callback(shape,value)
-				print(shape, value)
+		# Find specific objects based on their location in single cavity's vertical layout
+		for index, vLayout in enumerate(self.ui.cmTemplate.findChildren(QVBoxLayout)):
+			if index == 0:
+				pass
+			else:
+				shape = vLayout.itemAt(1).widget()
+				pvList[index-1].add_callback(partial(self.callback, shape, value=None))
 				
-			pvList[index].add_callback(callBackFunction)
-			
 
-
-	def callback(self,shape,value):
+	def callback(self,shape,value, **kw):
 		green = QColor(201,255,203)
 		neonGreenBorder = QColor(46,248,10)
 		

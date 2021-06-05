@@ -6,7 +6,8 @@ import epics
 from epics import caget, caput
 from PyQt5.QtWidgets import (QWidgetItem, QCheckBox, QPushButton, QLineEdit,
                              QGroupBox, QVBoxLayout, QMessageBox, QWidget,
-                             QLabel, QFrame, QComboBox, QRadioButton, QGridLayout)
+                             QLabel, QFrame, QComboBox, QRadioButton, QGridLayout,
+                             QColorDialog)
 from pydm.widgets import PyDMDrawingRectangle, PyDMLabel
 from pydm.widgets.drawing import PyDMDrawingPolygon
 from functools import partial
@@ -33,6 +34,7 @@ class cryomoduleTemplateRepeater(Display):
 		cavityNumberList = []
 		cavityTLCList = []			
 		labelList = self.ui.cmTemplate.findChildren(PyDMLabel)
+
 		for index, items in enumerate (labelList):
 			if index%2 == 0:
 				cavityNumberList.append(items)
@@ -40,15 +42,21 @@ class cryomoduleTemplateRepeater(Display):
 				cavityTLCList.append(items)
 
 		# Find specific objects based on their location in single cavity's vertical layout
-		for index, vLayout in enumerate(self.ui.cmTemplate.findChildren(QVBoxLayout)):
-			if index == 0:
-				pass
-			else:
-				shape = vLayout.itemAt(1).widget()
-				pvList[index-1].add_callback(partial(self.callback, shape, value=None))
-				
+		List = self.ui.cmTemplate.findChildren(QVBoxLayout)
+		shapeList = self.ui.cmTemplate.findChildren(PyDMDrawingPolygon)
+		for index, shape in enumerate (shapeList):
+			pvList[index].add_callback(partial(self.callback, shape, cavityTLCList[index], value=None))
 
-	def callback(self,shape,value, **kw):
+
+#		for index, vLayout in enumerate(self.ui.cmTemplate.findChildren(QVBoxLayout)):
+#			if index == 0:
+#				pass
+#			else:
+#				shape = vLayout.itemAt(1).widget()
+#				pvList[index-1].add_callback(partial(self.callback, shape, value=None))
+
+
+	def callback(self,shape, TLCLabel, value, **kw):
 		green = QColor(201,255,203)
 		neonGreenBorder = QColor(46,248,10)
 		
@@ -59,20 +67,23 @@ class cryomoduleTemplateRepeater(Display):
 		neonRedBorder = QColor(255,0,0)
 
 		if value<0:
-			self.changeShapeColor(shape, green, neonGreenBorder, numPoints=4)
+			self.changeShapeColor(shape, TLCLabel, green, neonGreenBorder, numPoints=4)
 		elif value == 0:
-			self.changeShapeColor(shape, yellow, neonYellowBorder, numPoints=3)
+			self.changeShapeColor(shape, TLCLabel, yellow, neonYellowBorder, numPoints=3)
 		elif value > 0:
-			self.changeShapeColor(shape, red, neonRedBorder, numPoints=6)
+			self.changeShapeColor(shape, TLCLabel, red, neonRedBorder, numPoints=6)
 
 		
-	def changeShapeColor(self, shape, fillColor, borderColor, numPoints):
+	def changeShapeColor(self, shape, TLCLabel, fillColor, borderColor, numPoints):	
 		shape.brush.setColor(fillColor)
 		shape.penColor = borderColor
 		shape.numberOfPoints = numPoints
 		shape.rotation = 0
+
+		TLCLabel.setStyleSheet("background-color:" + fillColor.name())
 		
 		shape.update()
+
 
 
 

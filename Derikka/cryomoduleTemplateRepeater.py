@@ -42,25 +42,22 @@ class cryomoduleTemplateRepeater(Display):
 
 		for index, items in enumerate (labelList):
 			if index%2 == 0:
-				cavityNumberList.append(items)
-			else:
 				cavityTLCList.append(items)
+				#items.setStyleSheet("background-color: rgba(255,255,255,0)")
+			else:
+				cavityNumberList.append(items)
+				#items.setStyleSheet("background-color: rgba(255,255,255,0)")
 
-		# Find specific objects based on their location in single cavity's vertical layout
+		# Find specific objects
 		shapeList = self.ui.cmTemplate.findChildren(PyDMDrawingPolygon)
 		for index, shape in enumerate (shapeList):
-			pvList[index].add_callback(partial(self.callback, shape, cavityTLCList[index], value=None))
+			pvList[index].add_callback(partial(self.callback, shape, cavityTLCList[index], cavityNumberList[index], value=None))
+
+		# Initialize TLC label and cavity number label to be transparent
 
 
-#		for index, vLayout in enumerate(self.ui.cmTemplate.findChildren(QVBoxLayout)):
-#			if index == 0:
-#				pass
-#			else:
-#				shape = vLayout.itemAt(1).widget()
-#				pvList[index-1].add_callback(partial(self.callback, shape, value=None))
 
-
-	def callback(self,shape, TLCLabel, value, **kw):
+	def callback(self,shape, TLCLabel, CavNumLabel, value, **kw):
 		green = QColor(201,255,203)
 		neonGreenBorder = QColor(46,248,10)
 		
@@ -69,13 +66,22 @@ class cryomoduleTemplateRepeater(Display):
 
 		red = QColor(255,195,187)
 		neonRedBorder = QColor(255,0,0)
+		
+		blackText = "color: rgba(0,0,0,255); background-color: rgba(0,0,0,0)"
+		transparent = "color: rgba(0,0,0,0); background-color: rgba(0,0,0,0)"
 
 		if value<0:
 			self.changeShapeColor(shape, TLCLabel, green, neonGreenBorder, border=Qt.SolidLine, numPoints=4)
+			TLCLabel.setStyleSheet(transparent)
+			CavNumLabel.setStyleSheet(blackText)
 		elif value == 0:
 			self.changeShapeColor(shape, TLCLabel, yellow, neonYellowBorder, border=Qt.DotLine, numPoints=3)
+			TLCLabel.setStyleSheet(blackText)
+			CavNumLabel.setStyleSheet(transparent)
 		elif value > 0:
 			self.changeShapeColor(shape, TLCLabel, red, neonRedBorder, border = Qt.DotLine, numPoints=6)
+			TLCLabel.setStyleSheet(blackText)
+			CavNumLabel.setStyleSheet(transparent)
 
 		
 	def changeShapeColor(self, shape, TLCLabel, fillColor, borderColor, border, numPoints):	
@@ -85,8 +91,8 @@ class cryomoduleTemplateRepeater(Display):
 		shape.penStyle = border
 		shape.rotation = 0
 
-		TLCLabel.setStyleSheet("background-color:" + fillColor.name())
-		
+#		TLCLabel.setStyleSheet("background-color:" + fillColor.name())
+
 		shape.update()
 
 

@@ -34,7 +34,7 @@ class TalkToPV(Display):
 		radioButton = self.sender() 
 		if radioButton.isChecked():
 			caput(radioButton.PV, radioButton.value)
-			self.ui.Qt_radioOutput.setText("Radio button toggled to PV value of " + str(radioButton.value) )						
+			self.ui.Qt_radioOutput.setText("Radio button toggled to PV value of " + str(radioButton.value))						
 
 		self.colorChange()
 			

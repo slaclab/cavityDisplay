@@ -22,10 +22,15 @@ class cryomoduleTemplateRepeater(Display):
 		super(cryomoduleTemplateRepeater, self).__init__(parent=parent,args=args)
 		
 		# Define PVs for cavities 1 - 8
-		pvList = [PV('SIOC:SYS0:ML07:AO011'), PV('SIOC:SYS0:ML07:AO012'), 
-			PV('SIOC:SYS0:ML07:AO013'), PV('SIOC:SYS0:ML07:AO014'),
-			PV('SIOC:SYS0:ML07:AO015'),PV('SIOC:SYS0:ML07:AO016'),
-			PV('SIOC:SYS0:ML07:AO017'),PV('SIOC:SYS0:ML07:AO018')]
+		pvList = []
+		
+		for i in range (1,9):
+			pvList.append(PV("SIOC:SYS0:ML07:AO01{cavNum}".format(cavNum=i)))
+		
+		#pvList = [PV('SIOC:SYS0:ML07:AO011'), PV('SIOC:SYS0:ML07:AO012'), 
+		#	PV('SIOC:SYS0:ML07:AO013'), PV('SIOC:SYS0:ML07:AO014'),
+		#	PV('SIOC:SYS0:ML07:AO015'),PV('SIOC:SYS0:ML07:AO016'),
+		#	PV('SIOC:SYS0:ML07:AO017'),PV('SIOC:SYS0:ML07:AO018')]
 		
 		self.ui.cmTemplate.loadWhenShown = False
 		
@@ -42,7 +47,6 @@ class cryomoduleTemplateRepeater(Display):
 				cavityTLCList.append(items)
 
 		# Find specific objects based on their location in single cavity's vertical layout
-		List = self.ui.cmTemplate.findChildren(QVBoxLayout)
 		shapeList = self.ui.cmTemplate.findChildren(PyDMDrawingPolygon)
 		for index, shape in enumerate (shapeList):
 			pvList[index].add_callback(partial(self.callback, shape, cavityTLCList[index], value=None))
@@ -67,17 +71,18 @@ class cryomoduleTemplateRepeater(Display):
 		neonRedBorder = QColor(255,0,0)
 
 		if value<0:
-			self.changeShapeColor(shape, TLCLabel, green, neonGreenBorder, numPoints=4)
+			self.changeShapeColor(shape, TLCLabel, green, neonGreenBorder, border=Qt.SolidLine, numPoints=4)
 		elif value == 0:
-			self.changeShapeColor(shape, TLCLabel, yellow, neonYellowBorder, numPoints=3)
+			self.changeShapeColor(shape, TLCLabel, yellow, neonYellowBorder, border=Qt.DotLine, numPoints=3)
 		elif value > 0:
-			self.changeShapeColor(shape, TLCLabel, red, neonRedBorder, numPoints=6)
+			self.changeShapeColor(shape, TLCLabel, red, neonRedBorder, border = Qt.DotLine, numPoints=6)
 
 		
-	def changeShapeColor(self, shape, TLCLabel, fillColor, borderColor, numPoints):	
+	def changeShapeColor(self, shape, TLCLabel, fillColor, borderColor, border, numPoints):	
 		shape.brush.setColor(fillColor)
 		shape.penColor = borderColor
 		shape.numberOfPoints = numPoints
+		shape.penStyle = border
 		shape.rotation = 0
 
 		TLCLabel.setStyleSheet("background-color:" + fillColor.name())

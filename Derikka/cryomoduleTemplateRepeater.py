@@ -43,17 +43,15 @@ class cryomoduleTemplateRepeater(Display):
 		for index, items in enumerate (labelList):
 			if index%2 == 0:
 				cavityTLCList.append(items)
-				#items.setStyleSheet("background-color: rgba(255,255,255,0)")
 			else:
 				cavityNumberList.append(items)
-				#items.setStyleSheet("background-color: rgba(255,255,255,0)")
 
 		# Find specific objects
 		shapeList = self.ui.cmTemplate.findChildren(PyDMDrawingPolygon)
 		for index, shape in enumerate (shapeList):
 			pvList[index].add_callback(partial(self.callback, shape, cavityTLCList[index], cavityNumberList[index], value=None))
 
-		# Initialize TLC label and cavity number label to be transparent
+		# Initialize Stuff
 
 
 
@@ -90,9 +88,6 @@ class cryomoduleTemplateRepeater(Display):
 		shape.numberOfPoints = numPoints
 		shape.penStyle = border
 		shape.rotation = 0
-
-#		TLCLabel.setStyleSheet("background-color:" + fillColor.name())
-
 		shape.update()
 
 

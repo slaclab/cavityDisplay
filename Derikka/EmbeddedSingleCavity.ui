@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>257</width>
-    <height>145</height>
+    <width>272</width>
+    <height>137</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,9 +22,9 @@
   <widget class="QWidget" name="widgetContainer" native="true">
    <property name="geometry">
     <rect>
-     <x>21</x>
-     <y>11</y>
-     <width>201</width>
+     <x>6</x>
+     <y>-1</y>
+     <width>186</width>
      <height>102</height>
     </rect>
    </property>
@@ -45,7 +45,7 @@
      <rect>
       <x>35</x>
       <y>-1</y>
-      <width>121</width>
+      <width>100</width>
       <height>100</height>
      </rect>
     </property>
@@ -66,6 +66,9 @@
     </property>
     <property name="accessibleName">
      <string>${cavity_Shape}</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
     <property name="rules" stdset="0">
      <string>[]</string>
@@ -102,7 +105,7 @@
    <widget class="PyDMLabel" name="TLC_Label">
     <property name="geometry">
      <rect>
-      <x>75</x>
+      <x>65</x>
       <y>36</y>
       <width>43</width>
       <height>26</height>
@@ -137,7 +140,7 @@
    <widget class="PyDMLabel" name="cavity_Number">
     <property name="geometry">
      <rect>
-      <x>-7</x>
+      <x>-18</x>
       <y>36</y>
       <width>205</width>
       <height>26</height>
@@ -175,6 +178,50 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+   <widget class="PyDMDrawingRectangle" name="squareCavity">
+    <property name="geometry">
+     <rect>
+      <x>35</x>
+      <y>-1</y>
+      <width>100</width>
+      <height>100</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>100</height>
+     </size>
+    </property>
+    <property name="toolTip">
+     <string/>
+    </property>
+    <property name="brush" stdset="0">
+     <brush brushstyle="SolidPattern">
+      <color alpha="255">
+       <red>255</red>
+       <green>255</green>
+       <blue>255</blue>
+      </color>
+     </brush>
+    </property>
+    <property name="penStyle" stdset="0">
+     <enum>Qt::SolidLine</enum>
+    </property>
+    <property name="penWidth" stdset="0">
+     <double>5.000000000000000</double>
+    </property>
+   </widget>
+   <zorder>cavityShape</zorder>
+   <zorder>squareCavity</zorder>
+   <zorder>TLC_Label</zorder>
+   <zorder>cavity_Number</zorder>
   </widget>
  </widget>
  <customwidgets>
@@ -182,6 +229,11 @@
    <class>PyDMLabel</class>
    <extends>QLabel</extends>
    <header>pydm.widgets.label</header>
+  </customwidget>
+  <customwidget>
+   <class>PyDMDrawingRectangle</class>
+   <extends>QWidget</extends>
+   <header>pydm.widgets.drawing</header>
   </customwidget>
   <customwidget>
    <class>PyDMDrawingPolygon</class>

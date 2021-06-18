@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>255</width>
-    <height>1200</height>
+    <width>210</width>
+    <height>1009</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -57,6 +57,9 @@
    </item>
    <item>
     <widget class="PyDMTemplateRepeater" name="cmTemplate">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="sizePolicy">
       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
        <horstretch>0</horstretch>
@@ -71,6 +74,15 @@
      </property>
      <property name="toolTip">
       <string/>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="layoutSpacing" stdset="0">
+      <number>1</number>
+     </property>
+     <property name="countShownInDesigner" stdset="0">
+      <number>8</number>
      </property>
      <property name="templateFilename" stdset="0">
       <string>EmbeddedSingleCavity.ui</string>

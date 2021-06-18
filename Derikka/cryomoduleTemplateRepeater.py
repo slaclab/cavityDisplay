@@ -23,10 +23,8 @@ class cryomoduleTemplateRepeater(Display):
 		
 		# Define PVs for cavities 1 - 8
 		pvList = []
-		pvList_str = []
 		for i in range (1,9):
 			pvList.append(PV("SIOC:SYS0:ML07:AO01{cavNum}".format(cavNum=i)))
-			pvList_str.append("SIOC:SYS0:ML07:AO01{cavNum}".format(cavNum=i))
 		
 		self.ui.cmTemplate.loadWhenShown = False
 		
@@ -48,7 +46,7 @@ class cryomoduleTemplateRepeater(Display):
 		
 		#Initialize cavity shape colors and label
 		for index, (shape, square) in enumerate (zip(shapeList,squareList)):
-			pvAlarmStatus = caget(pvList_str[index])
+			pvAlarmStatus = pvList[index].value
 			self.callback(shape, square, cavityTLCList[index], cavityNumberList[index], pvAlarmStatus)	
 
 		
@@ -107,9 +105,6 @@ class cryomoduleTemplateRepeater(Display):
 		cavShape.brush.setColor(transparent)
 		cavShape.penColor = transparent
 		cavShape.update()
-		
-	def initializeCavities(self):
-		print("Hello")
 
 
 

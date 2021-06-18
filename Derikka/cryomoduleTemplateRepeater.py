@@ -23,8 +23,10 @@ class cryomoduleTemplateRepeater(Display):
 		
 		# Define PVs for cavities 1 - 8
 		pvList = []
+		pvList_str = []
 		for i in range (1,9):
 			pvList.append(PV("SIOC:SYS0:ML07:AO01{cavNum}".format(cavNum=i)))
+			pvList_str.append("SIOC:SYS0:ML07:AO01{cavNum}".format(cavNum=i))
 		
 		self.ui.cmTemplate.loadWhenShown = False
 		
@@ -43,6 +45,13 @@ class cryomoduleTemplateRepeater(Display):
 		# Find cavity shapes (square or polygon) in embedded gui
 		squareList = self.ui.cmTemplate.findChildren(PyDMDrawingRectangle)
 		shapeList = self.ui.cmTemplate.findChildren(PyDMDrawingPolygon)
+		
+		#Initialize cavity shape colors and label
+		for index, (shape, square) in enumerate (zip(shapeList,squareList)):
+			pvAlarmStatus = caget(pvList_str[index])
+			self.callback(shape, square, cavityTLCList[index], cavityNumberList[index], pvAlarmStatus)	
+
+		
 		for index, (shape, square) in enumerate (zip(shapeList,squareList)):
 			pvList[index].add_callback(partial(self.callback, shape, square, cavityTLCList[index], cavityNumberList[index], value=None))
 
@@ -98,8 +107,9 @@ class cryomoduleTemplateRepeater(Display):
 		cavShape.brush.setColor(transparent)
 		cavShape.penColor = transparent
 		cavShape.update()
-
-
+		
+	def initializeCavities(self):
+		print("Hello")
 
 
 

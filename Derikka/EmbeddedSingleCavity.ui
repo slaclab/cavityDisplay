@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>211</width>
-    <height>103</height>
+    <width>111</width>
+    <height>117</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,9 +22,9 @@
   <widget class="QWidget" name="widgetContainer" native="true">
    <property name="geometry">
     <rect>
-     <x>6</x>
-     <y>-1</y>
-     <width>186</width>
+     <x>-4</x>
+     <y>2</y>
+     <width>106</width>
      <height>102</height>
     </rect>
    </property>
@@ -43,7 +43,7 @@
    <widget class="PyDMDrawingPolygon" name="cavityShape">
     <property name="geometry">
      <rect>
-      <x>35</x>
+      <x>3</x>
       <y>-1</y>
       <width>100</width>
       <height>100</height>
@@ -105,7 +105,7 @@
    <widget class="PyDMLabel" name="TLC_Label">
     <property name="geometry">
      <rect>
-      <x>65</x>
+      <x>33</x>
       <y>36</y>
       <width>43</width>
       <height>26</height>
@@ -140,7 +140,7 @@
    <widget class="PyDMLabel" name="cavity_Number">
     <property name="geometry">
      <rect>
-      <x>-18</x>
+      <x>-50</x>
       <y>36</y>
       <width>205</width>
       <height>26</height>
@@ -181,7 +181,7 @@
    <widget class="PyDMDrawingRectangle" name="squareCavity">
     <property name="geometry">
      <rect>
-      <x>35</x>
+      <x>3</x>
       <y>-1</y>
       <width>100</width>
       <height>100</height>

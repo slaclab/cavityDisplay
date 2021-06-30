@@ -46,6 +46,19 @@ class pvCommunicator(Display):
 		self.ui.inputPV8.PV = 'SIOC:SYS0:ML07:AO018'
 		self.ui.inputPV8.returnPressed.connect(lambda:self.readValue())
 
+
+		self.ui.cm2inputPV1.PV = 'SIOC:SYS0:ML07:AO019'
+		self.ui.cm2inputPV1.returnPressed.connect(lambda:self.readValue())
+
+		self.ui.cm2inputPV2.PV = 'SIOC:SYS0:ML07:AO020'
+		self.ui.cm2inputPV2.returnPressed.connect(lambda:self.readValue())
+
+		self.ui.cm2inputPV3.PV = 'SIOC:SYS0:ML07:AO021'
+		self.ui.cm2inputPV3.returnPressed.connect(lambda:self.readValue())
+
+		self.ui.cm2inputPV4.PV = 'SIOC:SYS0:ML07:AO022'
+		self.ui.cm2inputPV4.returnPressed.connect(lambda:self.readValue())
+
 	
 	# self.sender() identifies which QLineEdit object was typed into
 	# changes PV value to corresponding user input	

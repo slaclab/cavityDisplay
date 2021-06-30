@@ -14,6 +14,7 @@ MNT = faultSeverity(1, 'MNT', 2)
 HWI = faultSeverity(1, 'HWI', 3)
 PHJ = faultSeverity(1, 'PHJ', 4)
 
+print(ARU)
 
 # Add faults to a list
 faultList = []
@@ -48,14 +49,7 @@ for elements in faults:
 	
 print(sorted(faults.items(), key=faults.get() ))
 
-
 displayList = []
-	
 
+		
 
-
-
-
-
-
-	

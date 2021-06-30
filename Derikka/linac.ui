@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>544</width>
-    <height>909</height>
+    <width>542</width>
+    <height>932</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -58,7 +58,7 @@
       <enum>PyDMTemplateRepeater::Horizontal</enum>
      </property>
      <property name="layoutSpacing" stdset="0">
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="countShownInDesigner" stdset="0">
       <number>4</number>
@@ -67,7 +67,7 @@
       <string>cryomoduleTemplateRepeater.ui</string>
      </property>
      <property name="dataSource" stdset="0">
-      <string>linacTest.json</string>
+      <string>linac2.json</string>
      </property>
     </widget>
    </item>

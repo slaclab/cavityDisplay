@@ -64,7 +64,7 @@
       <number>4</number>
      </property>
      <property name="templateFilename" stdset="0">
-      <string>cryomoduleTemplateRepeater.ui</string>
+      <string>cryomodule.ui</string>
      </property>
      <property name="dataSource" stdset="0">
       <string>linac2.json</string>

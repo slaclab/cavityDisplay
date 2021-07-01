@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>825</width>
-    <height>854</height>
+    <height>1662</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,7 +29,7 @@
       <enum>PyDMTemplateRepeater::Horizontal</enum>
      </property>
      <property name="templateFilename" stdset="0">
-      <string>cryomoduleTemplateRepeater.ui</string>
+      <string>cryomodule.ui</string>
      </property>
      <property name="dataSource" stdset="0">
       <string>linac3.json</string>
@@ -56,7 +56,7 @@
         <number>1</number>
        </property>
        <property name="templateFilename" stdset="0">
-        <string>cryomoduleTemplateRepeater.ui</string>
+        <string>cryomodule.ui</string>
        </property>
        <property name="dataSource" stdset="0">
         <string>linac0.json</string>
@@ -84,7 +84,7 @@
         <number>4</number>
        </property>
        <property name="templateFilename" stdset="0">
-        <string>cryomoduleTemplateRepeater.ui</string>
+        <string>cryomodule.ui</string>
        </property>
        <property name="dataSource" stdset="0">
         <string>linac1.json</string>
@@ -106,7 +106,7 @@
         <enum>PyDMTemplateRepeater::Horizontal</enum>
        </property>
        <property name="templateFilename" stdset="0">
-        <string>cryomoduleTemplateRepeater.ui</string>
+        <string>cryomodule.ui</string>
        </property>
        <property name="dataSource" stdset="0">
         <string>linac2.json</string>

@@ -5,7 +5,7 @@ from PyQt5.QtCore import Qt, QObject
 import epics
 from epics import caget, caput
 from PyQt5.QtWidgets import (QWidgetItem, QCheckBox, QPushButton, QLineEdit,
-                             QGroupBox, QVBoxLayout, QMessageBox, QWidget,
+                             QGroupBox, QVBoxLayout, QHBoxLayout, QMessageBox, QWidget,
                              QLabel, QFrame, QComboBox, QRadioButton, QGridLayout,
                              QColorDialog)
 from pydm.widgets import PyDMDrawingRectangle, PyDMLabel
@@ -16,7 +16,7 @@ from epics import PV
 class cryomoduleTemplateRepeater(Display):
 
 	def ui_filename(self):
-		return 'cryomoduleTemplateRepeater.ui'
+		return '../cryomodule.ui'
 		
 	def __init__(self, parent = None, args = None):
 		super(cryomoduleTemplateRepeater, self).__init__(parent=parent,args=args)
@@ -27,7 +27,7 @@ class cryomoduleTemplateRepeater(Display):
 		for i in range (1,9):
 			pvList.append(PV("SIOC:SYS0:ML07:AO01{cavNum}".format(cavNum=i)))
 		
-		self.ui.cmTemplate.loadWhenShown = False
+		self.ui.cmTemplate.loadWhenShown = False	
 		
 		# Read in labels from EmbeddedSingleCavity.ui
 		# Make seperate lists for cavity numbers and TLC labels

@@ -5,7 +5,7 @@ from PyQt5.QtCore import Qt, QObject
 import epics
 from epics import caget, caput
 from PyQt5.QtWidgets import (QWidgetItem, QCheckBox, QPushButton, QLineEdit,
-                             QGroupBox, QVBoxLayout, QMessageBox, QWidget,
+                             QGroupBox, QVBoxLayout, QHBoxLayout, QMessageBox, QWidget,
                              QLabel, QFrame, QComboBox, QRadioButton, QGridLayout,
                              QColorDialog)
 from pydm.widgets import PyDMDrawingRectangle, PyDMLabel
@@ -21,17 +21,12 @@ class linacTemplate(Display):
 	def __init__(self, parent = None, args = None):
 		super(linacTemplate, self).__init__(parent=parent,args=args)
 		self.defineColors()
-		
-		# Define PVs for cavities 1 - 8 for CM04
-		pvList = []
-		for i in range (1,9):
-			pvList.append(PV("SIOC:SYS0:ML07:AO01{cavNum}".format(cavNum=i)))
 
-		# Define PVs for cavities 1 - 4 for CM05
-		for i in range (19,23):
+		pvList = []
+		# Define PVs for cavities 1 - 8 for CM04, and 1 -4 for CM05
+		for i in range (11,23):
 			pvList.append(PV("SIOC:SYS0:ML07:AO0{unitNum}".format(unitNum=i)))
-			
-		
+
 		
 		self.ui.linac2.loadWhenShown = False
 		

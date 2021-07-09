@@ -110,6 +110,7 @@
    <class>PyDMTemplateRepeater</class>
    <extends>QFrame</extends>
    <header>pydm.widgets.template_repeater</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

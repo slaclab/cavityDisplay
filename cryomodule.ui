@@ -42,7 +42,7 @@
      </property>
      <property name="font">
       <font>
-       <pointsize>14</pointsize>
+       <pointsize>28</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>
@@ -80,6 +80,9 @@
      </property>
      <property name="toolTip">
       <string/>
+     </property>
+     <property name="accessibleName">
+      <string>${cryoTemplate}</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>

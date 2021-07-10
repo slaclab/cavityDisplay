@@ -71,7 +71,7 @@
        <string/>
       </property>
       <property name="accessibleName">
-       <string>${cavity_Shape}</string>
+       <string>${cavity_polygon}</string>
       </property>
       <property name="styleSheet">
        <string notr="true"/>
@@ -111,10 +111,10 @@
      <widget class="PyDMLabel" name="TLC_Label">
       <property name="geometry">
        <rect>
-        <x>28</x>
-        <y>36</y>
-        <width>43</width>
-        <height>26</height>
+        <x>0</x>
+        <y>30</y>
+        <width>100</width>
+        <height>38</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -125,7 +125,7 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>14</pointsize>
+        <pointsize>28</pointsize>
         <weight>75</weight>
         <bold>true</bold>
        </font>
@@ -147,9 +147,9 @@
       <property name="geometry">
        <rect>
         <x>-55</x>
-        <y>36</y>
+        <y>30</y>
         <width>205</width>
-        <height>26</height>
+        <height>38</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -161,12 +161,12 @@
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>25</height>
+        <height>0</height>
        </size>
       </property>
       <property name="font">
        <font>
-        <pointsize>14</pointsize>
+        <pointsize>28</pointsize>
         <weight>75</weight>
         <bold>true</bold>
        </font>
@@ -207,6 +207,9 @@
       </property>
       <property name="toolTip">
        <string/>
+      </property>
+      <property name="accessibleName">
+       <string>${cavity_square}</string>
       </property>
       <property name="brush" stdset="0">
        <brush brushstyle="SolidPattern">

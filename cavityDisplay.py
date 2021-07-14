@@ -30,15 +30,6 @@ class cavityDisplay(Display):
 		
 		self.ui.linac2.loadWhenShown = False
 		
-		# Read in labels from EmbeddedSingleCavity.ui
-		# Make seperate lists for cavity numbers and TLC labels
-		cryoNumList = []
-		cavityNumberList = []
-		cavityTLCList = []
-		counter = 0
-		labelList = self.ui.linac2.findChildren(PyDMLabel)
-
-
 
 		# These print statements helped me figure out what QObjects were located at each index
 		'''		
@@ -51,24 +42,74 @@ class cavityDisplay(Display):
 		for index, items in enumerate(cavities):
 			print index, items.itemAt(0).widget(), items.itemAt(1), items.itemAt(2), items.itemAt(3)
 		'''
+
 		
-				
+		stopTest = 12
+		pvCounter = 0	
 		cryomodules_linac1 = self.ui.linac1.findChildren(QVBoxLayout)
 		for index, cryomodules in enumerate(cryomodules_linac1):
-			print(index, cryomodules.itemAt(0).widget(), cryomodules.itemAt(1).widget())
-			#if index%2 == 0:
-			#	cromodule_num = cryomodules.itemAt(0).widget()
-			#	print(index, cromodule_num.text())
-		
-		cm1 = cryomodules_linac1[0].itemAt(1).widget()
-		cavities = cm1.findChildren(QHBoxLayout)
-		
-		stuff = cavities[0].findChildren(QObject)
-		print(stuff)
-
+			item0 = cryomodules.itemAt(0).widget()
+			item1 = cryomodules.itemAt(1).widget()
+			
+			if "cryomoduleName" in item0.accessibleName():
+				cryomodule_num = item0.text()
 				
+				cryoTemplateRepeater = item1
+				cavities = cryoTemplateRepeater.findChildren(QHBoxLayout)
+
+				for i, objects in enumerate(cavities):
+					if pvCounter >= stopTest:
+						break
+					
+					qWidget = objects.itemAt(0).widget()
+					qWidgetContents = qWidget.findChildren(QObject)
+					for items in qWidgetContents:
+						print(cryomodule_num, i, items.accessibleName())
+						if "TLC" in items.accessibleName():
+							cavityTLClabel = items
+						if "cavityNumber" in items.accessibleName():
+							cavityNumberlabel = items
+						if "square" in items.accessibleName():
+							squareShape = items
+						if "polygon" in items.accessibleName():
+							polygonShape = items
+					pvAlarmStatusTest = pvList[pvCounter].value
+					self.callback(polygonShape, squareShape, cavityTLClabel, cavityNumberlabel, pvAlarmStatusTest)
+					
+					print(pvAlarmStatusTest)
+					#.add_callback is called when PV in pvList changes
+					pvList[pvCounter].add_callback(partial(self.callback, polygonShape, squareShape,
+										cavityTLClabel, cavityNumberlabel, pvAlarmStatusTest))
+					pvCounter = pvCounter + 1
+
+		#.add_callback is called when PV in pvList changes
+#		for index, (shape, square) in enumerate (zip(shapeList,squareList)):
+#			pvList[index].add_callback(partial(self.callback, shape, square,
+#								cavityTLCList[index], cavityNumberList[index], value=None))
+#			if index >= stop:
+#				break					
+
 		
+
+		'''
+		cm1 = cryomodules_linac1[0].itemAt(1).widget()
+		print("cm1: ", cm1)
+		TemplateContents = cm1.findChildren(QHBoxLayout)
+		for index, items in enumerate(TemplateContents):
+			print(index, items.itemAt(0).widget(),items.itemAt(1),items.itemAt(2),items.itemAt(3))
 		
+		individualWidget = TemplateContents[0].itemAt(0).widget()
+		qtWidgetContents = individualWidget.findChildren(QObject)
+		print(qtWidgetContents)
+		'''
+		
+		# Read in labels from EmbeddedSingleCavity.ui
+		# Make seperate lists for cavity numbers and TLC labels
+		cryoNumList = []
+		cavityNumberList = []
+		cavityTLCList = []
+		counter = 0
+		labelList = self.ui.linac2.findChildren(PyDMLabel)		
 		
 		# labelList contains the cryoNum first, then alternates between
 		#    TLC and cavityNum for the next 16 PyDMLabel objects. This pattern
@@ -92,7 +133,7 @@ class cavityDisplay(Display):
 		stop = 11 # index 0 to 11 accounts for all 12 of my activs test PVs
 		for index, (shape, square) in enumerate (zip(shapeList,squareList)):
 			pvAlarmStatus = pvList[index].value
-			self.callback(shape, square, cavityTLCList[index], cavityNumberList[index], pvAlarmStatus)
+			#self.callback(shape, square, cavityTLCList[index], cavityNumberList[index], pvAlarmStatus)
 			if index >= stop:
 				break
 

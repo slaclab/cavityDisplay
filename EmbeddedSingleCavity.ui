@@ -134,7 +134,7 @@
        <string/>
       </property>
       <property name="accessibleName">
-       <string>${TLC_Text}</string>
+       <string>TLC_Text</string>
       </property>
       <property name="text">
        <string>TLC</string>
@@ -175,7 +175,7 @@
        <string/>
       </property>
       <property name="accessibleName">
-       <string>${cavityNumberName}</string>
+       <string>cavityNumberName</string>
       </property>
       <property name="text">
        <string>${cavityNumber}</string>

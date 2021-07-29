@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>914</width>
+    <width>1014</width>
     <height>1840</height>
    </rect>
   </property>
@@ -47,12 +47,12 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>164</width>
-          <height>948</height>
+          <width>184</width>
+          <height>1001</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="formLayout_2">
-         <item row="0" column="0">
+         <item row="1" column="0">
           <widget class="PyDMTemplateRepeater" name="linac0">
            <property name="sizePolicy">
             <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -74,6 +74,29 @@
            </property>
            <property name="dataSource" stdset="0">
             <string>linac0.json</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0" colspan="2">
+          <widget class="PyDMLabel" name="PyDMLabel">
+           <property name="font">
+            <font>
+             <pointsize>28</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="toolTip">
+            <string/>
+           </property>
+           <property name="accessibleName">
+            <string>L0B</string>
+           </property>
+           <property name="text">
+            <string>L0B</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>
@@ -101,11 +124,11 @@
           <x>0</x>
           <y>0</y>
           <width>542</width>
-          <height>948</height>
+          <height>1001</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="formLayout_3">
-         <item row="0" column="0">
+         <item row="1" column="0">
           <widget class="PyDMTemplateRepeater" name="linac1">
            <property name="sizePolicy">
             <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -130,6 +153,29 @@
            </property>
           </widget>
          </item>
+         <item row="0" column="0" colspan="2">
+          <widget class="PyDMLabel" name="PyDMLabel_2">
+           <property name="font">
+            <font>
+             <pointsize>28</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="toolTip">
+            <string/>
+           </property>
+           <property name="accessibleName">
+            <string>L1B</string>
+           </property>
+           <property name="text">
+            <string>L1B</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </widget>
@@ -144,12 +190,12 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>164</width>
-          <height>948</height>
+          <width>216</width>
+          <height>1001</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="formLayout_4">
-         <item row="0" column="0">
+         <item row="1" column="0">
           <widget class="PyDMTemplateRepeater" name="linac2">
            <property name="sizePolicy">
             <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -168,6 +214,29 @@
            </property>
            <property name="dataSource" stdset="0">
             <string>linac2.json</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0" colspan="2">
+          <widget class="PyDMLabel" name="PyDMLabel_3">
+           <property name="font">
+            <font>
+             <pointsize>28</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="toolTip">
+            <string/>
+           </property>
+           <property name="accessibleName">
+            <string>L2B</string>
+           </property>
+           <property name="text">
+            <string>L2B</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>
@@ -196,12 +265,12 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>880</width>
-        <height>948</height>
+        <width>980</width>
+        <height>1001</height>
        </rect>
       </property>
       <layout class="QFormLayout" name="formLayout">
-       <item row="0" column="0">
+       <item row="1" column="0">
         <widget class="PyDMTemplateRepeater" name="linac3">
          <property name="sizePolicy">
           <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -223,6 +292,26 @@
          </property>
         </widget>
        </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="PyDMLabel" name="PyDMLabel_4">
+         <property name="font">
+          <font>
+           <pointsize>28</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string/>
+         </property>
+         <property name="text">
+          <string>L3B</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </widget>
@@ -230,6 +319,11 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>PyDMLabel</class>
+   <extends>QLabel</extends>
+   <header>pydm.widgets.label</header>
+  </customwidget>
   <customwidget>
    <class>PyDMTemplateRepeater</class>
    <extends>QFrame</extends>

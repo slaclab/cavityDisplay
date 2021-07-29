@@ -304,6 +304,9 @@
          <property name="toolTip">
           <string/>
          </property>
+         <property name="accessibleName">
+          <string>L3B</string>
+         </property>
          <property name="text">
           <string>L3B</string>
          </property>

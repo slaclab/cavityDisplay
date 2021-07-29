@@ -26,8 +26,8 @@ class cavityDisplay(Display):
 		# Define PVs for cavities 1 - 8 for CM04, and 1 -4 for CM05
 		for i in range (11,23):
 			pvList.append(PV("SIOC:SYS0:ML07:AO0{unitNum}".format(unitNum=i)))
-
-		
+			
+	
 		self.ui.linac2.loadWhenShown = False
 		
 

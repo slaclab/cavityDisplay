@@ -26,28 +26,27 @@ class cavityDisplay(Display):
 		# Define PVs for cavities 1 - 8 for CM04, and 1 -4 for CM05
 		for i in range (11,23):
 			pvList.append(PV("SIOC:SYS0:ML07:AO0{unitNum}".format(unitNum=i)))
-			
-	
-		self.ui.linac2.loadWhenShown = False
+
+		# What's this for again??????? 			
+		self.ui.linac0.loadWhenShown = False
+		self.ui.linac1.loadWhenShown = False
+		self.ui.linac2.loadWhenShown = False	
+		self.ui.linac3.loadWhenShown = False
 		
 
 		# These print statements helped me figure out what QObjects were located at each index
 		'''		
 		cryomodules = self.ui.linac1.findChildren(QVBoxLayout)
 		for index, items in enumerate(cryomodules):
-			print index, items.itemAt(0).widget(), items.itemAt(1), items.itemAt(2), items.itemAt(3)
+			print index, items.itemAt(0).widget(), items.itemAt(1).widget(), items.itemAt(2), items.itemAt(3)
 
-		print("\n\n cavities")
-		cavities = self.ui.linac1.findChildren(QHBoxLayout)
-		for index, items in enumerate(cavities):
-			print index, items.itemAt(0).widget(), items.itemAt(1), items.itemAt(2), items.itemAt(3)
 		'''
 
 		
 		stopTest = 12
 		pvCounter = 0	
-		cryomodules_linac1 = self.ui.linac1.findChildren(QVBoxLayout)
-		for index, cryomodules in enumerate(cryomodules_linac1):
+		linac1 = self.ui.linac1.findChildren(QVBoxLayout)
+		for cryomodules in linac1:
 			item0 = cryomodules.itemAt(0).widget()
 			item1 = cryomodules.itemAt(1).widget()
 			
@@ -64,7 +63,7 @@ class cavityDisplay(Display):
 					qWidget = objects.itemAt(0).widget()
 					qWidgetContents = qWidget.findChildren(QObject)
 					for items in qWidgetContents:
-						print(cryomodule_num, i, items.accessibleName())
+						#print(cryomodule_num, i, items.accessibleName())
 						if "TLC" in items.accessibleName():
 							cavityTLClabel = items
 						if "cavityNumber" in items.accessibleName():
@@ -76,7 +75,6 @@ class cavityDisplay(Display):
 					pvAlarmStatusTest = pvList[pvCounter].value
 					self.callback(polygonShape, squareShape, cavityTLClabel, cavityNumberlabel, pvAlarmStatusTest)
 					
-					print(pvAlarmStatusTest)
 					#.add_callback is called when PV in pvList changes
 					pvList[pvCounter].add_callback(partial(self.callback, polygonShape, squareShape,
 										cavityTLClabel, cavityNumberlabel))

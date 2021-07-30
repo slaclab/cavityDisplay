@@ -71,9 +71,14 @@ class cavityDisplay(Display):
 							polygonShape = childWidget
 						else:
 							print("ERROR in cavity QWidget container")
-					print("ACCL:{LINAC}:{CRYOMODULE_NUM}{CAVITY}0:CUDSEVR".format(LINAC = self.ui.L1Blabel.text(),
-																			CRYOMODULE_NUM = cmLabel.text(),
-																			CAVITY = cavityNumberlabel.text()))
+					#print("ACCL:{LINAC}:{CRYOMODULE_NUM}{CAVITY}0:CUDSEVR".format(LINAC = self.ui.L1Blabel.text(),
+					#														CRYOMODULE_NUM = cmLabel.text(),
+					#														CAVITY = cavityNumberlabel.text()))
+					#statusPVString = "ACCL:{LINAC}:{CRYOMODULE_NUM}{CAVITY}0:CUDSEVR".format(LINAC = self.ui.L1Blabel.text(),
+																			#CRYOMODULE_NUM = cmLabel.text(),
+																			#CAVITY = cavityNumberlabel.text()))
+					#statusPV = PV(statusPVstring)
+					#print(statusPV.value)
 					pvAlarmStatusTest = pvList[pvCounter].value
 					self.callback(polygonShape, squareShape, cavityTLClabel, cavityNumberlabel, pvAlarmStatusTest)
 					

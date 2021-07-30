@@ -1,6 +1,1 @@
-faults = {}
-# read faults.csv
-# for row in csv add fault object to faults
-
-
-
+fillColor = {0: QColor(201,255,203), 1: QColor(255,253,167),..}

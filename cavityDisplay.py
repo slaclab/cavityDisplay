@@ -90,6 +90,8 @@ class cavityDisplay(Display):
 
 	# Updates shape and label depending on pv value
 	def callback(self, shape, square, TLCLabel, CavNumLabel, value, **kw):
+		# changeFillColor(fillColor[severity])
+		# changeBorderColor(borderColor[severity])
 		if value<0:
 			self.changeSquareColor(square, self.green, self.neonGreenBorder)
 			self.makeItTransparent(shape)

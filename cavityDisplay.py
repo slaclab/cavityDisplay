@@ -44,34 +44,36 @@ class cavityDisplay(Display):
 
 		
 		stopTest = 12
-		pvCounter = 0	
+		pvCounter = 0
 		linac1 = self.ui.linac1.findChildren(QVBoxLayout)
 		for cryomodules in linac1:
-			item0 = cryomodules.itemAt(0).widget()
-			item1 = cryomodules.itemAt(1).widget()
+		
+			cmLabel = cryomodules.itemAt(0).widget()	# cryo number pydmLabel 
+			cmTemplateRepeater = cryomodules.itemAt(1).widget()	# templateRepeater of 8 cavities
 			
-			if "cryomoduleName" in item0.accessibleName():
-				cryomodule_num = item0.text()
-				
-				cryoTemplateRepeater = item1
-				cavities = cryoTemplateRepeater.findChildren(QHBoxLayout)
+			if "cryomoduleName" in cmLabel.accessibleName():
+				cavityList = cmTemplateRepeater.findChildren(QHBoxLayout)
 
-				for i, objects in enumerate(cavities):
+				for i, cavity in enumerate(cavityList):
 					if pvCounter >= stopTest:
 						break
 					
-					qWidget = objects.itemAt(0).widget()
-					qWidgetContents = qWidget.findChildren(QObject)
-					for items in qWidgetContents:
-						#print(cryomodule_num, i, items.accessibleName())
-						if "TLC" in items.accessibleName():
-							cavityTLClabel = items
-						if "cavityNumber" in items.accessibleName():
-							cavityNumberlabel = items
-						if "square" in items.accessibleName():
-							squareShape = items
-						if "polygon" in items.accessibleName():
-							polygonShape = items
+					cavityWidgetContainer = cavity.itemAt(0).widget()
+					childWidgetsList = cavityWidgetContainer.findChildren(QObject)
+					for childWidget in childWidgetsList:
+						if "TLC" in childWidget.accessibleName():
+							cavityTLClabel = childWidget
+						elif "cavityNumber" in childWidget.accessibleName():
+							cavityNumberlabel = childWidget
+						elif "square" in childWidget.accessibleName():
+							squareShape = childWidget
+						elif "polygon" in childWidget.accessibleName():
+							polygonShape = childWidget
+						else:
+							print("ERROR in cavity QWidget container")
+					print("ACCL:{LINAC}:{CRYOMODULE_NUM}{CAVITY}0:CUDSEVR".format(LINAC = self.ui.L1Blabel.text(),
+																			CRYOMODULE_NUM = cmLabel.text(),
+																			CAVITY = cavityNumberlabel.text()))
 					pvAlarmStatusTest = pvList[pvCounter].value
 					self.callback(polygonShape, squareShape, cavityTLClabel, cavityNumberlabel, pvAlarmStatusTest)
 					

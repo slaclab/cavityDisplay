@@ -78,7 +78,7 @@
           </widget>
          </item>
          <item row="0" column="0" colspan="2">
-          <widget class="PyDMLabel" name="PyDMLabel">
+          <widget class="PyDMLabel" name="L0Blabel">
            <property name="font">
             <font>
              <pointsize>28</pointsize>
@@ -154,7 +154,7 @@
           </widget>
          </item>
          <item row="0" column="0" colspan="2">
-          <widget class="PyDMLabel" name="PyDMLabel_2">
+          <widget class="PyDMLabel" name="L1Blabel">
            <property name="font">
             <font>
              <pointsize>28</pointsize>
@@ -218,7 +218,7 @@
           </widget>
          </item>
          <item row="0" column="0" colspan="2">
-          <widget class="PyDMLabel" name="PyDMLabel_3">
+          <widget class="PyDMLabel" name="L2Blabel">
            <property name="font">
             <font>
              <pointsize>28</pointsize>
@@ -293,7 +293,7 @@
         </widget>
        </item>
        <item row="0" column="0" colspan="2">
-        <widget class="PyDMLabel" name="PyDMLabel_4">
+        <widget class="PyDMLabel" name="L3Label">
          <property name="font">
           <font>
            <pointsize>28</pointsize>

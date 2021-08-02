@@ -22,11 +22,6 @@ class cavityDisplay(Display):
 		super(cavityDisplay, self).__init__(parent=parent,args=args)
 		self.defineColors()
 
-		pvList = []
-		# Define PVs for cavities 1 - 8 for CM04, and 1 -4 for CM05
-		for i in range (11,23):
-			pvList.append(PV("SIOC:SYS0:ML07:AO0{unitNum}".format(unitNum=i)))
-
 		# What's this for again??????? 			
 		self.ui.linac0.loadWhenShown = False
 		self.ui.linac1.loadWhenShown = False
@@ -43,11 +38,8 @@ class cavityDisplay(Display):
 		'''
 
 		
-		stopTest = 12
-		pvCounter = 0
 		linac1 = self.ui.linac1.findChildren(QVBoxLayout)
 		for cryomodules in linac1:
-		
 			cmLabel = cryomodules.itemAt(0).widget()	# cryo number pydmLabel 
 			cmTemplateRepeater = cryomodules.itemAt(1).widget()	# templateRepeater of 8 cavities
 			
@@ -55,9 +47,6 @@ class cavityDisplay(Display):
 				cavityList = cmTemplateRepeater.findChildren(QHBoxLayout)
 
 				for i, cavity in enumerate(cavityList):
-					if pvCounter >= stopTest:
-						break
-					
 					cavityWidgetContainer = cavity.itemAt(0).widget()
 					childWidgetsList = cavityWidgetContainer.findChildren(QObject)
 					for childWidget in childWidgetsList:
@@ -71,44 +60,45 @@ class cavityDisplay(Display):
 							polygonShape = childWidget
 						else:
 							print("ERROR in cavity QWidget container")
-					#print("ACCL:{LINAC}:{CRYOMODULE_NUM}{CAVITY}0:CUDSEVR".format(LINAC = self.ui.L1Blabel.text(),
-					#														CRYOMODULE_NUM = cmLabel.text(),
-					#														CAVITY = cavityNumberlabel.text()))
+							
 					statusPVstring = "ACCL:{LINAC}:{CRYOMODULE_NUM}{CAVITY}0:CUDSEVR".format(LINAC = self.ui.L1Blabel.text(),
 																			CRYOMODULE_NUM = cmLabel.text(),
 																			CAVITY = cavityNumberlabel.text())
 					statusPV = PV(statusPVstring)
 					print(statusPVstring, statusPV.value)
-					#pvAlarmStatusTest = pvList[pvCounter].value
 					
 					# This line is meant to initialize the cavity colors and shapes when first launched
 					self.Severitycallback(polygonShape, squareShape, cavityTLClabel, cavityNumberlabel, statusPV.value)
 					
-					#.add_callback is called when PV in pvList changes
+					#.add_callback is called when statusPV changes value
 					statusPV.add_callback(partial(self.Severitycallback, polygonShape, squareShape,
 										cavityTLClabel, cavityNumberlabel))
-					#pvList[pvCounter].add_callback(partial(self.callback, polygonShape, squareShape,
-					#					cavityTLClabel, cavityNumberlabel))
-					pvCounter = pvCounter + 1
 
 
 	# Updates shape and label depending on pv value
 	def Severitycallback(self, shape, square, TLCLabel, CavNumLabel, value, **kw):
-		# changeFillColor(fillColor[severity])
-		# changeBorderColor(borderColor[severity])
-		if value<0:
+		if value==0:
+			# Make it green
 			self.changeSquareColor(square, self.green, self.neonGreenBorder)
 			self.makeItTransparent(shape)
 			TLCLabel.setStyleSheet(self.transparentLabel)
 			CavNumLabel.setStyleSheet(self.blackText)
-		elif value == 0:
+		elif value==1:
+			# Make it yellow
 			self.makeItTransparent(square)
 			self.changeShapeColor(shape, self.yellow, self.neonYellowBorder, border=Qt.DotLine, numPoints=4)
 			TLCLabel.setStyleSheet(self.blackText)
 			CavNumLabel.setStyleSheet(self.transparentLabel)
-		elif value > 0:
+		elif value==2:
+			# Make it red
 			self.makeItTransparent(square)
 			self.changeShapeColor(shape, self.red, self.neonRedBorder, border = Qt.DotLine, numPoints=6)
+			TLCLabel.setStyleSheet(self.blackText)
+			CavNumLabel.setStyleSheet(self.transparentLabel)
+		else:
+			# Make it purple
+			self.makeItTransparent(square)
+			self.changeShapeColor(shape, self.purple, self.neonPurpleBorder, border = Qt.DotLine, numPoints=6)
 			TLCLabel.setStyleSheet(self.blackText)
 			CavNumLabel.setStyleSheet(self.transparentLabel)
 
@@ -145,6 +135,9 @@ class cavityDisplay(Display):
 
 		self.red = QColor(255,195,187)
 		self.neonRedBorder = QColor(255,0,0)
+		
+		self.purple = QColor(209,203,255)
+		self.neonPurpleBorder = QColor(170,85,255)
 		
 		self.blackText = "color: rgba(0,0,0,255); background-color: rgba(0,0,0,0)"
 		self.transparentLabel = "color: rgba(0,0,0,0); background-color: rgba(0,0,0,0)"

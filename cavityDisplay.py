@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import (QWidgetItem, QCheckBox, QPushButton, QLineEdit,
                              QGroupBox, QVBoxLayout, QHBoxLayout, QMessageBox, QWidget,
                              QLabel, QFrame, QComboBox, QRadioButton, QGridLayout,
                              QColorDialog)
-from pydm.widgets import PyDMDrawingRectangle, PyDMLabel
+from pydm.widgets import PyDMDrawingRectangle, PyDMLabel, PyDMTemplateRepeater
 from pydm.widgets.drawing import PyDMDrawingPolygon
 from functools import partial
 from epics import PV
@@ -27,61 +27,51 @@ class cavityDisplay(Display):
 		self.ui.linac1.loadWhenShown = False
 		self.ui.linac2.loadWhenShown = False	
 		self.ui.linac3.loadWhenShown = False
-		
 
-		# These print statements helped me figure out what QObjects were located at each index
-		'''	
-		Cryomodules = self.ui.linac1.findChildren(QVBoxLayout)
-		for index, items in enumerate(Cryomodules):
-			print index, items.itemAt(0).widget(), items.itemAt(1).widget(), items.itemAt(2), items.itemAt(3)
-		'''
+		repeaters = [self.ui.linac0,
+                     self.ui.linac1,
+                     self.ui.linac2,
+                     self.ui.linac3]  # type: List[PyDMTemplateRepeater]
 		
-		LINAC1_label = self.ui.L1Blabel.text()
-		print(LINAC1_label)
-		
-		LINAC2_label = self.ui.L2Blabel.text()
-		print(LINAC2_label)
-		
-		LINAC3_label = self.ui.L3Blabel.text()
-		print(LINAC3_label)
-
-
-		linac1 = self.ui.linac1.findChildren(QVBoxLayout)
-		for cryomodules in linac1:
-			cmLabel = cryomodules.itemAt(0).widget()	# cryo number pydmLabel 
-			cmTemplateRepeater = cryomodules.itemAt(1).widget()	# templateRepeater of 8 cavities
+		for linacTemplateRepeater in repeaters:
+			print(linacTemplateRepeater.accessibleName())
+			linac = linacTemplateRepeater.findChildren(QVBoxLayout)
 			
-			if "cryomoduleName" in cmLabel.accessibleName():
-				cavityList = cmTemplateRepeater.findChildren(QHBoxLayout)
+			for cryomodules in linac:
+				cmLabel = cryomodules.itemAt(0).widget()	# cryo number pydmLabel 
+				cmTemplateRepeater = cryomodules.itemAt(1).widget()	# templateRepeater of 8 cavities
+				
+				if "cryomoduleName" in cmLabel.accessibleName():
+					cavityList = cmTemplateRepeater.findChildren(QHBoxLayout)
 
-				for i, cavity in enumerate(cavityList):
-					cavityWidgetContainer = cavity.itemAt(0).widget()
-					childWidgetsList = cavityWidgetContainer.findChildren(QObject)
-					for childWidget in childWidgetsList:
-						if "TLC" in childWidget.accessibleName():
-							cavityTLClabel = childWidget
-						elif "cavityNumber" in childWidget.accessibleName():
-							cavityNumberlabel = childWidget
-						elif "square" in childWidget.accessibleName():
-							squareShape = childWidget
-						elif "polygon" in childWidget.accessibleName():
-							polygonShape = childWidget
-						else:
-							print("ERROR in cavity QWidget container")
+					for i, cavity in enumerate(cavityList):
+						cavityWidgetContainer = cavity.itemAt(0).widget()
+						childWidgetsList = cavityWidgetContainer.findChildren(QObject)
+						
+						for childWidget in childWidgetsList:
+							if "TLC" in childWidget.accessibleName():
+								cavityTLClabel = childWidget
+							elif "cavityNumber" in childWidget.accessibleName():
+								cavityNumberlabel = childWidget
+							elif "square" in childWidget.accessibleName():
+								squareShape = childWidget
+							elif "polygon" in childWidget.accessibleName():
+								polygonShape = childWidget
+							else:
+								print("ERROR in cavity QWidget container")
 							
-					statusPVstring = "ACCL:{LINAC}:{CRYOMODULE_NUM}{CAVITY}0:CUDSEVR".format(LINAC = self.ui.L1Blabel.text(),
+						statusPVstring = "ACCL:{LINAC}:{CRYOMODULE_NUM}{CAVITY}0:CUDSEVR".format(LINAC = linacTemplateRepeater.accessibleName(),
 																			CRYOMODULE_NUM = cmLabel.text(),
 																			CAVITY = cavityNumberlabel.text())
-					statusPV = PV(statusPVstring)
-					print(statusPVstring, statusPV.value)
+						statusPV = PV(statusPVstring)
 					
-					# This line is meant to initialize the cavity colors and shapes when first launched
-					self.Severitycallback(polygonShape, squareShape, cavityTLClabel, cavityNumberlabel, statusPV.value)
+						# This line is meant to initialize the cavity colors and shapes when first launched
+						self.Severitycallback(polygonShape, squareShape, cavityTLClabel, cavityNumberlabel, statusPV.value)
 					
-					#.add_callback is called when statusPV changes value
-					statusPV.add_callback(partial(self.Severitycallback, polygonShape, squareShape,
+						#.add_callback is called when statusPV changes value
+						statusPV.add_callback(partial(self.Severitycallback, polygonShape, squareShape,
 										cavityTLClabel, cavityNumberlabel))
-	
+		
 
 	# Updates shape and label depending on pv value
 	def Severitycallback(self, shape, square, TLCLabel, CavNumLabel, value, **kw):

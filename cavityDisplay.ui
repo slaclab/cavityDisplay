@@ -69,6 +69,9 @@
            <property name="toolTip">
             <string/>
            </property>
+           <property name="accessibleName">
+            <string>L0B</string>
+           </property>
            <property name="layoutType" stdset="0">
             <enum>PyDMTemplateRepeater::Horizontal</enum>
            </property>
@@ -142,6 +145,9 @@
            <property name="toolTip">
             <string/>
            </property>
+           <property name="accessibleName">
+            <string>L1B</string>
+           </property>
            <property name="layoutType" stdset="0">
             <enum>PyDMTemplateRepeater::Horizontal</enum>
            </property>
@@ -208,6 +214,9 @@
            </property>
            <property name="toolTip">
             <string/>
+           </property>
+           <property name="accessibleName">
+            <string>L2B</string>
            </property>
            <property name="layoutType" stdset="0">
             <enum>PyDMTemplateRepeater::Horizontal</enum>
@@ -284,6 +293,9 @@
          <property name="toolTip">
           <string/>
          </property>
+         <property name="accessibleName">
+          <string>L3B</string>
+         </property>
          <property name="layoutType" stdset="0">
           <enum>PyDMTemplateRepeater::Horizontal</enum>
          </property>
@@ -296,7 +308,7 @@
         </widget>
        </item>
        <item row="0" column="0" colspan="2">
-        <widget class="PyDMLabel" name="L3Label">
+        <widget class="PyDMLabel" name="L3Blabel">
          <property name="font">
           <font>
            <pointsize>28</pointsize>

@@ -74,22 +74,26 @@ class cavityDisplay(Display):
 					#print("ACCL:{LINAC}:{CRYOMODULE_NUM}{CAVITY}0:CUDSEVR".format(LINAC = self.ui.L1Blabel.text(),
 					#														CRYOMODULE_NUM = cmLabel.text(),
 					#														CAVITY = cavityNumberlabel.text()))
-					#statusPVString = "ACCL:{LINAC}:{CRYOMODULE_NUM}{CAVITY}0:CUDSEVR".format(LINAC = self.ui.L1Blabel.text(),
-																			#CRYOMODULE_NUM = cmLabel.text(),
-																			#CAVITY = cavityNumberlabel.text()))
-					#statusPV = PV(statusPVstring)
-					#print(statusPV.value)
-					pvAlarmStatusTest = pvList[pvCounter].value
-					self.callback(polygonShape, squareShape, cavityTLClabel, cavityNumberlabel, pvAlarmStatusTest)
+					statusPVstring = "ACCL:{LINAC}:{CRYOMODULE_NUM}{CAVITY}0:CUDSEVR".format(LINAC = self.ui.L1Blabel.text(),
+																			CRYOMODULE_NUM = cmLabel.text(),
+																			CAVITY = cavityNumberlabel.text())
+					statusPV = PV(statusPVstring)
+					print(statusPVstring, statusPV.value)
+					#pvAlarmStatusTest = pvList[pvCounter].value
+					
+					# This line is meant to initialize the cavity colors and shapes when first launched
+					self.Severitycallback(polygonShape, squareShape, cavityTLClabel, cavityNumberlabel, statusPV.value)
 					
 					#.add_callback is called when PV in pvList changes
-					pvList[pvCounter].add_callback(partial(self.callback, polygonShape, squareShape,
+					statusPV.add_callback(partial(self.Severitycallback, polygonShape, squareShape,
 										cavityTLClabel, cavityNumberlabel))
+					#pvList[pvCounter].add_callback(partial(self.callback, polygonShape, squareShape,
+					#					cavityTLClabel, cavityNumberlabel))
 					pvCounter = pvCounter + 1
 
 
 	# Updates shape and label depending on pv value
-	def callback(self, shape, square, TLCLabel, CavNumLabel, value, **kw):
+	def Severitycallback(self, shape, square, TLCLabel, CavNumLabel, value, **kw):
 		# changeFillColor(fillColor[severity])
 		# changeBorderColor(borderColor[severity])
 		if value<0:

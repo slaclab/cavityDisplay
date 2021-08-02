@@ -96,7 +96,7 @@ class cavityDisplay(Display):
 		else:
 			# Make it purple
 			self.makeItTransparent(square)
-			self.changeShapeColor(shape, self.purple, self.neonPurpleBorder, border = Qt.DotLine, numPoints=6)
+			self.changeShapeColor(shape, self.purple, self.neonPurpleBorder, border = Qt.DotLine, numPoints=20)
 			TLCLabel.setStyleSheet(self.blackText)
 			CavNumLabel.setStyleSheet(self.transparentLabel)
 

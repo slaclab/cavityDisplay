@@ -30,14 +30,22 @@ class cavityDisplay(Display):
 		
 
 		# These print statements helped me figure out what QObjects were located at each index
-		'''		
-		cryomodules = self.ui.linac1.findChildren(QVBoxLayout)
-		for index, items in enumerate(cryomodules):
+		'''	
+		Cryomodules = self.ui.linac1.findChildren(QVBoxLayout)
+		for index, items in enumerate(Cryomodules):
 			print index, items.itemAt(0).widget(), items.itemAt(1).widget(), items.itemAt(2), items.itemAt(3)
-
 		'''
-
 		
+		LINAC1_label = self.ui.L1Blabel.text()
+		print(LINAC1_label)
+		
+		LINAC2_label = self.ui.L2Blabel.text()
+		print(LINAC2_label)
+		
+		LINAC3_label = self.ui.L3Blabel.text()
+		print(LINAC3_label)
+
+
 		linac1 = self.ui.linac1.findChildren(QVBoxLayout)
 		for cryomodules in linac1:
 			cmLabel = cryomodules.itemAt(0).widget()	# cryo number pydmLabel 
@@ -73,7 +81,7 @@ class cavityDisplay(Display):
 					#.add_callback is called when statusPV changes value
 					statusPV.add_callback(partial(self.Severitycallback, polygonShape, squareShape,
 										cavityTLClabel, cavityNumberlabel))
-
+	
 
 	# Updates shape and label depending on pv value
 	def Severitycallback(self, shape, square, TLCLabel, CavNumLabel, value, **kw):

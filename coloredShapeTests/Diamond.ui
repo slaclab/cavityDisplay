@@ -48,13 +48,22 @@
    <property name="toolTip">
     <string/>
    </property>
+   <property name="brush" stdset="0">
+    <brush brushstyle="SolidPattern">
+     <color alpha="255">
+      <red>209</red>
+      <green>203</green>
+      <blue>255</blue>
+     </color>
+    </brush>
+   </property>
    <property name="penStyle" stdset="0">
     <enum>Qt::DotLine</enum>
    </property>
    <property name="penColor" stdset="0">
     <color>
-     <red>255</red>
-     <green>255</green>
+     <red>170</red>
+     <green>85</green>
      <blue>255</blue>
     </color>
    </property>

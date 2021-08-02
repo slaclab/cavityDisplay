@@ -48,7 +48,7 @@
           <x>0</x>
           <y>0</y>
           <width>184</width>
-          <height>1001</height>
+          <height>1036</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="formLayout_2">
@@ -68,6 +68,9 @@
            </property>
            <property name="toolTip">
             <string/>
+           </property>
+           <property name="layoutType" stdset="0">
+            <enum>PyDMTemplateRepeater::Horizontal</enum>
            </property>
            <property name="templateFilename" stdset="0">
             <string>cryomodule.ui</string>
@@ -123,8 +126,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>542</width>
-          <height>1001</height>
+          <width>534</width>
+          <height>1036</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="formLayout_3">
@@ -190,8 +193,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>216</width>
-          <height>1001</height>
+          <width>224</width>
+          <height>1036</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="formLayout_4">
@@ -266,7 +269,7 @@
         <x>0</x>
         <y>0</y>
         <width>980</width>
-        <height>1001</height>
+        <height>1036</height>
        </rect>
       </property>
       <layout class="QFormLayout" name="formLayout">

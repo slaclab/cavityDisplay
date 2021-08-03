@@ -49,12 +49,9 @@ class cavityDisplay(Display):
 						childWidgetsList = cavityWidgetContainer.findChildren(QObject)
 						
 						for childWidget in childWidgetsList:
-							if "TLC" in childWidget.accessibleName():
-								cavityTLClabel = childWidget
-							elif "cavityNumber" in childWidget.accessibleName():
+							if "cavityLabel" in childWidget.accessibleName():
 								cavityNumberlabel = childWidget
-							elif "square" in childWidget.accessibleName():
-								squareShape = childWidget
+								cavityNumberlabel.setStyleSheet("background-color: rgba(0,0,0,0)")
 							elif "polygon" in childWidget.accessibleName():
 								polygonShape = childWidget
 							else:
@@ -66,61 +63,37 @@ class cavityDisplay(Display):
 						statusPV = PV(statusPVstring)
 					
 						# This line is meant to initialize the cavity colors and shapes when first launched
-						self.Severitycallback(polygonShape, squareShape, cavityTLClabel, cavityNumberlabel, statusPV.value)
+						self.Severitycallback(polygonShape, cavityNumberlabel, statusPV.value)
 					
 						#.add_callback is called when statusPV changes value
-						statusPV.add_callback(partial(self.Severitycallback, polygonShape, squareShape,
-										cavityTLClabel, cavityNumberlabel))
+						statusPV.add_callback(partial(self.Severitycallback, polygonShape,
+										cavityNumberlabel))
 		
 
 	# Updates shape and label depending on pv value
-	def Severitycallback(self, shape, square, TLCLabel, CavNumLabel, value, **kw):
+	def Severitycallback(self, shape, CavNumLabel, value, **kw):
 		if value==0:
 			# Make it green
-			self.changeSquareColor(square, self.green, self.neonGreenBorder)
-			self.makeItTransparent(shape)
-			TLCLabel.setStyleSheet(self.transparentLabel)
-			CavNumLabel.setStyleSheet(self.blackText)
+			self.changeShapeColor(shape, self.green, self.neonGreenBorder, border=Qt.SolidLine, numPoints=4, rotation=45)
 		elif value==1:
 			# Make it yellow
-			self.makeItTransparent(square)
-			self.changeShapeColor(shape, self.yellow, self.neonYellowBorder, border=Qt.DotLine, numPoints=4)
-			TLCLabel.setStyleSheet(self.blackText)
-			CavNumLabel.setStyleSheet(self.transparentLabel)
+			self.changeShapeColor(shape, self.yellow, self.neonYellowBorder, border=Qt.DotLine, numPoints=4,rotation=0)
 		elif value==2:
 			# Make it red
-			self.makeItTransparent(square)
-			self.changeShapeColor(shape, self.red, self.neonRedBorder, border = Qt.DotLine, numPoints=6)
-			TLCLabel.setStyleSheet(self.blackText)
-			CavNumLabel.setStyleSheet(self.transparentLabel)
+			self.changeShapeColor(shape, self.red, self.neonRedBorder, border = Qt.DotLine, numPoints=6,rotation=0)
 		else:
 			# Make it purple
-			self.makeItTransparent(square)
-			self.changeShapeColor(shape, self.purple, self.neonPurpleBorder, border = Qt.DotLine, numPoints=20)
-			TLCLabel.setStyleSheet(self.blackText)
-			CavNumLabel.setStyleSheet(self.transparentLabel)
+			self.changeShapeColor(shape, self.purple, self.neonPurpleBorder, border = Qt.DotLine, numPoints=20,rotation=0)
 
 
 	# Change PyDMDrawingPolygon color	
-	def changeShapeColor(self, shape, fillColor, borderColor, border, numPoints):	
+	def changeShapeColor(self, shape, fillColor, borderColor, border, numPoints,rotation):	
 		shape.brush.setColor(fillColor)
 		shape.penColor = borderColor
 		shape.numberOfPoints = numPoints
 		shape.penStyle = border
+		shape.rotation = rotation
 		shape.update()
-	
-	# Change PyDMDrawingRectangle color
-	def changeSquareColor(self, square, fillColor, borderColor):
-		square.brush.setColor(fillColor)
-		square.penColor = borderColor
-		square.update()
-	
-	# Make PyDMDrawingRectangle or Polygon transparent via alpha = 0 in rgba	
-	def makeItTransparent(self, cavShape):
-		cavShape.setStyleSheet(self.clearBackground)
-		cavShape.brush.setColor(self.transparentColor)
-		cavShape.penColor = self.transparentColor
-		cavShape.update()
 
 
 	# Define all colors to be used in GUI
@@ -137,10 +110,5 @@ class cavityDisplay(Display):
 		self.purple = QColor(209,203,255)
 		self.neonPurpleBorder = QColor(170,85,255)
 		
-		self.blackText = "color: rgba(0,0,0,255); background-color: rgba(0,0,0,0)"
-		self.transparentLabel = "color: rgba(0,0,0,0); background-color: rgba(0,0,0,0)"
-		
-		self.transparentColor = QColor(0,0,0,0)
-		self.clearBackground = "background-color: rgba(0,0,0,0)"
 		
 

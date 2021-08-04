@@ -12,7 +12,9 @@ from pydm.widgets import PyDMDrawingRectangle, PyDMLabel, PyDMTemplateRepeater
 from pydm.widgets.drawing import PyDMDrawingPolygon
 from functools import partial
 from epics import PV
+
 from constants import shapeParameterDict
+from scLinac import LINACS
 
 
 
@@ -35,47 +37,46 @@ class cavityDisplay(Display):
                      self.ui.linac2,
                      self.ui.linac3]  # type: List[PyDMTemplateRepeater]
         
-        for linacTemplateRepeater in repeaters:
-            print(linacTemplateRepeater.accessibleName())
+        for index, linacTemplateRepeater in enumerate(repeaters):
+            linacObject = LINACS[index]
+            print(linacObject.name)
             linac = linacTemplateRepeater.findChildren(QVBoxLayout)
             
             for cryomodules in linac:
                 cmLabel = cryomodules.itemAt(0).widget()    # cryo number pydmLabel 
                 cmTemplateRepeater = cryomodules.itemAt(1).widget()    # templateRepeater of 8 cavities
+            
+                cryomoduleObject = linacObject.cryomodules[cmLabel.text()]
                 
-                if "cryomoduleName" in cmLabel.accessibleName():
-                    cavityList = cmTemplateRepeater.findChildren(QHBoxLayout)
-
-                    for i, cavity in enumerate(cavityList):
-                        cavityWidgetContainer = cavity.itemAt(0).widget()
-                        childWidgetsList = cavityWidgetContainer.findChildren(QObject)
-                        
-                        for childWidget in childWidgetsList:
-                            if "cavityLabel" in childWidget.accessibleName():
-                                cavityNumberlabel = childWidget
-                                cavityNumberlabel.setStyleSheet("background-color: rgba(0,0,0,0)")
-                            elif "polygon" in childWidget.accessibleName():
-                                polygonShape = childWidget
-                            else:
-                                print("ERROR in cavity QWidget container")
-                        
-                        pvPrefix = "ACCL:{LINAC}:{CRYOMODULE_NUM}{CAVITY}0:".format(
-                                    LINAC = linacTemplateRepeater.accessibleName(),
-                                    CRYOMODULE_NUM = cmLabel.text(),
-                                    CAVITY = cavityNumberlabel.text())
-                        
-                        severityPV = PV(pvPrefix + "CUDSEVR")
-                        statusPV = PV(pvPrefix + "CUDSTATUS")
+                cavityList = cmTemplateRepeater.findChildren(QHBoxLayout)
+                
+                for cavity in cavityList:
+                    cavityWidgetContainer = cavity.itemAt(0).widget()
+                    childWidgetsList = cavityWidgetContainer.findChildren(QObject)
                     
-                        # This line is meant to initialize the cavity colors and shapes when first launched
-                        self.severityCallback(polygonShape, severityPV.value)
-                        self.statusCallback(cavityNumberlabel, statusPV.value)
+                    for childWidget in childWidgetsList:
+                        if "cavityLabel" in childWidget.accessibleName():
+                            cavityNumberlabel = childWidget
+                            cavityNumberlabel.setStyleSheet("background-color: rgba(0,0,0,0)")
+                        elif "polygon" in childWidget.accessibleName():
+                            polygonShape = childWidget
+                        else:
+                            print("ERROR in cavity QWidget container")
                     
-                        #.add_callback is called when severityPV changes value
-                        severityPV.add_callback(partial(self.severityCallback, polygonShape))
-                        
-                        #.add_callback is called when statusPV changes value
-                        statusPV.add_callback(partial(self.statusCallback, cavityNumberlabel))
+                    cavityObject = cryomoduleObject.cavities[int(cavityNumberlabel.text())]
+                    
+                    severityPV = PV(cavityObject.pvPrefix + "CUDSEVR")
+                    statusPV = PV(cavityObject.pvPrefix + "CUDSTATUS")
+                
+                    # This line is meant to initialize the cavity colors and shapes when first launched
+                    self.severityCallback(polygonShape, severityPV.value)
+                    self.statusCallback(cavityNumberlabel, statusPV.value)
+                
+                    #.add_callback is called when severityPV changes value
+                    severityPV.add_callback(partial(self.severityCallback, polygonShape))
+                    
+                    #.add_callback is called when statusPV changes value
+                    statusPV.add_callback(partial(self.statusCallback, cavityNumberlabel))
                         
                         
         

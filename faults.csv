@@ -1,39 +1,39 @@
-H Group,Order,Name,"Per Cavity, Rack, or CM",PV Name <cavity> ~ ACCL:L3B:1710 <cm> ~ ACCL:L3B:1700,Ok value,Fault Value,TLC,Y/R,Short description for display help
-0,1,Any of the PVs needed by the display are offline,CAV,"Code needs to check that it gets a response to caget request for all PVs, if any fail caget or return INVALID status, put up this TLC",,,INV,R,Invalid: one of the PVs necessary is not responding to caget or has INVALID status
-1,1,Awaiting Run Up: Station needs attention from LLRF/SRF groups before can be used. A status set and cleared by experts. ,CAV,(to be created),,,ARU,R,Awaiting Run Up: Cavity is ready to be commissioned by experts but not ready to be used to accelerate beam
-1,2,Maintenance (Station is known to be bad and awaiting attention from experts),CAV,(to be created),,,MNT,R,Maintenance: Cavity is known to be bad and needs attention from experts
-1,3,Hardware Initialization (a.k.a. rack checkout) needs to be run,RACK,(to be created),,,HWI,R,Hardware Initialization needs to be run. Don't trust current values.
-1,4,Parked,CAV,(to be created),,,PKD,G,Cavity is tuned off frequency so it doesn’t affect the beam.
-2,1,Check phase: if something is done to the system that makes 0 phase no longer knowable and ops need to re-gold. A status set and cleared by experts ,CAV,(to be created),,,CKP,R,Check Phase: Cavity phase is in an indeterminate state and needs to be measured with the beam before being usable
-3,0,NIRP or other individual SSA interlocks like PPS,CAV,,,,,R,
-3,1,SSA Permit,CAV,<cavity>:SSA_LTCH,0,Not 0,SSP,R,SSA permit to turn on faulted
-3,2,SSA Faulted,CAV,<cavity>:SSA:AlarmSummary.SEVR,Not 2,2,SSA,R,SSA not on
-3,3,LLRF has shifted the frequency,CAV,<cavity>:FREQ_OFFSET.SEVR,0,Not 0,FRO,R,LLRF Frequency is offset from nominal - look at PV severity
-3,4,"He Level, and He Pressure are summed into the Cryo Summary Interlock in the Resonance/Interlock Chassis",RACK,<cm>:CRYOSUMA_LTCH,0,Not 0,CSI ,R,"CM Cryo Summary (He pressure, He Level, and CP Ready) faulted"
-,,,,<cm>:CRYOSUMB_LTCH,,,,,
-4,1,Resonance/Interlock Link (cryo summary and items 4-8 summed here),CAV,<cavity>:RESLINK_LTCH,0,Not 0,RES,R,"Resonance/ Interlock Summary (Cryo Summary, beamline vacuum, coupler vacuum, coupler temps, and stepper temps) faulted"
-4,2,FPGA PLL Lock,CAV,<cavity>:PLL_FLT,0,Not 0,FPG,R,
-4,3,EPICS IOC Watchdog,CAV,<cavity>:IOCWDOG_LTCH,0,Not 0,IOC,R,
-4,4,Beamline Vacuum,RACK,<cm>:BMLNVACA_LTCH,0,Not 0,BLV,R,Beamline Vacuum too high
-,,,,<cm>:BMLNVACB_LTCH,,,,,
-4,5,Coupler Vacuum ,RACK,<cm>:CPLRVACA_LTCH,0,Not 0,CPV,R,Coupler manifold vacuum too high
-,,,,<cm>:CPLRVACB_LTCH,,,,,
-4,6,Coupler Temperature 1,CAV,<cavity>:CPLRTEMP1_LTCH,0,Not 0,CP1,R,Temperature sensor on the top of the coupler indicates high temp.
-4,7,Coupler Temperature 2,CAV,<cavity>:CPLRTEMP2_LTCH,0,Not 0,CP2,R,Temperature sensor on the bottom of the coupler indicates high temp.
-4,8,Stepper Temperature,CAV,<cavity>:STEPTEMP_LTCH,0,Not 0,STT,R,Temperature sensor on cavity tuner stepper motor out of tolerance.
-4,9,Quench,CAV,<cavity>:QUENCH_LTCH,0,Not 0,QCH,R,LLRF system detected a cavity quench
-4,10,Interlock Summary Fault,CAV,<cavity>:RFPERMIT,1,Not 1,,R,Latched cavity interlock summary fault
-4,11,Hardware summary status for piezo ,CAV,(to be created),,,PZT,R,
-4,12,Hardware summary status for stepper,CAV,(to be created),,,STP,Y,
-5,1,Cavity Characterization needs to be run ,CAV,(to be created),,,CVC,R,"Due to changes in the LLRF system, the cavity characterization needs to be run."
-5,2,Cavity Calibration required,CAV,<cavity>:CAV:CALSUM,0,Not 0,CAL,R,Cavity Calibration needed before use
-5,3,RF (not) Ready for Beam,CAV,<cavity>:RFREADYFORBEAM,1,Not 1,RFR  ,R,RF not ready for beam: mode is not SELAP and/or RF is off
-6,1,Piezo feedback not on,CAV,<cavity>:PZT:MODECTRL,1,Not 1,PZF,R,Piezo Feedback is not on
-6,2,Piezo feedback indicating problem,CAV,(to be created),,,PZO,R,Piezo Feedback is indicating a problem
-7,1,Amplitude feedback of measured gradient is too low,CAV,<cavity>:AMPFB_SUM,0,Not 0,AFB,R,The feedback maintaining the amplitude is unable to keep the amplitude within tolerance. (Must be checked after RFREADYFORBEAM)
-7,2,Phase feedback shows phase out of tolerance,CAV,<cavity>:PHAFB_SUM,0,Not 0,PFB ,R,The feedback maintaining the phase is unable to keep the phase within tolerance. (Must be checked after RFREADYFORBEAM)
-7,3,Summary of the feedback errors,CAV,<cavity>:FB_SUM,0,Not 0,FBS (FBS?)  ,R,The feedback is unable to keep either phase or amplitude within tolerance. (Must be checked after RFREADYFORBEAM)
-8,1,Amplitude Jitter,CAV,(to be created),,,AMJ,Y,(maybe not needed)
-8,2,Phase Jitter ,CAV,(to be created),,,PHJ,Y,(maybe not needed)
-8,3,"Any statuses from the cryo instrumentation list for specific cavities (vs CM as a whole)? Heater, HOM coupler clamp temps, including Helium level and pressure",CAV,,,,CCR,Y/R,"If these turn yellow, put some warning up on the display"
+H Group,Order,Name,"Per Cavity, Rack, or CM",PV Name <cavity> ~ ACCL:L3B:1710 <cm> ~ ACCL:L3B:1700,Ok value,Fault Value,TLC,Severity,Short description for display help
+0,1,Any of the PVs needed by the display are offline,CAV,"Code needs to check that it gets a response to caget request for all PVs, if any fail caget or return INVALID status, put up this TLC",,,INV,2,Invalid: one of the PVs necessary is not responding to caget or has INVALID status
+1,1,Awaiting Run Up: Station needs attention from LLRF/SRF groups before can be used. A status set and cleared by experts. ,CAV,(to be created),,,ARU,2,Awaiting Run Up: Cavity is ready to be commissioned by experts but not ready to be used to accelerate beam
+1,2,Maintenance (Station is known to be bad and awaiting attention from experts),CAV,(to be created),,,MNT,2,Maintenance: Cavity is known to be bad and needs attention from experts
+1,3,Hardware Initialization (a.k.a. rack checkout) needs to be run,RACK,(to be created),,,HWI,2,Hardware Initialization needs to be run. Don't trust current values.
+1,4,Parked,CAV,(to be created),,,PKD,0,Cavity is tuned off frequency so it doesn’t affect the beam.
+2,1,Check phase: if something is done to the system that makes 0 phase no longer knowable and ops need to re-gold. A status set and cleared by experts ,CAV,(to be created),,,CKP,2,Check Phase: Cavity phase is in an indeterminate state and needs to be measured with the beam before being usable
+3,0,NIRP or other individual SSA interlocks like PPS,CAV,,,,,2,
+3,1,SSA Permit,CAV,<cavity>:SSA_LTCH,0,Not 0,SSP,2,SSA permit to turn on faulted
+3,2,SSA Faulted,CAV,<cavity>:SSA:AlarmSummary.SEVR,Not 2,2,SSA,2,SSA not on
+3,3,LLRF has shifted the frequency,CAV,<cavity>:FREQ_OFFSET.SEVR,0,Not 0,FRO,2,LLRF Frequency is offset from nominal - look at PV severity
+3,4,"He Level, and He Pressure are summed into the Cryo Summary Interlock in the Resonance/Interlock Chassis",RACK,<cm>:CRYOSUMA_LTCH,0,Not 0,CSI,2,"CM Cryo Summary (He pressure, He Level, and CP Ready) faulted"
+,4,"He Level, and He Pressure are summed into the Cryo Summary Interlock in the Resonance/Interlock Chassis",RACK,<cm>:CRYOSUMB_LTCH,0,Not 0,CSI,2,"CM Cryo Summary (He pressure, He Level, and CP Ready) faulted"
+4,1,Resonance/Interlock Link (cryo summary and items 4-8 summed here),CAV,<cavity>:RESLINK_LTCH,0,Not 0,RES,2,"Resonance/ Interlock Summary (Cryo Summary, beamline vacuum, coupler vacuum, coupler temps, and stepper temps) faulted"
+4,2,FPGA PLL Lock,CAV,<cavity>:PLL_FLT,0,Not 0,FPG,2,
+4,3,EPICS IOC Watchdog,CAV,<cavity>:IOCWDOG_LTCH,0,Not 0,IOC,2,
+4,4,Beamline Vacuum,RACK,<cm>:BMLNVACA_LTCH,0,Not 0,BLV,2,Beamline Vacuum too high
+,4,Beamline Vacuum,RACK,<cm>:BMLNVACB_LTCH,0,Not 0,BLV,2,Beamline Vacuum too high
+4,5,Coupler Vacuum ,RACK,<cm>:CPLRVACA_LTCH,0,Not 0,CPV,2,Coupler manifold vacuum too high
+,5,Coupler Vacuum ,RACK,<cm>:CPLRVACB_LTCH,0,Not 0,CPV,2,Coupler manifold vacuum too high
+4,6,Coupler Temperature 1,CAV,<cavity>:CPLRTEMP1_LTCH,0,Not 0,CP1,2,Temperature sensor on the top of the coupler indicates high temp.
+4,7,Coupler Temperature 2,CAV,<cavity>:CPLRTEMP2_LTCH,0,Not 0,CP2,2,Temperature sensor on the bottom of the coupler indicates high temp.
+4,8,Stepper Temperature,CAV,<cavity>:STEPTEMP_LTCH,0,Not 0,STT,2,Temperature sensor on cavity tuner stepper motor out of tolerance.
+4,9,Quench,CAV,<cavity>:QUENCH_LTCH,0,Not 0,QCH,2,LLRF system detected a cavity quench
+4,10,Interlock Summary Fault,CAV,<cavity>:RFPERMIT,1,Not 1,,2,Latched cavity interlock summary fault
+4,11,Hardware summary status for piezo ,CAV,(to be created),,,PZT,2,
+4,12,Hardware summary status for stepper,CAV,(to be created),,,STP,1,
+5,1,Cavity Characterization needs to be run ,CAV,(to be created),,,CVC,2,"Due to changes in the LLRF system, the cavity characterization needs to be run."
+5,2,Cavity Calibration required,CAV,<cavity>:CAV:CALSUM,0,Not 0,CAL,2,Cavity Calibration needed before use
+5,3,RF (not) Ready for Beam,CAV,<cavity>:RFREADYFORBEAM,1,Not 1,RFR,2,RF not ready for beam: mode is not SELAP and/or RF is off
+6,1,Piezo feedback not on,CAV,<cavity>:PZT:MODECTRL,1,Not 1,PZF,2,Piezo Feedback is not on
+6,2,Piezo feedback indicating problem,CAV,(to be created),,,PZO,2,Piezo Feedback is indicating a problem
+7,1,Amplitude feedback of measured gradient is too low,CAV,<cavity>:AMPFB_SUM,0,Not 0,AFB,2,The feedback maintaining the amplitude is unable to keep the amplitude within tolerance. (Must be checked after RFREADYFORBEAM)
+7,2,Phase feedback shows phase out of tolerance,CAV,<cavity>:PHAFB_SUM,0,Not 0,PFB,2,The feedback maintaining the phase is unable to keep the phase within tolerance. (Must be checked after RFREADYFORBEAM)
+7,3,Summary of the feedback errors,CAV,<cavity>:FB_SUM,0,Not 0,FBS (FBS?),2,The feedback is unable to keep either phase or amplitude within tolerance. (Must be checked after RFREADYFORBEAM)
+8,1,Amplitude Jitter,CAV,(to be created),,,AMJ,1,(maybe not needed)
+8,2,Phase Jitter ,CAV,(to be created),,,PHJ,1,(maybe not needed)
+8,3,"Any statuses from the cryo instrumentation list for specific cavities (vs CM as a whole)? Heater, HOM coupler clamp temps, including Helium level and pressure",CAV,,,,CCR,1/2,"If these turn yellow, put some warning up on the display"
 8,4,"Any analog instrumentation that feeds an interlock if it turns yellow, show it, including Helium level and pressure",CM,,,,,,

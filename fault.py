@@ -1,4 +1,4 @@
-from csv import reader
+from csv import reader, DictReader
 import pandas as pd
 
 
@@ -20,25 +20,11 @@ class Fault:
     def writeToPVs(self):
         # if faulted, write tlc to CUDSTATUS pv and severity to CUDSEVR pv
         pass
-'''
-csvRowList = []
-faults = []
-csvReader = reader(open("faults.csv"))
-header = next(csvReader)
-print(header)
 
-for row in csvReader:
-    # print(row)
-    csvRowList.append(row)
-    #faults.append(Fault(row,csvReader.line_num))
-'''
 
-dataFrame = pd.read_csv('faults.csv')
-pd.set_option('display.max_colwidth', -1)
-
-for tlc, colorSeverity, rank in zip(dataFrame['TLC'][1:], dataFrame['Severity'][1:], dataFrame['Order'][1:]):
-    Fault(tlc, colorSeverity, rank)
-
+csvFile = DictReader(open("faults.csv"))
+for row in csvFile:
+	fault = Fault(row["Three Letter Code"], row["Severity"], csvFile.line_num)
 
 
 

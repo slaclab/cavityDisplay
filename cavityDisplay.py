@@ -13,7 +13,7 @@ from pydm.widgets.drawing import PyDMDrawingPolygon
 from functools import partial
 from epics import PV
 
-from constants import shapeParameterDict
+from constants import shapeParameterDict, DISPLAY_LINACS
 from scLinac import LINACS
 
 
@@ -38,7 +38,7 @@ class cavityDisplay(Display):
                      self.ui.linac3]  # type: List[PyDMTemplateRepeater]
         
         for index, linacTemplateRepeater in enumerate(repeaters):
-            linacObject = LINACS[index]
+            linacObject = DISPLAY_LINACS["L{INDEX}B".format(INDEX=index)]
             print(linacObject.name)
             linac = linacTemplateRepeater.findChildren(QVBoxLayout)
             

@@ -1,12 +1,9 @@
 from fault import *
-from scLinac import LINACS
+from scLinac import LINACS, Cavity, Linac
+from constants import STATUS_SUFFIX, SEVERITY_SUFFIX, DISPLAY_LINACS
+from epics import PV
 
-for linac in LINACS:
-    for _, cryomodule in linac.cryomodules.items():
-        for _, cavity in cryomodule.cavities.items():
-            # cavity.addThread(updateStatus)
-            # cavity.launchThread
-            pass
+
 
 
 def updateStatus():
@@ -16,3 +13,24 @@ def updateStatus():
                 fault.writeToPVs()
                 break
 
+class displayCavity(Cavity):
+    def __init__(self):
+        super(displayCavity, self).__init__()
+        self.statusPV = PV(self.pvPrefix + STATUS_SUFFIX)
+        self.severityPV = PV(self.pvPrefix + SEVERITY_SUFFIX)
+
+    def runThroughFaults(self):
+        while True:
+            for fault in faults:
+                if fault.isFaulted(self):
+                    self.statusPV.put(fault.tlc)
+                    self.severityPV.put(fault.severity)
+                    break
+
+#cavity = LINACS[1].cryomodules["H2"].cavities[1]
+#cavity = DISPLAY_LINACS[1].cryomodules["H2"]
+#for fault in faults:
+    #print(fault.suffix + ": " + str(fault.isFaulted(cavity)))
+    #print(fault.isFaulted(cavity))
+    
+print (DISPLAY_LINACS[1].cryomodules["H2"])

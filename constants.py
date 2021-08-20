@@ -1,4 +1,5 @@
 from PyQt5.QtGui import QColor
+from scLinac import LINACS, Linac, Cavity
 
 greenFillColor = QColor(201,255,203)
 neonGreenBorderColor = QColor(46,248,10)
@@ -27,3 +28,12 @@ shapeParameterDict = {0: ShapeParameters(greenFillColor, neonGreenBorderColor,
                                          6, 0),
                       3: ShapeParameters(purpleFillColor, neonPurpleBorderColor,
                                          20, 0)}
+                                         
+STATUS_SUFFIX = "CUDSTATUS"
+SEVERITY_SUFFIX = "CUDSEVR"
+
+DISPLAY_LINACS = []
+for name, cryomoduleList in LINACS.items():
+    #print(name, cryomoduleList)
+    DISPLAY_LINACS.append(Linac(name, cryomoduleList, Cavity))
+

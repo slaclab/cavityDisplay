@@ -38,7 +38,7 @@ class cavityDisplay(Display):
                      self.ui.linac3]  # type: List[PyDMTemplateRepeater]
         
         for index, linacTemplateRepeater in enumerate(repeaters):
-            linacObject = DISPLAY_LINACS["L{INDEX}B".format(INDEX=index)]
+            linacObject = DISPLAY_LINACS[index]
             print(linacObject.name)
             linac = linacTemplateRepeater.findChildren(QVBoxLayout)
             

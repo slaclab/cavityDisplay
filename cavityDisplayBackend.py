@@ -27,10 +27,7 @@ class displayCavity(Cavity):
                     self.severityPV.put(fault.severity)
                     break
 
-#cavity = LINACS[1].cryomodules["H2"].cavities[1]
-#cavity = DISPLAY_LINACS[1].cryomodules["H2"]
-#for fault in faults:
-    #print(fault.suffix + ": " + str(fault.isFaulted(cavity)))
-    #print(fault.isFaulted(cavity))
-    
-print (DISPLAY_LINACS[1].cryomodules["H2"])
+cavity = DISPLAY_LINACS[1].cryomodules["H2"].cavities[1]
+for fault in faults:
+    print(fault.suffix + ": " + str(fault.isFaulted(cavity)))
+

@@ -3,6 +3,10 @@ import pandas as pd
 from scLinac import LINACS, Cavity
 from epics import PV
 
+class PvInvalid(Exception):
+    def __init__(self, message):
+        super().__init__(message)
+
 class Fault:
     def __init__(self, tlc, severity, rank, level, suffix, okValue, faultValue):
         self.tlc = tlc
@@ -15,12 +19,19 @@ class Fault:
 
     def __gt__(self, other):
         return self.rank > other.rank
+        
+    def isConnected(self, cavity):
+        pass
 
-    def isFaulted(self, cavity=Cavity):
+    def isFaulted(self, cavity):
         # This will come from columns D-G
         # aka Cav/rack/cm, PV, Ok value, fault value
-        pv = PV(cavity.pvPrefix + self.suffix)
+        pvString = cavity.pvPrefix + self.suffix
+        pv = PV(pvString)
+        if not pv.get():
+            raise pvInvalid("{PV} invalid".format(PV=pvString))
         if self.okValue:
+
             return (pv.get() != self.okValue)
             
         elif self.faultValue:

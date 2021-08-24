@@ -1,6 +1,6 @@
 from PyQt5.QtGui import QColor
 from scLinac import LINACS, Linac, Cavity
-from fault import faults
+from fault import faults, PvInvalid
 from epics import PV
 
 greenFillColor = QColor(201,255,203)
@@ -34,29 +34,41 @@ shapeParameterDict = {0: ShapeParameters(greenFillColor, neonGreenBorderColor,
 STATUS_SUFFIX = "CUDSTATUS"
 SEVERITY_SUFFIX = "CUDSEVR"
 
+
 class DisplayCavity(Cavity, object):
     def __init__(self, cavityNum, rackObject):
         super(DisplayCavity, self).__init__(cavityNum, rackObject)
-        self.statusPV = PV(self.pvPrefix + STATUS_SUFFIX)
-        self.severityPV = PV(self.pvPrefix + SEVERITY_SUFFIX)
+        self.statusPV = self.pvPrefix + STATUS_SUFFIX
+        self.severityPV = self.pvPrefix + SEVERITY_SUFFIX
 
-    def runThroughFaults(self):
-        while True:
-            for fault in faults:
-                try:                               
-                    if fault.isFaulted(self):
-                        self.statusPV.put(fault.tlc)
-                        self.severityPV.put(fault.severity)
-                        break
-                    self.statusPV.put(self.number)
-                    self.severityPV.put(0)
-                except PvInvalid:
-                    self.statusPV.put("INV")
-                    self.severityPV.put(3)     
+    def runThroughFaults(self, caputDict):
+        #self.statusPV.put(str(self.number))
+        #self.severityPV.put(0)
+        
+        caputDict.statusNames.append(self.statusPV)
+        caputDict.severityNames.append(self.severityPV)
+        for fault in faults:
+            try:                               
+                if fault.isFaulted(self):
+                    caputDict.statusValues.append(fault.tlc)
+                    caputDict.severityValues.append(fault.severity)
+                    #self.statusPV.put(fault.tlc)
+                    #self.severityPV.put(fault.severity)
+                    break
+                caputDict.statusValues.append(str(self.number))
+                caputDict.severityValues.append(0)
+                #self.statusPV.put(str(self.number))
+                #self.severityPV.put(0)
+            except PvInvalid as e:
+                print(e)
+                caputDict.statusValues.append("INV")
+                caputDict.severityValues.append(3)
+                #self.statusPV.put("INV")
+                #self.severityPV.put(3)
+                break
 
 DISPLAY_LINACS = []
 for name, cryomoduleList in LINACS.items():
-    #print(name, cryomoduleList)
     DISPLAY_LINACS.append(Linac(name, cryomoduleList, DisplayCavity))
     
 

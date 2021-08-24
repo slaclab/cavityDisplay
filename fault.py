@@ -5,7 +5,7 @@ from epics import PV
 
 class PvInvalid(Exception):
     def __init__(self, message):
-        super().__init__(message)
+        super(PvInvalid, self).__init__(message)
 
 class Fault:
     def __init__(self, tlc, severity, rank, level, suffix, okValue, faultValue):
@@ -28,14 +28,14 @@ class Fault:
         # aka Cav/rack/cm, PV, Ok value, fault value
         pvString = cavity.pvPrefix + self.suffix
         pv = PV(pvString)
-        if not pv.get():
-            raise pvInvalid("{PV} invalid".format(PV=pvString))
-        if self.okValue:
+        if pv.status == None:
+            raise PvInvalid("{PV} invalid".format(PV=pvString))
 
-            return (pv.get() != self.okValue)
+        if self.okValue:
+            return (pv.value != self.okValue)
             
         elif self.faultValue:
-            return (pv.get() == self.faultValue)
+            return (pv.value == self.faultValue)
         
         else:
             raise("Weird state, oh no")

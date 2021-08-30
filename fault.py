@@ -23,19 +23,16 @@ class Fault:
     def isConnected(self, cavity):
         pass
 
-    def isFaulted(self, cavity):
-        # This will come from columns D-G
-        # aka Cav/rack/cm, PV, Ok value, fault value
-        pvString = cavity.pvPrefix + self.suffix
-        pv = PV(pvString)
-        if pv.status == None:
-            raise PvInvalid("{PV} invalid".format(PV=pvString))
+    def isFaulted(self, faultPV):
 
-        if self.okValue:
-            return (pv.value != self.okValue)
+        if faultPV.status == None:
+            raise PvInvalid(faultPV)
+        
+        if self.okValue:            
+            return (faultPV.value != self.okValue)
             
         elif self.faultValue:
-            return (pv.value == self.faultValue)
+            return (faultPV.value == self.faultValue)
         
         else:
             raise("Weird state, oh no")
@@ -50,8 +47,8 @@ csvFile.next()
 for row in csvFile:
     if row["PV Suffix"] and row["Level"]=="CAV":
         faults.append(Fault(row["Three Letter Code"], row["Severity"], 
-	                        csvFile.line_num, row["Level"], row["PV Suffix"],
-	                        row["OK If Equal To"], row["Faulted If Equal To"]))
+                      csvFile.line_num, row["Level"], row["PV Suffix"],
+                      row["OK If Equal To"], row["Faulted If Equal To"]))
 
 
 

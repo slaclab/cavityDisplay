@@ -25,8 +25,7 @@ class cavityDisplay(Display):
         
     def __init__(self, parent = None, args = None):
         super(cavityDisplay, self).__init__(parent=parent,args=args)
-
-        # What's this for again???????             
+   
         self.ui.linac0.loadWhenShown = False
         self.ui.linac1.loadWhenShown = False
         self.ui.linac2.loadWhenShown = False    

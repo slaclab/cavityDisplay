@@ -1,7 +1,9 @@
 from csv import reader, DictReader
-import pandas as pd
-from scLinac import LINACS, Cavity
 from epics import PV
+
+import sys
+sys.path.insert(0, '..')
+from scLinac import LINACS, Cavity
 
 class PvInvalid(Exception):
     def __init__(self, message):

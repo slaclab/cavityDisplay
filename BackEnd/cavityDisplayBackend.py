@@ -1,9 +1,11 @@
 from fault import *
-from scLinac import LINACS, Cavity, Linac
-from constants import STATUS_SUFFIX, SEVERITY_SUFFIX, DISPLAY_LINACS, BATCH
+from backEnd_constants import STATUS_SUFFIX, SEVERITY_SUFFIX, DISPLAY_LINACS, BATCH
 from epics import PV, caput_many
 from time import time
 
+import sys
+sys.path.insert(0, '..')
+from scLinac import LINACS, Cavity, Linac
 
 
 class DisplayValues:

@@ -12,10 +12,12 @@ from pydm.widgets import PyDMDrawingRectangle, PyDMLabel, PyDMTemplateRepeater
 from pydm.widgets.drawing import PyDMDrawingPolygon
 from functools import partial
 from epics import PV
+from frontEnd_constants import shapeParameterDict
 
-from constants import shapeParameterDict, DISPLAY_LINACS
-from scLinac import LINACS
-
+import sys
+sys.path.insert(0, '..')
+from scLinac import LINAC_OBJECTS
+from constants import STATUS_SUFFIX, SEVERITY_SUFFIX
 
 
 class cavityDisplay(Display):
@@ -37,7 +39,7 @@ class cavityDisplay(Display):
                      self.ui.linac3]  # type: List[PyDMTemplateRepeater]
         
         for index, linacTemplateRepeater in enumerate(repeaters):
-            linacObject = DISPLAY_LINACS[index]
+            linacObject = LINAC_OBJECTS[index]
             print(linacObject.name)
             linac = linacTemplateRepeater.findChildren(QVBoxLayout)
             
@@ -64,8 +66,8 @@ class cavityDisplay(Display):
                     
                     cavityObject = cryomoduleObject.cavities[int(cavityNumberlabel.text())]
                     
-                    severityPV = PV(cavityObject.pvPrefix + "CUDSEVR")
-                    statusPV = PV(cavityObject.pvPrefix + "CUDSTATUS")
+                    severityPV = PV(cavityObject.pvPrefix + SEVERITY_SUFFIX)
+                    statusPV = PV(cavityObject.pvPrefix + STATUS_SUFFIX)
                 
                     # This line is meant to initialize the cavity colors and shapes when first launched
                     self.severityCallback(polygonShape, severityPV.value)

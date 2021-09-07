@@ -7,3 +7,4 @@ class TestShape(Display):
         cavityWidget = CavityWidget()
         cavityWidget.cavityText = "new custom text here"
         self.ui.gridLayout.addWidget(cavityWidget)
+        self.update()

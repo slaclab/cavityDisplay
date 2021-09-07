@@ -72,7 +72,7 @@ class DisplayCavity(Cavity, object):
                         lastFault = fault
                         break
                 except PvInvalid as e:
-                    #print(e)
+                    print(e)
                     isOkay = False
                     invalid = True
                     break

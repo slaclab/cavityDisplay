@@ -82,11 +82,11 @@ class cavityDisplay(Display):
 
     # Updates shape and label depending on pv value
     def severityCallback(self, shape, value, **kw):
-        self.changeShapeColor(shape, shapeParameterDict[value] if value in shapeParameterDict else shapeParameterDict[3])
+        self.changeShape(shape, shapeParameterDict[value] if value in shapeParameterDict else shapeParameterDict[3])
 
 
     # Change PyDMDrawingPolygon color    
-    def changeShapeColor(self, shape, shapeParameterObject):    
+    def changeShape(self, shape, shapeParameterObject):    
         shape.brush.setColor(shapeParameterObject.fillColor)
         shape.penColor = shapeParameterObject.borderColor
         shape.numberOfPoints = shapeParameterObject.numPoints

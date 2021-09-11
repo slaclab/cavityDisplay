@@ -13,6 +13,7 @@ from pydm.widgets.drawing import PyDMDrawingPolygon
 from functools import partial
 from epics import PV
 from frontEnd_constants import shapeParameterDict
+from cavityWidget import CavityWidget
 
 import sys
 sys.path.insert(0, '..')
@@ -46,56 +47,44 @@ class cavityDisplay(Display):
             for cryomodules in linac:
                 cmLabel = cryomodules.itemAt(0).widget()    # cryo number pydmLabel 
                 cmTemplateRepeater = cryomodules.itemAt(1).widget()    # templateRepeater of 8 cavities
-            
+                
                 cryomoduleObject = linacObject.cryomodules[cmLabel.text()]
                 
-                cavityList = cmTemplateRepeater.findChildren(QHBoxLayout)
+                cavityList = cmTemplateRepeater.findChildren(CavityWidget)
                 
                 for cavity in cavityList:
-                    cavityWidgetContainer = cavity.itemAt(0).widget()
-                    childWidgetsList = cavityWidgetContainer.findChildren(QObject)
-                    
-                    for childWidget in childWidgetsList:
-                        if "cavityLabel" in childWidget.accessibleName():
-                            cavityNumberlabel = childWidget
-                            cavityNumberlabel.setStyleSheet("background-color: rgba(0,0,0,0)")
-                        elif "polygon" in childWidget.accessibleName():
-                            polygonShape = childWidget
-                        else:
-                            print("ERROR in cavity QWidget container")
-                    
-                    cavityObject = cryomoduleObject.cavities[int(cavityNumberlabel.text())]
+                    #cavity = cavity.widget()
+                    cavityObject = cryomoduleObject.cavities[int(cavity.cavityText)]
                     
                     severityPV = PV(cavityObject.pvPrefix + SEVERITY_SUFFIX)
                     statusPV = PV(cavityObject.pvPrefix + STATUS_SUFFIX)
                 
                     # This line is meant to initialize the cavity colors and shapes when first launched
-                    self.severityCallback(polygonShape, severityPV.value)
-                    self.statusCallback(cavityNumberlabel, statusPV.value)
+                    self.severityCallback(cavity, severityPV.value)
+                    self.statusCallback(cavity, statusPV.value)
                 
                     #.add_callback is called when severityPV changes value
-                    severityPV.add_callback(partial(self.severityCallback, polygonShape))
+                    severityPV.add_callback(partial(self.severityCallback, cavity))
                     
                     #.add_callback is called when statusPV changes value
-                    statusPV.add_callback(partial(self.statusCallback, cavityNumberlabel))
+                    statusPV.add_callback(partial(self.statusCallback, cavity))
                         
                         
         
-
     # Updates shape and label depending on pv value
-    def severityCallback(self, shape, value, **kw):
-        self.changeShape(shape, shapeParameterDict[value] if value in shapeParameterDict else shapeParameterDict[3])
+    def severityCallback(self, cavity_widget, value, **kw):
+        self.changeShape(cavity_widget, shapeParameterDict[value] if value in shapeParameterDict else shapeParameterDict[3])
 
 
     # Change PyDMDrawingPolygon color    
-    def changeShape(self, shape, shapeParameterObject):    
-        shape.brush.setColor(shapeParameterObject.fillColor)
-        shape.penColor = shapeParameterObject.borderColor
-        shape.numberOfPoints = shapeParameterObject.numPoints
-        shape.rotation = shapeParameterObject.rotation
-        shape.update()
+    def changeShape(self, cavity_widget, shapeParameterObject):    
+        cavity_widget.brush.setColor(shapeParameterObject.fillColor)
+        cavity_widget.penColor = shapeParameterObject.borderColor
+        cavity_widget.numberOfPoints = shapeParameterObject.numPoints
+        cavity_widget.rotation = shapeParameterObject.rotation
+        cavity_widget.update()
         
      # Change cavity label
-    def statusCallback(self, cavityLabel, value, **kw):
-        cavityLabel.setText(value)
+    def statusCallback(self, cavity_widget, value, **kw):
+        cavity_widget.cavityText = value
 

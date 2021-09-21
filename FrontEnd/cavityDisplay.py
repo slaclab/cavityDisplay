@@ -42,7 +42,25 @@ class cavityDisplay(Display):
         for index, linacTemplateRepeater in enumerate(repeaters):
             linacObject = LINAC_OBJECTS[index]
             print(linacObject.name)
-            linac = linacTemplateRepeater.findChildren(QVBoxLayout)
+            
+            # linac = linacTemplateRepeater.findChildren(QVBoxLayout)
+            
+            
+            # PyDMLabel = linac[0].itemAt(0).widget()
+            # PyDMTemplateRepeater = linac[0].itemAt(1).widget()
+            
+            #print("linac: ", linac[0].itemAt(0).widget(), linac[0].itemAt(1).widget(), linac[0].itemAt(2))
+            #print("linac: ", linac[1].itemAt(0).widget(), linac[1].itemAt(1).widget(), linac[1].itemAt(2).widget())
+            
+            #if linac[0].itemAt(1).widget().accesibleName == "${cryoTemplate}":
+            #    linac = linac[0].itemAt(0).widget()
+            
+            linac = []
+            vertLayoutList = linacTemplateRepeater.findChildren(QVBoxLayout)
+            for index, vertLayout in enumerate(vertLayoutList):
+                if vertLayout.itemAt(1).widget().accessibleName == "${cryoTemplate}":
+                    templateRepeater = vertLayout.itemAt(1).widget() #templateRepeater
+                    linac.append(templateRepeater)
             
             for cryomodules in linac:
                 cmLabel = cryomodules.itemAt(0).widget()    # cryo number pydmLabel 

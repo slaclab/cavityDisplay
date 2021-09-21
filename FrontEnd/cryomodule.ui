@@ -70,7 +70,7 @@
       <enum>QFrame::NoFrame</enum>
      </property>
      <property name="layoutType" stdset="0">
-      <enum>PyDMTemplateRepeater::Flow</enum>
+      <enum>PyDMTemplateRepeater::Vertical</enum>
      </property>
      <property name="layoutSpacing" stdset="0">
       <number>1</number>

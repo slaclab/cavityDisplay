@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1157</width>
-    <height>1026</height>
+    <width>1014</width>
+    <height>2250</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,21 +15,23 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <property name="leftMargin">
-      <number>0</number>
-     </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <layout class="QVBoxLayout" name="vertLayoutL0B">
+      <layout class="QVBoxLayout" name="L0BverticalLayout">
        <item>
-        <widget class="QLabel" name="L0BLabel">
+        <widget class="PyDMLabel" name="L0Blabel">
          <property name="font">
           <font>
-           <family>Sans Serif</family>
-           <pointsize>16</pointsize>
+           <pointsize>28</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
+         </property>
+         <property name="toolTip">
+          <string/>
+         </property>
+         <property name="accessibleName">
+          <string>L0B</string>
          </property>
          <property name="text">
           <string>L0B</string>
@@ -42,22 +44,25 @@
        <item>
         <widget class="PyDMTemplateRepeater" name="linac0">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="maximumSize">
+          <size>
+           <width>300</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="toolTip">
           <string/>
          </property>
+         <property name="accessibleName">
+          <string>L0B</string>
+         </property>
          <property name="layoutType" stdset="0">
           <enum>PyDMTemplateRepeater::Horizontal</enum>
-         </property>
-         <property name="layoutSpacing" stdset="0">
-          <number>0</number>
-         </property>
-         <property name="countShownInDesigner" stdset="0">
-          <number>1</number>
          </property>
          <property name="templateFilename" stdset="0">
           <string>cryomodule.ui</string>
@@ -65,22 +70,26 @@
          <property name="dataSource" stdset="0">
           <string>linac0.json</string>
          </property>
-         <zorder>verticalLayoutWidget_3</zorder>
         </widget>
        </item>
       </layout>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="vertLayoutL1B">
+      <layout class="QVBoxLayout" name="L1BverticalLayout">
        <item>
-        <widget class="QLabel" name="L1BLabel">
+        <widget class="PyDMLabel" name="L1Blabel">
          <property name="font">
           <font>
-           <family>Sans Serif</family>
-           <pointsize>16</pointsize>
+           <pointsize>28</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
+         </property>
+         <property name="toolTip">
+          <string/>
+         </property>
+         <property name="accessibleName">
+          <string>L1B</string>
          </property>
          <property name="text">
           <string>L1B</string>
@@ -93,7 +102,7 @@
        <item>
         <widget class="PyDMTemplateRepeater" name="linac1">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -101,11 +110,11 @@
          <property name="toolTip">
           <string/>
          </property>
+         <property name="accessibleName">
+          <string>L1B</string>
+         </property>
          <property name="layoutType" stdset="0">
           <enum>PyDMTemplateRepeater::Horizontal</enum>
-         </property>
-         <property name="layoutSpacing" stdset="0">
-          <number>0</number>
          </property>
          <property name="countShownInDesigner" stdset="0">
           <number>4</number>
@@ -116,21 +125,27 @@
          <property name="dataSource" stdset="0">
           <string>linac1.json</string>
          </property>
+         <zorder>verticalLayoutWidget</zorder>
         </widget>
        </item>
       </layout>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="vertLayoutL2B">
+      <layout class="QVBoxLayout" name="L2BverticalLayout">
        <item>
-        <widget class="QLabel" name="L2BLabel">
+        <widget class="PyDMLabel" name="L2Blabel">
          <property name="font">
           <font>
-           <family>Sans Serif</family>
-           <pointsize>16</pointsize>
+           <pointsize>28</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
+         </property>
+         <property name="toolTip">
+          <string/>
+         </property>
+         <property name="accessibleName">
+          <string>L2B</string>
          </property>
          <property name="text">
           <string>L2B</string>
@@ -143,7 +158,7 @@
        <item>
         <widget class="PyDMTemplateRepeater" name="linac2">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -151,14 +166,11 @@
          <property name="toolTip">
           <string/>
          </property>
+         <property name="accessibleName">
+          <string>L2B</string>
+         </property>
          <property name="layoutType" stdset="0">
           <enum>PyDMTemplateRepeater::Horizontal</enum>
-         </property>
-         <property name="layoutSpacing" stdset="0">
-          <number>0</number>
-         </property>
-         <property name="countShownInDesigner" stdset="0">
-          <number>4</number>
          </property>
          <property name="templateFilename" stdset="0">
           <string>cryomodule.ui</string>
@@ -166,66 +178,68 @@
          <property name="dataSource" stdset="0">
           <string>linac2.json</string>
          </property>
-         <zorder>verticalLayoutWidget_5</zorder>
         </widget>
        </item>
       </layout>
      </item>
     </layout>
    </item>
+   <item row="6" column="0">
+    <widget class="PyDMTemplateRepeater" name="linac3">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="accessibleName">
+      <string>L3B</string>
+     </property>
+     <property name="layoutType" stdset="0">
+      <enum>PyDMTemplateRepeater::Horizontal</enum>
+     </property>
+     <property name="templateFilename" stdset="0">
+      <string>cryomodule.ui</string>
+     </property>
+     <property name="dataSource" stdset="0">
+      <string>linac3.json</string>
+     </property>
+    </widget>
+   </item>
    <item row="2" column="0">
-    <layout class="QVBoxLayout" name="vertLayoutL3B">
-     <item>
-      <widget class="QLabel" name="L3Blabel">
-       <property name="font">
-        <font>
-         <family>Sans Serif</family>
-         <pointsize>16</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>L3B</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="PyDMTemplateRepeater" name="linac3">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="toolTip">
-        <string/>
-       </property>
-       <property name="layoutType" stdset="0">
-        <enum>PyDMTemplateRepeater::Horizontal</enum>
-       </property>
-       <property name="layoutSpacing" stdset="0">
-        <number>0</number>
-       </property>
-       <property name="countShownInDesigner" stdset="0">
-        <number>9</number>
-       </property>
-       <property name="templateFilename" stdset="0">
-        <string>cryomodule.ui</string>
-       </property>
-       <property name="dataSource" stdset="0">
-        <string>linac3.json</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="PyDMLabel" name="L3Blabel">
+     <property name="font">
+      <font>
+       <pointsize>28</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="accessibleName">
+      <string>L3B</string>
+     </property>
+     <property name="text">
+      <string>L3B</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>PyDMLabel</class>
+   <extends>QLabel</extends>
+   <header>pydm.widgets.label</header>
+  </customwidget>
   <customwidget>
    <class>PyDMTemplateRepeater</class>
    <extends>QFrame</extends>

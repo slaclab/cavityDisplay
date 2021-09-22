@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>456</width>
+    <height>349</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="4" column="0">
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="inputPV2"/>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="inputPV4"/>
+     </item>
+     <item row="7" column="1">
+      <widget class="QLineEdit" name="inputPV7"/>
+     </item>
+     <item row="4" column="0">
+      <widget class="PyDMLabel" name="cav4">
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="text">
+        <string>SIOC:SYS0:ML07:AO014</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QLineEdit" name="inputPV5"/>
+     </item>
+     <item row="8" column="1">
+      <widget class="QLineEdit" name="inputPV8"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="PyDMLabel" name="cav2">
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="text">
+        <string>SIOC:SYS0:ML07:AO012</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="inputPV1"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="PyDMLabel" name="cav1">
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="text">
+        <string>SIOC:SYS0:ML07:AO011</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="inputPV3"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="PyDMLabel" name="cav3">
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="text">
+        <string>SIOC:SYS0:ML07:AO013</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QLineEdit" name="inputPV6"/>
+     </item>
+     <item row="5" column="0">
+      <widget class="PyDMLabel" name="cav5">
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="text">
+        <string>SIOC:SYS0:ML07:AO015</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0">
+      <widget class="PyDMLabel" name="cav7">
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="text">
+        <string>SIOC:SYS0:ML07:AO017</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0">
+      <widget class="PyDMLabel" name="cav8">
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="text">
+        <string>SIOC:SYS0:ML07:AO018</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0">
+      <widget class="PyDMLabel" name="cav6">
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="text">
+        <string>SIOC:SYS0:ML07:AO016</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="PyDMLabel" name="cm2cav2">
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="text">
+        <string>SIOC:SYS0:ML07:AO020</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="PyDMLabel" name="cm2cav1">
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="text">
+        <string>SIOC:SYS0:ML07:AO019</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="2">
+      <widget class="PyDMLabel" name="cm2cav3">
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="text">
+        <string>SIOC:SYS0:ML07:AO020</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="2">
+      <widget class="PyDMLabel" name="cm2cav4">
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="text">
+        <string>SIOC:SYS0:ML07:AO021</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QLineEdit" name="cm2inputPV1"/>
+     </item>
+     <item row="2" column="3">
+      <widget class="QLineEdit" name="cm2inputPV2"/>
+     </item>
+     <item row="3" column="3">
+      <widget class="QLineEdit" name="cm2inputPV3"/>
+     </item>
+     <item row="4" column="3">
+      <widget class="QLineEdit" name="cm2inputPV4"/>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="0">
+    <widget class="PyDMLabel" name="PyDMLabel">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(201, 255, 203);</string>
+     </property>
+     <property name="text">
+      <string>PV &lt; 0        Good</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="PyDMLabel" name="PyDMLabel_2">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 253, 167);</string>
+     </property>
+     <property name="text">
+      <string>PV = 0        Warning</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="PyDMLabel" name="PyDMLabel_3">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 195, 187);</string>
+     </property>
+     <property name="text">
+      <string>PV &gt; 0        Alarm</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PyDMLabel</class>
+   <extends>QLabel</extends>
+   <header>pydm.widgets.label</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

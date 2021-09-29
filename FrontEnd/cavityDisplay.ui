@@ -27,7 +27,7 @@
     <number>6</number>
    </property>
    <item row="1" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,4,12">
      <property name="leftMargin">
       <number>0</number>
      </property>
@@ -37,49 +37,45 @@
         <number>6</number>
        </property>
        <item>
-        <widget class="QLabel" name="L0BLabel">
+        <widget class="QGroupBox" name="groupBox_3">
          <property name="font">
           <font>
-           <family>Sans Serif</family>
-           <pointsize>16</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
+           <pointsize>15</pointsize>
           </font>
          </property>
-         <property name="text">
+         <property name="title">
           <string>L0B</string>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="PyDMTemplateRepeater" name="linac0">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="toolTip">
-          <string/>
-         </property>
-         <property name="layoutType" stdset="0">
-          <enum>PyDMTemplateRepeater::Horizontal</enum>
-         </property>
-         <property name="layoutSpacing" stdset="0">
-          <number>0</number>
-         </property>
-         <property name="countShownInDesigner" stdset="0">
-          <number>1</number>
-         </property>
-         <property name="templateFilename" stdset="0">
-          <string>cryomodule.ui</string>
-         </property>
-         <property name="dataSource" stdset="0">
-          <string>linac0.json</string>
-         </property>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="0" column="0">
+           <widget class="PyDMTemplateRepeater" name="linac0">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="layoutType" stdset="0">
+             <enum>PyDMTemplateRepeater::Horizontal</enum>
+            </property>
+            <property name="layoutSpacing" stdset="0">
+             <number>0</number>
+            </property>
+            <property name="countShownInDesigner" stdset="0">
+             <number>1</number>
+            </property>
+            <property name="templateFilename" stdset="0">
+             <string>cryomodule.ui</string>
+            </property>
+            <property name="dataSource" stdset="0">
+             <string>linac0.json</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
@@ -87,49 +83,45 @@
      <item>
       <layout class="QVBoxLayout" name="vertLayoutL1B">
        <item>
-        <widget class="QLabel" name="L1BLabel">
+        <widget class="QGroupBox" name="groupBox">
          <property name="font">
           <font>
-           <family>Sans Serif</family>
-           <pointsize>16</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
+           <pointsize>15</pointsize>
           </font>
          </property>
-         <property name="text">
+         <property name="title">
           <string>L1B</string>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="PyDMTemplateRepeater" name="linac1">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="toolTip">
-          <string/>
-         </property>
-         <property name="layoutType" stdset="0">
-          <enum>PyDMTemplateRepeater::Horizontal</enum>
-         </property>
-         <property name="layoutSpacing" stdset="0">
-          <number>0</number>
-         </property>
-         <property name="countShownInDesigner" stdset="0">
-          <number>4</number>
-         </property>
-         <property name="templateFilename" stdset="0">
-          <string>cryomodule.ui</string>
-         </property>
-         <property name="dataSource" stdset="0">
-          <string>linac1.json</string>
-         </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
+           <widget class="PyDMTemplateRepeater" name="linac1">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="layoutType" stdset="0">
+             <enum>PyDMTemplateRepeater::Horizontal</enum>
+            </property>
+            <property name="layoutSpacing" stdset="0">
+             <number>0</number>
+            </property>
+            <property name="countShownInDesigner" stdset="0">
+             <number>4</number>
+            </property>
+            <property name="templateFilename" stdset="0">
+             <string>cryomodule.ui</string>
+            </property>
+            <property name="dataSource" stdset="0">
+             <string>linac1.json</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
@@ -137,49 +129,45 @@
      <item>
       <layout class="QVBoxLayout" name="vertLayoutL2B">
        <item>
-        <widget class="QLabel" name="L2BLabel">
+        <widget class="QGroupBox" name="groupBox_2">
          <property name="font">
           <font>
-           <family>Sans Serif</family>
-           <pointsize>16</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
+           <pointsize>15</pointsize>
           </font>
          </property>
-         <property name="text">
+         <property name="title">
           <string>L2B</string>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="PyDMTemplateRepeater" name="linac2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="toolTip">
-          <string/>
-         </property>
-         <property name="layoutType" stdset="0">
-          <enum>PyDMTemplateRepeater::Horizontal</enum>
-         </property>
-         <property name="layoutSpacing" stdset="0">
-          <number>0</number>
-         </property>
-         <property name="countShownInDesigner" stdset="0">
-          <number>4</number>
-         </property>
-         <property name="templateFilename" stdset="0">
-          <string>cryomodule.ui</string>
-         </property>
-         <property name="dataSource" stdset="0">
-          <string>linac2.json</string>
-         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <widget class="PyDMTemplateRepeater" name="linac2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="layoutType" stdset="0">
+             <enum>PyDMTemplateRepeater::Horizontal</enum>
+            </property>
+            <property name="layoutSpacing" stdset="0">
+             <number>0</number>
+            </property>
+            <property name="countShownInDesigner" stdset="0">
+             <number>4</number>
+            </property>
+            <property name="templateFilename" stdset="0">
+             <string>cryomodule.ui</string>
+            </property>
+            <property name="dataSource" stdset="0">
+             <string>linac2.json</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
@@ -189,49 +177,45 @@
    <item row="2" column="0">
     <layout class="QVBoxLayout" name="vertLayoutL3B">
      <item>
-      <widget class="QLabel" name="L3Blabel">
+      <widget class="QGroupBox" name="groupBox_4">
        <property name="font">
         <font>
-         <family>Sans Serif</family>
-         <pointsize>16</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
+         <pointsize>15</pointsize>
         </font>
        </property>
-       <property name="text">
+       <property name="title">
         <string>L3B</string>
        </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="PyDMTemplateRepeater" name="linac3">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="toolTip">
-        <string/>
-       </property>
-       <property name="layoutType" stdset="0">
-        <enum>PyDMTemplateRepeater::Horizontal</enum>
-       </property>
-       <property name="layoutSpacing" stdset="0">
-        <number>0</number>
-       </property>
-       <property name="countShownInDesigner" stdset="0">
-        <number>9</number>
-       </property>
-       <property name="templateFilename" stdset="0">
-        <string>cryomodule.ui</string>
-       </property>
-       <property name="dataSource" stdset="0">
-        <string>linac3.json</string>
-       </property>
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="0" column="0">
+         <widget class="PyDMTemplateRepeater" name="linac3">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string/>
+          </property>
+          <property name="layoutType" stdset="0">
+           <enum>PyDMTemplateRepeater::Horizontal</enum>
+          </property>
+          <property name="layoutSpacing" stdset="0">
+           <number>0</number>
+          </property>
+          <property name="countShownInDesigner" stdset="0">
+           <number>9</number>
+          </property>
+          <property name="templateFilename" stdset="0">
+           <string>cryomodule.ui</string>
+          </property>
+          <property name="dataSource" stdset="0">
+           <string>linac3.json</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </item>
     </layout>

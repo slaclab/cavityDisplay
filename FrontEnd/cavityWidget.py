@@ -3,6 +3,7 @@ from qtpy.QtCore import Property, Qt, QRect
 from PyQt5.QtGui import QColor, QPen, QFont, QFontMetrics
 
 
+
 class CavityWidget(PyDMDrawingPolygon):
     def __init__(self, parent=None, init_channel=None):
         super(CavityWidget, self).__init__(parent, init_channel)
@@ -20,7 +21,8 @@ class CavityWidget(PyDMDrawingPolygon):
     @cavityText.setter
     def cavityText(self, text):
         self._cavityText = text
-        self.update()
+        #self.update()
+
     
     def draw_item(self, painter):
         super(CavityWidget, self).draw_item(painter)
@@ -30,10 +32,10 @@ class CavityWidget(PyDMDrawingPolygon):
         sx = rect.width()/fm.width(self.cavityText)
         sy = rect.height()/fm.height()
         painter.save()
+        #cavity_widget.penColor = QColor(0,0,0)
         painter.translate(rect.center())
         painter.scale(sx, sy)
         painter.translate(-rect.center())
         painter.drawText(rect, Qt.AlignCenter, self.cavityText)
         painter.restore()
-        self.update()
         

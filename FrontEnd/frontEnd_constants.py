@@ -12,6 +12,8 @@ neonRedBorderColor = QColor(255,0,0)
 purpleFillColor = QColor(209,203,255)
 neonPurpleBorderColor = QColor(170,85,255)
 
+blackTextColor = QColor(0,0,0)
+
 class ShapeParameters:
     def __init__(self, fillColor, borderColor, numPoints, rotation):
         self.fillColor = fillColor

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1157</width>
-    <height>1026</height>
+    <height>1090</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,7 +27,10 @@
     <number>6</number>
    </property>
    <item row="1" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,4,12">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,5,15">
+     <property name="spacing">
+      <number>1</number>
+     </property>
      <property name="leftMargin">
       <number>0</number>
      </property>
@@ -37,7 +40,7 @@
         <number>6</number>
        </property>
        <item>
-        <widget class="QGroupBox" name="groupBox_3">
+        <widget class="QGroupBox" name="L0BgroupBox">
          <property name="font">
           <font>
            <pointsize>15</pointsize>
@@ -46,7 +49,22 @@
          <property name="title">
           <string>L0B</string>
          </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
          <layout class="QGridLayout" name="gridLayout_4">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item row="0" column="0">
            <widget class="PyDMTemplateRepeater" name="linac0">
             <property name="sizePolicy">
@@ -83,7 +101,7 @@
      <item>
       <layout class="QVBoxLayout" name="vertLayoutL1B">
        <item>
-        <widget class="QGroupBox" name="groupBox">
+        <widget class="QGroupBox" name="L1BgroupBox">
          <property name="font">
           <font>
            <pointsize>15</pointsize>
@@ -92,7 +110,22 @@
          <property name="title">
           <string>L1B</string>
          </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
          <layout class="QGridLayout" name="gridLayout_2">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item row="0" column="0">
            <widget class="PyDMTemplateRepeater" name="linac1">
             <property name="sizePolicy">
@@ -129,7 +162,7 @@
      <item>
       <layout class="QVBoxLayout" name="vertLayoutL2B">
        <item>
-        <widget class="QGroupBox" name="groupBox_2">
+        <widget class="QGroupBox" name="L2BgroupBox">
          <property name="font">
           <font>
            <pointsize>15</pointsize>
@@ -138,7 +171,22 @@
          <property name="title">
           <string>L2B</string>
          </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
          <layout class="QGridLayout" name="gridLayout_3">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item row="0" column="0">
            <widget class="PyDMTemplateRepeater" name="linac2">
             <property name="sizePolicy">
@@ -150,6 +198,9 @@
             <property name="toolTip">
              <string/>
             </property>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
             <property name="layoutType" stdset="0">
              <enum>PyDMTemplateRepeater::Horizontal</enum>
             </property>
@@ -157,7 +208,7 @@
              <number>0</number>
             </property>
             <property name="countShownInDesigner" stdset="0">
-             <number>4</number>
+             <number>12</number>
             </property>
             <property name="templateFilename" stdset="0">
              <string>cryomodule.ui</string>
@@ -177,7 +228,7 @@
    <item row="2" column="0">
     <layout class="QVBoxLayout" name="vertLayoutL3B">
      <item>
-      <widget class="QGroupBox" name="groupBox_4">
+      <widget class="QGroupBox" name="L3BgroupBox">
        <property name="font">
         <font>
          <pointsize>15</pointsize>
@@ -186,7 +237,22 @@
        <property name="title">
         <string>L3B</string>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
        <layout class="QGridLayout" name="gridLayout_5">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
         <item row="0" column="0">
          <widget class="PyDMTemplateRepeater" name="linac3">
           <property name="sizePolicy">

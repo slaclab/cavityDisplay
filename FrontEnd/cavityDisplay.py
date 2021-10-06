@@ -12,13 +12,15 @@ from pydm.widgets import PyDMDrawingRectangle, PyDMLabel, PyDMTemplateRepeater
 from pydm.widgets.drawing import PyDMDrawingPolygon
 from functools import partial
 from epics import PV
-from frontEnd_constants import shapeParameterDict
+from frontEnd_constants import shapeParameterDict, blackTextColor
 from cavityWidget import CavityWidget
 
 import sys
 sys.path.insert(0, '..')
 from scLinac import LINAC_OBJECTS
 from constants import STATUS_SUFFIX, SEVERITY_SUFFIX
+from threading import Lock
+
 
 
 class cavityDisplay(Display):
@@ -28,7 +30,9 @@ class cavityDisplay(Display):
         
     def __init__(self, parent = None, args = None):
         super(cavityDisplay, self).__init__(parent=parent,args=args)
-   
+
+        self.mutexDictionary = {}
+
         self.ui.linac0.loadWhenShown = False
         self.ui.linac1.loadWhenShown = False
         self.ui.linac2.loadWhenShown = False    
@@ -61,6 +65,7 @@ class cavityDisplay(Display):
                 cavityList = cmTemplateRepeater.findChildren(CavityWidget)
                 
                 for cavity in cavityList:
+                    self.mutexDictionary[cavity] = Lock()
                     cavityObject = cryomoduleObject.cavities[int(cavity.cavityText)]
                     
                     severityPV = PV(cavityObject.pvPrefix + SEVERITY_SUFFIX)
@@ -84,14 +89,17 @@ class cavityDisplay(Display):
 
 
     # Change PyDMDrawingPolygon color    
-    def changeShape(self, cavity_widget, shapeParameterObject):    
-        cavity_widget.brush.setColor(shapeParameterObject.fillColor)
+    def changeShape(self, cavity_widget, shapeParameterObject):
+        self.mutexDictionary[cavity_widget].acquire()
+        cavity_widget.brush.setColor(shapeParameterObject.fillColor)       
         cavity_widget.penColor = shapeParameterObject.borderColor
         cavity_widget.numberOfPoints = shapeParameterObject.numPoints
         cavity_widget.rotation = shapeParameterObject.rotation
-        cavity_widget.update()
+        self.mutexDictionary[cavity_widget].release()
         
-     # Change cavity label
+    # Change cavity label
     def statusCallback(self, cavity_widget, value, **kw):
+        self.mutexDictionary[cavity_widget].acquire()
+        
         cavity_widget.cavityText = value
-
+        self.mutexDictionary[cavity_widget].release()

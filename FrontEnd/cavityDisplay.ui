@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1157</width>
-    <height>1141</height>
+    <height>1104</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -48,6 +48,10 @@
           <font>
            <pointsize>15</pointsize>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(255, 255, 255);</string>
          </property>
          <property name="title">
           <string>L0B</string>
@@ -110,6 +114,10 @@
            <pointsize>15</pointsize>
           </font>
          </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(255, 255, 255);</string>
+         </property>
          <property name="title">
           <string>L1B</string>
          </property>
@@ -170,6 +178,10 @@
           <font>
            <pointsize>15</pointsize>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(255, 255, 255);</string>
          </property>
          <property name="title">
           <string>L2B</string>
@@ -237,6 +249,10 @@
          <pointsize>15</pointsize>
         </font>
        </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(255, 255, 255);</string>
+       </property>
        <property name="title">
         <string>L3B</string>
        </property>
@@ -267,6 +283,9 @@
           <property name="toolTip">
            <string/>
           </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(0, 0, 0);</string>
+          </property>
           <property name="layoutType" stdset="0">
            <enum>PyDMTemplateRepeater::Horizontal</enum>
           </property>
@@ -282,7 +301,6 @@
           <property name="dataSource" stdset="0">
            <string>linac3.json</string>
           </property>
-          <zorder>PyDMDrawingRectangle</zorder>
          </widget>
         </item>
        </layout>

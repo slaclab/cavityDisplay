@@ -13,6 +13,7 @@ purpleFillColor = QColor(209,203,255)
 neonPurpleBorderColor = QColor(170,85,255)
 
 blackTextColor = QColor(0,0,0)
+whiteTextColor = QColor(255,255,255)
 
 class ShapeParameters:
     def __init__(self, fillColor, borderColor, numPoints, rotation):
@@ -22,9 +23,9 @@ class ShapeParameters:
         self.rotation = rotation
 
 shapeParameterDict = {0: ShapeParameters(greenFillColor, neonGreenBorderColor,
-                                         4, 45),
-                      1: ShapeParameters(yellowFillColor, neonYellowBorderColor,
                                          4, 0),
+                      1: ShapeParameters(yellowFillColor, neonYellowBorderColor,
+                                         3, 0),
                       2: ShapeParameters(redFillColor, neonRedBorderColor,
                                          6, 0),
                       3: ShapeParameters(purpleFillColor, neonPurpleBorderColor,

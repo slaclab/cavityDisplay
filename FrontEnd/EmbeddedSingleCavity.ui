@@ -40,6 +40,12 @@
      <property name="toolTip">
       <string/>
      </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(28, 28, 30);</string>
+     </property>
      <property name="cavityText" stdset="0">
       <string>${cavityNumber}</string>
      </property>

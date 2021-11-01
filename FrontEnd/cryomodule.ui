@@ -50,6 +50,9 @@
        <bold>true</bold>
       </font>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 0);</string>
+     </property>
      <property name="text">
       <string>${cryoNum}</string>
      </property>
@@ -68,6 +71,9 @@
      </property>
      <property name="accessibleName">
       <string>${cryoTemplate}</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 0);</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>

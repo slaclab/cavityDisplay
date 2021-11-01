@@ -8,8 +8,8 @@ class CavityWidget(PyDMDrawingPolygon):
     def __init__(self, parent=None, init_channel=None):
         super(CavityWidget, self).__init__(parent, init_channel)
         self._num_points = 4
-        self._cavityText = "TLC"
-        self._pen = QPen(QColor(46,248,10))
+        self._cavityText = "TEXT"
+        self._pen = QPen(QColor(46,248,10)) # GREEN
         self._rotation = 0
         self._brush.setColor(QColor(201,255,203))
         self._pen.setWidth(5.0)
@@ -22,7 +22,7 @@ class CavityWidget(PyDMDrawingPolygon):
     def cavityText(self, text):
         self._cavityText = text
         #self.update()
-
+    
     
     def draw_item(self, painter):
         super(CavityWidget, self).draw_item(painter)

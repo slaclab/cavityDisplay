@@ -37,6 +37,7 @@ class cavityDisplay(Display):
         self.ui.linac1.loadWhenShown = False
         self.ui.linac2.loadWhenShown = False    
         self.ui.linac3.loadWhenShown = False
+                
 
         repeaters = [self.ui.linac0,
                      self.ui.linac1,
@@ -83,10 +84,9 @@ class cavityDisplay(Display):
                         
                         
         
-    # Updates shape and label depending on pv value
+    # Updates shape depending on pv value
     def severityCallback(self, cavity_widget, value, **kw):
         self.changeShape(cavity_widget, shapeParameterDict[value] if value in shapeParameterDict else shapeParameterDict[3])
-
 
     # Change PyDMDrawingPolygon color    
     def changeShape(self, cavity_widget, shapeParameterObject):
@@ -100,6 +100,6 @@ class cavityDisplay(Display):
     # Change cavity label
     def statusCallback(self, cavity_widget, value, **kw):
         self.mutexDictionary[cavity_widget].acquire()
-        
+                
         cavity_widget.cavityText = value
         self.mutexDictionary[cavity_widget].release()

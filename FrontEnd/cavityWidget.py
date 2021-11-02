@@ -14,6 +14,7 @@ class CavityWidget(PyDMDrawingPolygon):
         self._brush.setColor(QColor(201,255,203))
         self._pen.setWidth(5.0)
         
+        
     @Property(str)
     def cavityText(self):
         return self._cavityText
@@ -32,14 +33,14 @@ class CavityWidget(PyDMDrawingPolygon):
         sx = rect.width()/fm.width(self.cavityText)
         sy = rect.height()/fm.height()
         painter.save()
-        #cavity_widget.penColor = QColor(0,0,0)
         painter.translate(rect.center())
         painter.scale(sx, sy)
         painter.translate(-rect.center())
-        originalColor = self._pen_color
-        pen = QPen(QColor(255,255,255))
+        #originalColor = self._pen_color
+        pen = QPen(QColor(255,255,255)) #Text color
         pen.setWidth(5.0)
         painter.setPen(pen)
+        #painter.setFont(QFont("Verdana", 10, QFont.Bold))
         painter.drawText(rect, Qt.AlignCenter, self.cavityText)
         painter.setPen(self._pen)
         painter.restore()

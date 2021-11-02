@@ -44,14 +44,28 @@
        </property>
        <item>
         <widget class="QGroupBox" name="L0BgroupBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <pointsize>15</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(0, 0, 0);
-color: rgb(255, 255, 255);</string>
+          <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(40, 40, 40);</string>
          </property>
          <property name="title">
           <string>L0B</string>
@@ -83,6 +97,9 @@ color: rgb(255, 255, 255);</string>
             <property name="toolTip">
              <string/>
             </property>
+            <property name="frameShape">
+             <enum>QFrame::Box</enum>
+            </property>
             <property name="layoutType" stdset="0">
              <enum>PyDMTemplateRepeater::Horizontal</enum>
             </property>
@@ -112,11 +129,13 @@ color: rgb(255, 255, 255);</string>
          <property name="font">
           <font>
            <pointsize>15</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(0, 0, 0);
-color: rgb(255, 255, 255);</string>
+          <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(40, 40, 40);</string>
          </property>
          <property name="title">
           <string>L1B</string>
@@ -148,6 +167,9 @@ color: rgb(255, 255, 255);</string>
             <property name="toolTip">
              <string/>
             </property>
+            <property name="frameShape">
+             <enum>QFrame::Box</enum>
+            </property>
             <property name="layoutType" stdset="0">
              <enum>PyDMTemplateRepeater::Horizontal</enum>
             </property>
@@ -163,6 +185,7 @@ color: rgb(255, 255, 255);</string>
             <property name="dataSource" stdset="0">
              <string>linac1.json</string>
             </property>
+            <zorder>horizontalSpacer</zorder>
            </widget>
           </item>
          </layout>
@@ -177,11 +200,13 @@ color: rgb(255, 255, 255);</string>
          <property name="font">
           <font>
            <pointsize>15</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(0, 0, 0);
-color: rgb(255, 255, 255);</string>
+          <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(40, 40, 40);</string>
          </property>
          <property name="title">
           <string>L2B</string>
@@ -214,7 +239,7 @@ color: rgb(255, 255, 255);</string>
              <string/>
             </property>
             <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
+             <enum>QFrame::Box</enum>
             </property>
             <property name="layoutType" stdset="0">
              <enum>PyDMTemplateRepeater::Horizontal</enum>
@@ -247,11 +272,13 @@ color: rgb(255, 255, 255);</string>
        <property name="font">
         <font>
          <pointsize>15</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(0, 0, 0);
-color: rgb(255, 255, 255);</string>
+        <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(40, 40, 40);</string>
        </property>
        <property name="title">
         <string>L3B</string>
@@ -283,8 +310,11 @@ color: rgb(255, 255, 255);</string>
           <property name="toolTip">
            <string/>
           </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(0, 0, 0);</string>
+          <property name="frameShape">
+           <enum>QFrame::Box</enum>
+          </property>
+          <property name="lineWidth">
+           <number>1</number>
           </property>
           <property name="layoutType" stdset="0">
            <enum>PyDMTemplateRepeater::Horizontal</enum>

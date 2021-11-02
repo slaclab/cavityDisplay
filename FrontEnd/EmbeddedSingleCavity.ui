@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>98</width>
-    <height>52</height>
+    <width>236</width>
+    <height>101</height>
    </rect>
+  </property>
+  <property name="font">
+   <font>
+    <weight>50</weight>
+    <bold>false</bold>
+   </font>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -33,9 +39,16 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>10</width>
+       <width>50</width>
        <height>10</height>
       </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
      </property>
      <property name="toolTip">
       <string/>
@@ -44,7 +57,7 @@
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(28, 28, 30);</string>
+      <string notr="true">background-color:rgb(40, 40, 40);</string>
      </property>
      <property name="cavityText" stdset="0">
       <string>${cavityNumber}</string>

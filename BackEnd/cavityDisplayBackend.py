@@ -1,5 +1,5 @@
 from fault import *
-from backEnd_constants import STATUS_SUFFIX, SEVERITY_SUFFIX, DISPLAY_LINACS, BATCH
+from backEnd_constants import STATUS_SUFFIX, SEVERITY_SUFFIX, DISPLAY_LINACS
 from epics import PV, caput_many
 from time import time
 
@@ -29,11 +29,11 @@ while True:
         for _, cryomodule in linac.cryomodules.items():
             for _, cavity in cryomodule.cavities.items():
                 cavity.runThroughFaults(displayValues)
-    if BATCH:
-        caput_many(displayValues.statusNames + displayValues.severityNames,
-                   displayValues.statusValues + displayValues.severityValues)
-        #caput_many(displayValues.severityNames, displayValues.severityValues)
-        displayValues.clearLists()
+
+    caput_many(displayValues.statusNames + displayValues.severityNames,
+               displayValues.statusValues + displayValues.severityValues)
+    #caput_many(displayValues.severityNames, displayValues.severityValues)
+    displayValues.clearLists()
     
     print(time()-start)
 

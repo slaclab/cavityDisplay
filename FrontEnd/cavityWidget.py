@@ -9,10 +9,11 @@ class CavityWidget(PyDMDrawingPolygon):
         super(CavityWidget, self).__init__(parent, init_channel)
         self._num_points = 4
         self._cavityText = "TEXT"
-        self._pen = QPen(QColor(46,248,10)) # GREEN
+        self._pen = QPen(QColor(46,248,10)) # Shape's border color
         self._rotation = 0
-        self._brush.setColor(QColor(201,255,203))
+        self._brush.setColor(QColor(201,255,203)) # Shape's fill color
         self._pen.setWidth(5.0)
+        
         
     @Property(str)
     def cavityText(self):
@@ -32,14 +33,14 @@ class CavityWidget(PyDMDrawingPolygon):
         sx = rect.width()/fm.width(self.cavityText)
         sy = rect.height()/fm.height()
         painter.save()
-        #cavity_widget.penColor = QColor(0,0,0)
         painter.translate(rect.center())
         painter.scale(sx, sy)
         painter.translate(-rect.center())
-        originalColor = self._pen_color
-        pen = QPen(QColor(255,255,255))
+        #originalColor = self._pen_color
+        pen = QPen(QColor(240,240,240)) #Text color
         pen.setWidth(5.0)
         painter.setPen(pen)
+        #painter.setFont(QFont("Verdana", 10, QFont.Bold))
         painter.drawText(rect, Qt.AlignCenter, self.cavityText)
         painter.setPen(self._pen)
         painter.restore()

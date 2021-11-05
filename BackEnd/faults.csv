@@ -1,9 +1,9 @@
-Heirarchy Group,Order Within Group,Name,Level,PV Prefix,PV Suffix,OK If Equal To,Faulted If Equal To,Three Letter Code,Severity,Short description for display help
-0,1,Any of the PVs needed by the display are offline,CAV,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,"Code needs to check that it gets a response to caget request for all PVs, if any fail caget or return INVALID status, put up this TLC",,,INV,2,Invalid: one of the PVs necessary is not responding to caget or has INVALID status
+﻿Heirarchy Group,Order Within Group,Name,Level,PV Prefix,PV Suffix,OK If Equal To,Faulted If Equal To,Three Letter Code,Severity,Short description for display help
+,4,Parked,CAV,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,,,,PKD,4,Cavity is tuned off frequency so it doesn’t affect the beam.
+0,1,Any of the PVs needed by the display are offline,CAV,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,"Code needs to check that it gets a response to caget request for all PVs, if any fail caget or return INVALID status, put up this TLC",,,INV,3,Invalid: one of the PVs necessary is not responding to caget or has INVALID status
 1,1,Awaiting Run Up: Station needs attention from LLRF/SRF groups before can be used. A status set and cleared by experts. ,CAV,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,,,,ARU,2,Awaiting Run Up: Cavity is ready to be commissioned by experts but not ready to be used to accelerate beam
 1,2,Maintenance (Station is known to be bad and awaiting attention from experts),CAV,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,,,,MNT,2,Maintenance: Cavity is known to be bad and needs attention from experts
 1,3,Hardware Initialization (a.k.a. rack checkout) needs to be run,RACK,ACCL:{LINAC}:{CRYOMODULE}00,,,,HWI,2,Hardware Initialization needs to be run. Don't trust current values.
-1,4,Parked,CAV,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,,,,PKD,0,Cavity is tuned off frequency so it doesn’t affect the beam.
 2,1,Check phase: if something is done to the system that makes 0 phase no longer knowable and ops need to re-gold. A status set and cleared by experts ,CAV,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,,,,CKP,2,Check Phase: Cavity phase is in an indeterminate state and needs to be measured with the beam before being usable
 3,0,NIRP or other individual SSA interlocks like PPS,CAV,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,,,,,2,
 3,1,SSA Permit,CAV,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,SSA_LTCH,0,,SSP,2,SSA permit to turn on faulted
@@ -36,5 +36,5 @@ Heirarchy Group,Order Within Group,Name,Level,PV Prefix,PV Suffix,OK If Equal To
 7,3,Summary of the feedback errors,CAV,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,FB_SUM,0,,FBS (FBS?),2,The feedback is unable to keep either phase or amplitude within tolerance. (Must be checked after RFREADYFORBEAM)
 8,1,Amplitude Jitter,CAV,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,,,,AMJ,1,(maybe not needed)
 8,2,Phase Jitter ,CAV,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,,,,PHJ,1,(maybe not needed)
-8,3,"Any statuses from the cryo instrumentation list for specific cavities (vs CM as a whole)? Heater, HOM coupler clamp temps, including Helium level and pressure",CAV,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,,,,CCR,1/2,"If these turn yellow, put some warning up on the display"
+8,3,"Any statuses from the cryo instrumentation list for specific cavities (vs CM as a whole)? Heater, HOM coupler clamp temps, including Helium level and pressure",CAV,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,,,,CCR,1 or 2,"If these turn yellow, put some warning up on the display"
 8,4,"Any analog instrumentation that feeds an interlock if it turns yellow, show it, including Helium level and pressure",CM,ACCL:{LINAC}:{CRYOMODULE}00,,,,,,

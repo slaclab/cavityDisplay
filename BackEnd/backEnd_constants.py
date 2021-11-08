@@ -17,7 +17,18 @@ class DisplayCavity(Cavity, object):
         self.faultPVs = []
         for fault in faults:
             # Decided to use timeout of 0.01 seconds after some trial and error
-            self.faultPVs.append((fault, PV(self.pvPrefix + fault.suffix, connection_timeout=0.01)))
+            timeout = 0.01
+            if fault.level == "RACK":
+                if fault.rack != self.rack.rackName:
+                    continue
+                prefix = self.rack.pvPrefix
+            elif fault.level == "CAV":
+                prefix = self.pvPrefix
+            else:
+                prefix = self.cryomodule.pvPrefix
+
+            self.faultPVs.append((fault, PV(prefix + fault.suffix,
+                                            connection_timeout=timeout)))
 
     def runThroughFaults(self, caputDict):
         """
@@ -42,7 +53,7 @@ class DisplayCavity(Cavity, object):
                 break
 
         if isOkay:
-            caputDict.statusValues.append(str(self.number))
+            caputDict.statusValues.append("{num}".format(num=str(self.number)))
             caputDict.severityValues.append(0)
         else:
             if not invalid:
@@ -55,4 +66,4 @@ class DisplayCavity(Cavity, object):
 
 DISPLAY_LINACS = []
 for name, cryomoduleList in LINACS:
-    DISPLAY_LINACS.append(Linac(name, cryomoduleList, DisplayCavity))
+    DISPLAY_LINACS.append(Linac(name, cryomoduleList, cavityClass=DisplayCavity))

@@ -13,11 +13,12 @@ class PvInvalid(Exception):
 
 
 class Fault:
-    def __init__(self, tlc, severity, rank, level, suffix, okValue, faultValue):
+    def __init__(self, tlc, severity, rank, level, suffix, okValue, faultValue, rack):
         self.tlc = tlc
         self.severity = int(severity)
         self.rank = rank
         self.level = level
+        self.rack = rack
         self.suffix = suffix
         self.okValue = float(okValue) if okValue else None
         self.faultValue = float(faultValue) if faultValue else None
@@ -27,9 +28,6 @@ class Fault:
 
     def __gt__(self, other):
         return self.rank > other.rank
-
-    def isConnected(self, cavity):
-        pass
 
     def isFaulted(self, faultPV):
 
@@ -46,16 +44,13 @@ class Fault:
             print(self)
             raise Exception("Weird state, oh no")
 
-    def writeToPVs(self):
-        # if faulted, write tlc to CUDSTATUS pv and severity to CUDSEVR pv
-        pass
-
 
 faults = []
 csvFile = DictReader(open("faults.csv"))
 next(csvFile)
 for row in csvFile:
-    if row["PV Suffix"] and row["Level"] == "CAV":
+    if row["PV Suffix"]:
         faults.append(Fault(row["Three Letter Code"], row["Severity"],
-                            csvFile.line_num, row["Level"], row["PV Suffix"],
-                            row["OK If Equal To"], row["Faulted If Equal To"]))
+                            csvFile.line_num, row["Level"],
+                            row["PV Suffix"], row["OK If Equal To"],
+                            row["Faulted If Equal To"], row["Rack"]))

@@ -1,12 +1,5 @@
-from fault import *
-from backEnd_constants import STATUS_SUFFIX, SEVERITY_SUFFIX, DISPLAY_LINACS
-from epics import PV, caput_many
-from time import time
-
-import sys
-
-sys.path.insert(0, '..')
-from scLinac import LINACS, Cavity, Linac
+from backEnd_constants import DISPLAY_LINACS
+from epics import caput_many
 
 
 class DisplayValues:
@@ -26,14 +19,11 @@ class DisplayValues:
 displayValues = DisplayValues()
 
 while True:
-    start = time()
     for linac in DISPLAY_LINACS:
-        for _, cryomodule in linac.cryomodules.items():
-            for _, cavity in cryomodule.cavities.items():
+        for cryomodule in linac.cryomodules.values():
+            for cavity in cryomodule.cavities.values():
                 cavity.runThroughFaults(displayValues)
 
     caput_many(displayValues.statusNames + displayValues.severityNames,
                displayValues.statusValues + displayValues.severityValues)
     displayValues.clearLists()
-
-    print(time() - start)

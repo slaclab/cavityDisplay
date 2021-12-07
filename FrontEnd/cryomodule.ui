@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>162</width>
+    <width>183</width>
     <height>492</height>
    </rect>
   </property>
@@ -36,29 +36,37 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QLabel" name="label_2">
+    <widget class="PyDMRelatedDisplayButton" name="PyDMRelatedDisplayButton">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="minimumSize">
+      <size>
+       <width>10</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="font">
       <font>
-       <pointsize>16</pointsize>
+       <pointsize>15</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
+     <property name="toolTip">
+      <string/>
+     </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(40,40,40);
-color: rgb(255, 255, 255);</string>
+      <string notr="true">background-color: rgb(35, 35, 35);</string>
      </property>
      <property name="text">
       <string>${cryoNum}</string>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
+     <property name="showIcon" stdset="0">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -96,6 +104,11 @@ color: rgb(255, 255, 255);</string>
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>PyDMRelatedDisplayButton</class>
+   <extends>QPushButton</extends>
+   <header>pydm.widgets.related_display_button</header>
+  </customwidget>
   <customwidget>
    <class>PyDMTemplateRepeater</class>
    <extends>QFrame</extends>

@@ -15,7 +15,7 @@ darkGrayTextColor = QColor(40,40,40)
 whiteTextColor = QColor(250,250,250)
 
 darkPurpleColor = QColor(106,102,212)
-
+alternateToYellow = QColor(223,149,0)
 
 class ShapeParameters:
     def __init__(self, fillColor, borderColor, numPoints, rotation):

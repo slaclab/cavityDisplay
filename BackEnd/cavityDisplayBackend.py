@@ -16,25 +16,11 @@ class DisplayValues:
         self.severityNames*=0
         self.severityValues*=0
         
+while True:
+    start = time()
+    for linac in DISPLAY_LINACS:
+        for cryomodule in linac.cryomodules.values():
+            for cavity in cryomodule.cavities.values():
+                cavity.runThroughFaults()
 
-displayValues = DisplayValues()
-
-
-try:
-    while True:
-        start = time()
-        for linac in DISPLAY_LINACS:
-            for cryomodule in linac.cryomodules.values():
-                for cavity in cryomodule.cavities.values():
-                    cavity.runThroughFaults(displayValues)
-
-        caput_many(displayValues.statusNames + displayValues.severityNames,
-                displayValues.statusValues + displayValues.severityValues)
-
-        displayValues.clearLists()
-
-        print(time() - start)
-        
-except KeyboardInterrupt:
-    print('Interuption! Program will end within the next minute (aka please be patient)')
-    pass
+    print(time() - start)

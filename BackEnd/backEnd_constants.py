@@ -11,8 +11,8 @@ from scLinac import LINACS, Linac, Cavity
 class DisplayCavity(Cavity, object):
     def __init__(self, cavityNum, rackObject):
         super(DisplayCavity, self).__init__(cavityNum, rackObject)
-        self.statusPV = self.pvPrefix + STATUS_SUFFIX
-        self.severityPV = self.pvPrefix + SEVERITY_SUFFIX
+        self.statusPV = PV(self.pvPrefix + STATUS_SUFFIX)
+        self.severityPV = PV(self.pvPrefix + SEVERITY_SUFFIX)
 
         self.faultPVs = []
         for fault in faults:
@@ -30,16 +30,9 @@ class DisplayCavity(Cavity, object):
             self.faultPVs.append((fault, PV(prefix + fault.suffix,
                                             connection_timeout=timeout)))
 
-    def runThroughFaults(self, caputDict):
-        """
-        caputDict.statusValues.append(str(self.number))
-        caputDict.severityValues.append(0)
-        """
+    def runThroughFaults(self):
         isOkay = True
         invalid = False
-
-        caputDict.statusNames.append(self.statusPV)
-        caputDict.severityNames.append(self.severityPV)
 
         for fault, pv in self.faultPVs:
             try:
@@ -53,15 +46,15 @@ class DisplayCavity(Cavity, object):
                 break
 
         if isOkay:
-            caputDict.statusValues.append("{num}".format(num=str(self.number)))
-            caputDict.severityValues.append(0)
+            self.statusPV.put("{num}".format(num=str(self.number)))
+            self.severityPV.put(0)
         else:
             if not invalid:
-                caputDict.statusValues.append(fault.tlc)
-                caputDict.severityValues.append(fault.severity)
+                self.statusPV.put(fault.tlc)
+                self.severityPV.put(fault.severity)
             else:
-                caputDict.statusValues.append("INV")
-                caputDict.severityValues.append(3)
+                self.statusPV.put("INV")
+                self.severityValues.append(3)
 
 
 DISPLAY_LINACS = []

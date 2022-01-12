@@ -1,16 +1,21 @@
 from PyQt5.QtGui import QColor
 
-greenFillColor = QColor(201,255,203)
-neonGreenBorderColor = QColor(46,248,10)
+greenFillColor = QColor(9,141,0)
         
-yellowFillColor = QColor(255,253,167)
-neonYellowBorderColor = QColor(248,228,0)
+yellowFillColor = QColor(244,230,67)
 
-redFillColor = QColor(255,195,187)
-neonRedBorderColor = QColor(255,0,0)
+redFillColor = QColor(150,0,0)
         
-purpleFillColor = QColor(209,203,255)
-neonPurpleBorderColor = QColor(170,85,255)
+purpleFillColor = QColor(131,61,235)
+
+grayFillColor = QColor(127,127,127)
+
+blackTextColor = QColor(0,0,0)
+darkGrayTextColor = QColor(40,40,40)
+whiteTextColor = QColor(250,250,250)
+
+darkPurpleColor = QColor(106,102,212)
+alternateToYellow = QColor(223,149,0)
 
 class ShapeParameters:
     def __init__(self, fillColor, borderColor, numPoints, rotation):
@@ -19,11 +24,13 @@ class ShapeParameters:
         self.numPoints = numPoints
         self.rotation = rotation
 
-shapeParameterDict = {0: ShapeParameters(greenFillColor, neonGreenBorderColor,
-                                         4, 45),
-                      1: ShapeParameters(yellowFillColor, neonYellowBorderColor,
+shapeParameterDict = {0: ShapeParameters(greenFillColor, greenFillColor,
                                          4, 0),
-                      2: ShapeParameters(redFillColor, neonRedBorderColor,
+                      1: ShapeParameters(yellowFillColor, yellowFillColor,
+                                         3, 0),
+                      2: ShapeParameters(redFillColor, redFillColor,
                                          6, 0),
-                      3: ShapeParameters(purpleFillColor, neonPurpleBorderColor,
-                                         20, 0)}
+                      3: ShapeParameters(purpleFillColor, purpleFillColor,
+                                         20, 0),
+                      4: ShapeParameters(grayFillColor, grayFillColor,
+                                         10,0)}

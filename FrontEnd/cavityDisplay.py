@@ -4,10 +4,8 @@ from PyQt5.QtGui import QPainter, QColor, QBrush, QPen
 from PyQt5.QtCore import Qt, QObject
 import epics
 from epics import caget, caput
-from PyQt5.QtWidgets import (QWidgetItem, QCheckBox, QPushButton, QLineEdit,
-                             QGroupBox, QVBoxLayout, QHBoxLayout, QMessageBox, QWidget,
-                             QLabel, QFrame, QComboBox, QRadioButton, QGridLayout,
-                             QColorDialog)
+from PyQt5.QtWidgets import (QWidgetItem, QPushButton, QGroupBox, QVBoxLayout,
+                             QHBoxLayout, QWidget, QLabel, QGridLayout)
 from pydm.widgets import PyDMDrawingRectangle, PyDMLabel, PyDMTemplateRepeater
 from pydm.widgets.drawing import PyDMDrawingPolygon
 from functools import partial
@@ -21,6 +19,7 @@ from scLinac import LINAC_OBJECTS
 from constants import STATUS_SUFFIX, SEVERITY_SUFFIX
 
 
+
 class cavityDisplay(Display):
 
     def ui_filename(self):
@@ -28,11 +27,12 @@ class cavityDisplay(Display):
         
     def __init__(self, parent = None, args = None):
         super(cavityDisplay, self).__init__(parent=parent,args=args)
-   
+
         self.ui.linac0.loadWhenShown = False
         self.ui.linac1.loadWhenShown = False
         self.ui.linac2.loadWhenShown = False    
         self.ui.linac3.loadWhenShown = False
+                
 
         repeaters = [self.ui.linac0,
                      self.ui.linac1,
@@ -78,20 +78,17 @@ class cavityDisplay(Display):
                         
                         
         
-    # Updates shape and label depending on pv value
+    # Updates shape depending on pv value
     def severityCallback(self, cavity_widget, value, **kw):
         self.changeShape(cavity_widget, shapeParameterDict[value] if value in shapeParameterDict else shapeParameterDict[3])
 
-
     # Change PyDMDrawingPolygon color    
-    def changeShape(self, cavity_widget, shapeParameterObject):    
-        cavity_widget.brush.setColor(shapeParameterObject.fillColor)
+    def changeShape(self, cavity_widget, shapeParameterObject):
+        cavity_widget.brush.setColor(shapeParameterObject.fillColor)       
         cavity_widget.penColor = shapeParameterObject.borderColor
         cavity_widget.numberOfPoints = shapeParameterObject.numPoints
         cavity_widget.rotation = shapeParameterObject.rotation
-        cavity_widget.update()
         
-     # Change cavity label
+    # Change cavity label
     def statusCallback(self, cavity_widget, value, **kw):
         cavity_widget.cavityText = value
-

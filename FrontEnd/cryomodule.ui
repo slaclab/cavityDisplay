@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>183</width>
+    <width>480</width>
     <height>492</height>
    </rect>
   </property>
@@ -60,7 +60,8 @@
       <string/>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(35, 35, 35);</string>
+      <string notr="true">background-color: rgb(35, 35, 35); 
+color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
       <string>${cryoNum}</string>
@@ -94,7 +95,7 @@
       <number>8</number>
      </property>
      <property name="templateFilename" stdset="0">
-      <string>EmbeddedSingleCavity.ui</string>
+      <string>cavity.ui</string>
      </property>
      <property name="dataSource" stdset="0">
       <string>cavities.json</string>

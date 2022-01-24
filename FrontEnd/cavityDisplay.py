@@ -6,7 +6,7 @@ import epics
 from epics import caget, caput
 from PyQt5.QtWidgets import (QWidgetItem, QPushButton, QGroupBox, QVBoxLayout,
                              QHBoxLayout, QWidget, QLabel, QGridLayout)
-from pydm.widgets import PyDMDrawingRectangle, PyDMLabel, PyDMTemplateRepeater
+from pydm.widgets import PyDMDrawingRectangle, PyDMLabel, PyDMTemplateRepeater, PyDMEmbeddedDisplay
 from pydm.widgets.drawing import PyDMDrawingPolygon
 from functools import partial
 from epics import PV
@@ -19,34 +19,39 @@ from scLinac import LINAC_OBJECTS
 from constants import STATUS_SUFFIX, SEVERITY_SUFFIX
 
 
-
 class cavityDisplay(Display):
 
     def ui_filename(self):
         return 'cavityDisplay.ui'
-        
+    
+    print("Hi")    
+    
     def __init__(self, parent = None, args = None):
         super(cavityDisplay, self).__init__(parent=parent,args=args)
+    
+        print("Hi 2.0")        
+        embeddedDisplays = [self.ui.L0B,
+                            self.ui.L1B,
+                            self.ui.L2B,
+                            self.ui.L3B] # type: List[PyDMEmbeddedDisplay]
+        print("Yo")
+        for embeddedDisplay in embeddedDisplays:
+            print(embeddedDisplay.children()[0])  # QVBoxLayout
+            print(embeddedDisplay.children()[1].text())    # QLabel
+            
+            print(embeddedDisplay.children()[0].itemAt(0).widget())  #QLabel
 
-        self.ui.linac0.loadWhenShown = False
-        self.ui.linac1.loadWhenShown = False
-        self.ui.linac2.loadWhenShown = False    
-        self.ui.linac3.loadWhenShown = False
-                
-
-        repeaters = [self.ui.linac0,
-                     self.ui.linac1,
-                     self.ui.linac2,
-                     self.ui.linac3]  # type: List[PyDMTemplateRepeater]
-        
-        for index, linacTemplateRepeater in enumerate(repeaters):
-            linacObject = LINAC_OBJECTS[index]
-            print(linacObject.name)                        
+            templateRepeater = embeddedDisplay.findChildren(PyDMTemplateRepeater)
+            print(templateRepeater)
+            templateRepeater.loadWhenShown = False
+            
+            
+            linac = []
+            vertLayoutList = templateRepeater.findChildren(QVBoxLayout)
+                            
             # PyDMLabel = linac[0].itemAt(0).widget()
             # PyDMTemplateRepeater = linac[0].itemAt(1).widget()
             
-            linac = []
-            vertLayoutList = linacTemplateRepeater.findChildren(QVBoxLayout)
             for vertLayout in vertLayoutList:
                 templateRepeater = vertLayout.itemAt(1).widget()
                 if templateRepeater.accessibleName() == "${cryoTemplate}":

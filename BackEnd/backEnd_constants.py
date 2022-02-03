@@ -49,11 +49,10 @@ class DisplayCavity(Cavity, object):
             self.statusPV.put("{num}".format(num=str(self.number)))
             self.severityPV.put(0)
         else:
+            self.statusPV.put(fault.tlc)
             if not invalid:
-                self.statusPV.put(fault.tlc)
                 self.severityPV.put(fault.severity)
             else:
-                self.statusPV.put("INV")
                 self.severityPV.put(3)
 
 

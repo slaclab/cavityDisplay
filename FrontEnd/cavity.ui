@@ -46,6 +46,9 @@
      <property name="toolTip">
       <string/>
      </property>
+     <property name="accessibleName">
+      <string>cavity_widget</string>
+     </property>
      <property name="autoFillBackground">
       <bool>false</bool>
      </property>
@@ -61,6 +64,9 @@
     <widget class="PyDMDrawingLine" name="PyDMDrawingLine">
      <property name="toolTip">
       <string/>
+     </property>
+     <property name="accessibleName">
+      <string>cavity_line</string>
      </property>
      <property name="rules" stdset="0">
       <string>[{&quot;channels&quot;: [{&quot;trigger&quot;: true, &quot;channel&quot;: &quot;ACCL:${linac}:${cryoNum}0${cavityNumber}:SSA:StatusMsg&quot;}], &quot;property&quot;: &quot;Visible&quot;, &quot;expression&quot;: &quot;ch[0]==3&quot;, &quot;name&quot;: &quot;SSA&quot;, &quot;initial_value&quot;: &quot;1&quot;}]</string>

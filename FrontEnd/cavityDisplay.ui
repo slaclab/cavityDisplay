@@ -41,6 +41,9 @@
          <property name="toolTip">
           <string/>
          </property>
+         <property name="accessibleName">
+          <string>cavityDisplay_L0B</string>
+         </property>
          <property name="macros" stdset="0">
           <string>linac=L0B</string>
          </property>
@@ -54,6 +57,9 @@
          <property name="toolTip">
           <string/>
          </property>
+         <property name="accessibleName">
+          <string>cavityDisplay_L1B</string>
+         </property>
          <property name="macros" stdset="0">
           <string>linac=L1B</string>
          </property>
@@ -66,6 +72,9 @@
         <widget class="PyDMEmbeddedDisplay" name="L2B">
          <property name="toolTip">
           <string/>
+         </property>
+         <property name="accessibleName">
+          <string>cavityDisplay_L2B</string>
          </property>
          <property name="macros" stdset="0">
           <string>linac=L2B</string>
@@ -81,6 +90,9 @@
       <widget class="PyDMEmbeddedDisplay" name="L3B">
        <property name="toolTip">
         <string/>
+       </property>
+       <property name="accessibleName">
+        <string>cavityDisplay_L3B</string>
        </property>
        <property name="macros" stdset="0">
         <string>linac=L3B</string>

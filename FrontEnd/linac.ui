@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="accessibleName">
+   <string>linacForm</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
@@ -37,6 +40,9 @@
        <weight>75</weight>
        <bold>true</bold>
       </font>
+     </property>
+     <property name="accessibleName">
+      <string>linac_groupBox</string>
      </property>
      <property name="styleSheet">
       <string notr="true">color: rgb(255, 255, 255);
@@ -73,6 +79,12 @@ background-color: rgb(40, 40, 40);</string>
          </sizepolicy>
         </property>
         <property name="toolTip">
+         <string/>
+        </property>
+        <property name="accessibleName">
+         <string>CryoTemplateRepeater_in_linac.ui</string>
+        </property>
+        <property name="accessibleDescription">
          <string/>
         </property>
         <property name="styleSheet">

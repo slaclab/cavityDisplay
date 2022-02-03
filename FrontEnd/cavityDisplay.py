@@ -22,27 +22,46 @@ from constants import STATUS_SUFFIX, SEVERITY_SUFFIX
 class cavityDisplay(Display):
 
     def ui_filename(self):
-        return 'cavityDisplay.ui'
-    
-    print("Hi")    
+        return 'cavityDisplay.ui'   
     
     def __init__(self, parent = None, args = None):
         super(cavityDisplay, self).__init__(parent=parent,args=args)
-    
-        print("Hi 2.0")        
+        
+        self.ui.L0B.loadWhenShown = False
+        self.ui.L1B.loadWhenShown = False
+        self.ui.L2B.loadWhenShown = False
+        self.ui.L3B.loadWhenShown = False
+        
         embeddedDisplays = [self.ui.L0B,
                             self.ui.L1B,
                             self.ui.L2B,
                             self.ui.L3B] # type: List[PyDMEmbeddedDisplay]
-        print("Yo")
-        for embeddedDisplay in embeddedDisplays:
-            print(embeddedDisplay.children()[0])  # QVBoxLayout
-            print(embeddedDisplay.children()[1].text())    # QLabel
-            
-            print(embeddedDisplay.children()[0].itemAt(0).widget())  #QLabel
 
-            templateRepeater = embeddedDisplay.findChildren(PyDMTemplateRepeater)
-            print(templateRepeater)
+        for embeddedDisplay in embeddedDisplays:
+            #print(embeddedDisplay.children())   # QVBoxLayout, QLabel
+            #print(embeddedDisplay.children()[0]) # QVBoxLayout
+            #print(embeddedDisplay.children()[1]) # QLabel
+            
+            #print("------" + embeddedDisplay.accessibleName() + "------")
+            vertLayout = embeddedDisplay.children()[0]
+            #print(vertLayout.findChildren(QLabel))
+            #print(vertLayout.itemAt(0).widget(), vertLayout.itemAt(1).widget(), vertLayout.itemAt(2))
+            print(vertLayout.itemAt(1).widget().accessibleName()) # linacForm in linac.ui
+            
+            print(vertLayout.itemAt(1).widget().children()) # QVBoxLayout, QGroupBox
+            print(vertLayout.itemAt(1).itemAt(0).children())
+            
+            
+            
+            #print(embeddedDisplay.children()[0])  # QVBoxLayout
+            #print(embeddedDisplay.children()[1].text())    # QLabel
+            
+            #print(embeddedDisplay.children()[0].itemAt(0).widget())  #QLabel
+
+            #templateRepeater = embeddedDisplay.findChildren(PyDMTemplateRepeater)
+            #print(templateRepeater)
+            
+            '''
             templateRepeater.loadWhenShown = False
             
             
@@ -80,7 +99,7 @@ class cavityDisplay(Display):
                     
                     #.add_callback is called when statusPV changes value
                     statusPV.add_callback(partial(self.statusCallback, cavity))
-                        
+               '''         
                         
         
     # Updates shape depending on pv value

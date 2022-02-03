@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>480</width>
+    <width>98</width>
     <height>492</height>
    </rect>
   </property>
@@ -58,6 +58,9 @@
      </property>
      <property name="toolTip">
       <string/>
+     </property>
+     <property name="accessibleName">
+      <string>cryoNumLabel</string>
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(35, 35, 35); 

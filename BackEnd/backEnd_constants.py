@@ -54,7 +54,7 @@ class DisplayCavity(Cavity, object):
                 self.severityPV.put(fault.severity)
             else:
                 self.statusPV.put("INV")
-                self.severityValues.append(3)
+                self.severityPV.put(3)
 
 
 DISPLAY_LINACS = []

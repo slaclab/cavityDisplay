@@ -36,7 +36,7 @@
     <number>3</number>
    </property>
    <item row="0" column="0">
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1">
      <property name="spacing">
       <number>0</number>
      </property>

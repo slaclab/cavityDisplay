@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="accessibleName">
+   <string>cavityDisplay.ui Form</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
     <number>0</number>
@@ -34,8 +37,14 @@
    </property>
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,4,11">
+       <property name="spacing">
+        <number>0</number>
+       </property>
        <item>
         <widget class="PyDMEmbeddedDisplay" name="L0B">
          <property name="toolTip">

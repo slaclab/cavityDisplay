@@ -82,7 +82,7 @@ background-color: rgb(40, 40, 40);</string>
          <string/>
         </property>
         <property name="accessibleName">
-         <string>CryoTemplateRepeater_in_linac.ui</string>
+         <string>linacTemplate</string>
         </property>
         <property name="accessibleDescription">
          <string/>

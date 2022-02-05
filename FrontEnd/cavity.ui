@@ -13,7 +13,10 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <property name="accessibleName">
+   <string>cavity.ui Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout" rowstretch="5,1">
    <property name="leftMargin">
     <number>1</number>
    </property>
@@ -25,6 +28,9 @@
    </property>
    <property name="bottomMargin">
     <number>1</number>
+   </property>
+   <property name="verticalSpacing">
+    <number>0</number>
    </property>
    <item row="0" column="0">
     <widget class="CavityWidget" name="cavityWidget">
@@ -68,8 +74,21 @@
      <property name="accessibleName">
       <string>cavity_line</string>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(40, 40, 40);</string>
+     </property>
      <property name="rules" stdset="0">
-      <string>[{&quot;channels&quot;: [{&quot;trigger&quot;: true, &quot;channel&quot;: &quot;ACCL:${linac}:${cryoNum}0${cavityNumber}:SSA:StatusMsg&quot;}], &quot;property&quot;: &quot;Visible&quot;, &quot;expression&quot;: &quot;ch[0]==3&quot;, &quot;name&quot;: &quot;SSA&quot;, &quot;initial_value&quot;: &quot;1&quot;}]</string>
+      <string>[{&quot;channels&quot;: [{&quot;trigger&quot;: true, &quot;channel&quot;: &quot;ACCL:${linac}:${cryoNum}${cavityNumber}0:SSA:StatusMsg&quot;}], &quot;property&quot;: &quot;Visible&quot;, &quot;expression&quot;: &quot;ch[0]==3&quot;, &quot;name&quot;: &quot;SSA&quot;, &quot;initial_value&quot;: &quot;1&quot;}]</string>
+     </property>
+     <property name="penColor" stdset="0">
+      <color>
+       <red>14</red>
+       <green>191</green>
+       <blue>255</blue>
+      </color>
+     </property>
+     <property name="penWidth" stdset="0">
+      <double>5.000000000000000</double>
      </property>
     </widget>
    </item>

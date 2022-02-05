@@ -36,52 +36,24 @@ class cavityDisplay(Display):
                             self.ui.L1B,
                             self.ui.L2B,
                             self.ui.L3B] # type: List[PyDMEmbeddedDisplay]
-
-        for embeddedDisplay in embeddedDisplays:
-            #print(embeddedDisplay.children())   # QVBoxLayout, QLabel
-            #print(embeddedDisplay.children()[0]) # QVBoxLayout
-            #print(embeddedDisplay.children()[1]) # QLabel
+        
+        for index, linacEmbeddedDisplay in enumerate(embeddedDisplays):
+            linacObject = LINAC_OBJECTS[index]
+            print(linacObject.name)
+        
+            linacHorizLayout = linacEmbeddedDisplay.findChild(QHBoxLayout)
+            totalCryos = linacHorizLayout.count()            
             
-            #print("------" + embeddedDisplay.accessibleName() + "------")
-            vertLayout = embeddedDisplay.children()[0]
-            #print(vertLayout.findChildren(QLabel))
-            #print(vertLayout.itemAt(0).widget(), vertLayout.itemAt(1).widget(), vertLayout.itemAt(2))
-            print(vertLayout.itemAt(1).widget().accessibleName()) # linacForm in linac.ui
-            
-            print(vertLayout.itemAt(1).widget().children()) # QVBoxLayout, QGroupBox
-            print(vertLayout.itemAt(1).itemAt(0).children())
-            
-            
-            
-            #print(embeddedDisplay.children()[0])  # QVBoxLayout
-            #print(embeddedDisplay.children()[1].text())    # QLabel
-            
-            #print(embeddedDisplay.children()[0].itemAt(0).widget())  #QLabel
-
-            #templateRepeater = embeddedDisplay.findChildren(PyDMTemplateRepeater)
-            #print(templateRepeater)
-            
-            '''
-            templateRepeater.loadWhenShown = False
-            
-            
+            # linac will be a list of cryomodules
             linac = []
-            vertLayoutList = templateRepeater.findChildren(QVBoxLayout)
-                            
-            # PyDMLabel = linac[0].itemAt(0).widget()
-            # PyDMTemplateRepeater = linac[0].itemAt(1).widget()
-            
-            for vertLayout in vertLayoutList:
-                templateRepeater = vertLayout.itemAt(1).widget()
-                if templateRepeater.accessibleName() == "${cryoTemplate}":
-                    linac.append(vertLayout)
-            
-            for cryomodules in linac:
-                cmLabel = cryomodules.itemAt(0).widget()    # cryo number pydmLabel 
-                cmTemplateRepeater = cryomodules.itemAt(1).widget()    # templateRepeater of 8 cavities
+            for index in range(0,totalCryos):
+                linac.append(linacHorizLayout.itemAt(index).widget())
+
+            for cryomodule in linac:
+                cmNumber = cryomodule.children()[1]   # cryo number pydmDisplayButton
+                cmTemplateRepeater = cryomodule.children()[2] # template repeater of 8 cavities
                 
-                cryomoduleObject = linacObject.cryomodules[cmLabel.text()]
-                
+                cryomoduleObject = linacObject.cryomodules[str(cmNumber.text())]
                 cavityList = cmTemplateRepeater.findChildren(CavityWidget)
                 
                 for cavity in cavityList:
@@ -89,17 +61,17 @@ class cavityDisplay(Display):
                     
                     severityPV = PV(cavityObject.pvPrefix + SEVERITY_SUFFIX)
                     statusPV = PV(cavityObject.pvPrefix + STATUS_SUFFIX)
-                
+                                
                     # This line is meant to initialize the cavity colors and shapes when first launched
                     self.severityCallback(cavity, severityPV.value)
                     self.statusCallback(cavity, statusPV.value)
-                
+                    
                     #.add_callback is called when severityPV changes value
                     severityPV.add_callback(partial(self.severityCallback, cavity))
-                    
+                        
                     #.add_callback is called when statusPV changes value
                     statusPV.add_callback(partial(self.statusCallback, cavity))
-               '''         
+                    
                         
         
     # Updates shape depending on pv value

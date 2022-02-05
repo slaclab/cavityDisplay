@@ -29,7 +29,7 @@ class Fault:
     def __gt__(self, other):
         return self.rank > other.rank
 
-    def isFaulted(self, faultPV: PV):
+    def isFaulted(self, faultPV):
 
         if faultPV.status is None:
             raise PvInvalid(faultPV)

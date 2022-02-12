@@ -78,7 +78,7 @@
       <string notr="true">background-color: rgb(40, 40, 40);</string>
      </property>
      <property name="rules" stdset="0">
-      <string>[{&quot;channels&quot;: [{&quot;trigger&quot;: true, &quot;channel&quot;: &quot;ACCL:${linac}:${cryoNum}${cavityNumber}0:SSA:StatusMsg&quot;}], &quot;property&quot;: &quot;Visible&quot;, &quot;expression&quot;: &quot;ch[0]==3&quot;, &quot;name&quot;: &quot;SSA&quot;, &quot;initial_value&quot;: &quot;1&quot;}]</string>
+      <string>[{&quot;channels&quot;: [{&quot;trigger&quot;: true, &quot;channel&quot;: &quot;ACCL:${linac}:${cryoNum}${cavityNumber}0:SSA:StatusMsg&quot;}], &quot;property&quot;: &quot;Opacity&quot;, &quot;expression&quot;: &quot;ch[0]==\&quot;SSA ON\&quot;&quot;, &quot;name&quot;: &quot;SSA&quot;, &quot;initial_value&quot;: &quot;1&quot;}]</string>
      </property>
      <property name="penColor" stdset="0">
       <color>

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>183</width>
+    <width>98</width>
     <height>492</height>
    </rect>
   </property>
@@ -15,6 +15,12 @@
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -36,7 +42,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="PyDMRelatedDisplayButton" name="PyDMRelatedDisplayButton">
+    <widget class="PyDMRelatedDisplayButton" name="cmPyDMDisplayButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -45,7 +51,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>10</width>
+       <width>5</width>
        <height>0</height>
       </size>
      </property>
@@ -59,8 +65,12 @@
      <property name="toolTip">
       <string/>
      </property>
+     <property name="accessibleName">
+      <string>cryoNumLabel</string>
+     </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(35, 35, 35);</string>
+      <string notr="true">background-color: rgb(35, 35, 35); 
+color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
       <string>${cryoNum}</string>
@@ -68,12 +78,23 @@
      <property name="showIcon" stdset="0">
       <bool>false</bool>
      </property>
+     <property name="macros" stdset="0">
+      <stringlist>
+       <string>cryomodule=${cryoNum}</string>
+      </stringlist>
+     </property>
     </widget>
    </item>
    <item>
     <widget class="PyDMTemplateRepeater" name="cmTemplate">
      <property name="enabled">
       <bool>true</bool>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
      </property>
      <property name="toolTip">
       <string/>
@@ -88,13 +109,13 @@
       <enum>QFrame::NoFrame</enum>
      </property>
      <property name="layoutSpacing" stdset="0">
-      <number>0</number>
+      <number>10</number>
      </property>
      <property name="countShownInDesigner" stdset="0">
       <number>8</number>
      </property>
      <property name="templateFilename" stdset="0">
-      <string>EmbeddedSingleCavity.ui</string>
+      <string>cavity.ui</string>
      </property>
      <property name="dataSource" stdset="0">
       <string>cavities.json</string>

@@ -39,13 +39,13 @@ class cavityDisplay(Display):
             linacObject = LINAC_OBJECTS[index]
             print("loading {linac}".format(linac=linacObject.name))
 
-            linacHorizLayout = linacEmbeddedDisplay.findChild(QHBoxLayout)
-            totalCryos = linacHorizLayout.count()
+            linacHorizLayoutRepeater = linacEmbeddedDisplay.findChild(QHBoxLayout)
+            totalCryosInLinac = linacHorizLayoutRepeater.count()
 
             # linac will be a list of cryomodules
             linac = []
-            for index in range(0, totalCryos):
-                linac.append(linacHorizLayout.itemAt(index).widget())
+            for cryo in range(0, totalCryosInLinac):
+                linac.append(linacHorizLayoutRepeater.itemAt(cryo).widget())
 
             for cryomodule in linac:
                 cmNumber = cryomodule.children()[1]  # cryo number pydmDisplayButton

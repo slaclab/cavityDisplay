@@ -5,7 +5,7 @@ import sys
 
 sys.path.insert(0, '..')
 from constants import STATUS_SUFFIX, SEVERITY_SUFFIX
-from scLinac import LINACS, Linac, Cavity
+from lcls_tools.devices.scLinac import LINACS, Linac, Cavity
 
 
 class DisplayCavity(Cavity, object):
@@ -49,12 +49,11 @@ class DisplayCavity(Cavity, object):
             self.statusPV.put("{num}".format(num=str(self.number)))
             self.severityPV.put(0)
         else:
+            self.statusPV.put(fault.tlc)
             if not invalid:
-                self.statusPV.put(fault.tlc)
                 self.severityPV.put(fault.severity)
             else:
-                self.statusPV.put("INV")
-                self.severityValues.append(3)
+                self.severityPV.put(3)
 
 
 DISPLAY_LINACS = []

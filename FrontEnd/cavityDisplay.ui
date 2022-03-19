@@ -6,321 +6,109 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1746</width>
-    <height>1104</height>
+    <width>796</width>
+    <height>502</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <property name="autoFillBackground">
-   <bool>false</bool>
+  <property name="accessibleName">
+   <string>cavityDisplay.ui Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
-    <number>1</number>
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <property name="verticalSpacing">
+   <property name="horizontalSpacing">
     <number>0</number>
    </property>
-   <item row="1" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,4,11">
+   <property name="verticalSpacing">
+    <number>3</number>
+   </property>
+   <item row="0" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1">
      <property name="spacing">
-      <number>1</number>
-     </property>
-     <property name="leftMargin">
       <number>0</number>
      </property>
      <item>
-      <layout class="QVBoxLayout" name="vertLayoutL0B">
+      <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,4,11">
        <property name="spacing">
-        <number>6</number>
+        <number>0</number>
        </property>
        <item>
-        <widget class="QGroupBox" name="L0BgroupBox">
-         <property name="font">
-          <font>
-           <pointsize>15</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
+        <widget class="PyDMEmbeddedDisplay" name="L0B">
+         <property name="toolTip">
+          <string/>
          </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(40,40, 40);
-color: rgb(255, 255, 255);</string>
+         <property name="accessibleName">
+          <string>cavityDisplay_L0B</string>
          </property>
-         <property name="title">
-          <string>L0B</string>
+         <property name="macros" stdset="0">
+          <string>linac=L0B</string>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
+         <property name="filename" stdset="0">
+          <string>linac.ui</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_4">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item row="0" column="0">
-           <widget class="PyDMTemplateRepeater" name="linac0">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string/>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::Box</enum>
-            </property>
-            <property name="layoutType" stdset="0">
-             <enum>PyDMTemplateRepeater::Horizontal</enum>
-            </property>
-            <property name="layoutSpacing" stdset="0">
-             <number>0</number>
-            </property>
-            <property name="countShownInDesigner" stdset="0">
-             <number>1</number>
-            </property>
-            <property name="templateFilename" stdset="0">
-             <string>cryomodule.ui</string>
-            </property>
-            <property name="dataSource" stdset="0">
-             <string>linac0.json</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="PyDMEmbeddedDisplay" name="L1B">
+         <property name="toolTip">
+          <string/>
+         </property>
+         <property name="accessibleName">
+          <string>cavityDisplay_L1B</string>
+         </property>
+         <property name="macros" stdset="0">
+          <string>linac=L1B</string>
+         </property>
+         <property name="filename" stdset="0">
+          <string>linac.ui</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="PyDMEmbeddedDisplay" name="L2B">
+         <property name="toolTip">
+          <string/>
+         </property>
+         <property name="accessibleName">
+          <string>cavityDisplay_L2B</string>
+         </property>
+         <property name="macros" stdset="0">
+          <string>linac=L2B</string>
+         </property>
+         <property name="filename" stdset="0">
+          <string>linac.ui</string>
+         </property>
         </widget>
        </item>
       </layout>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="vertLayoutL1B">
-       <item>
-        <widget class="QGroupBox" name="L1BgroupBox">
-         <property name="font">
-          <font>
-           <pointsize>15</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(40, 40, 40);
-color: rgb(255, 255, 255);</string>
-         </property>
-         <property name="title">
-          <string>L1B</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item row="0" column="0">
-           <widget class="PyDMTemplateRepeater" name="linac1">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string/>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::Box</enum>
-            </property>
-            <property name="layoutType" stdset="0">
-             <enum>PyDMTemplateRepeater::Horizontal</enum>
-            </property>
-            <property name="layoutSpacing" stdset="0">
-             <number>0</number>
-            </property>
-            <property name="countShownInDesigner" stdset="0">
-             <number>4</number>
-            </property>
-            <property name="templateFilename" stdset="0">
-             <string>cryomodule.ui</string>
-            </property>
-            <property name="dataSource" stdset="0">
-             <string>linac1.json</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="vertLayoutL2B">
-       <item>
-        <widget class="QGroupBox" name="L2BgroupBox">
-         <property name="font">
-          <font>
-           <pointsize>15</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(40, 40, 40);
-color: rgb(255, 255, 255);</string>
-         </property>
-         <property name="title">
-          <string>L2B</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_3">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item row="0" column="0">
-           <widget class="PyDMTemplateRepeater" name="linac2">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="toolTip">
-             <string/>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::Box</enum>
-            </property>
-            <property name="layoutType" stdset="0">
-             <enum>PyDMTemplateRepeater::Horizontal</enum>
-            </property>
-            <property name="layoutSpacing" stdset="0">
-             <number>0</number>
-            </property>
-            <property name="countShownInDesigner" stdset="0">
-             <number>12</number>
-            </property>
-            <property name="templateFilename" stdset="0">
-             <string>cryomodule.ui</string>
-            </property>
-            <property name="dataSource" stdset="0">
-             <string>linac2.json</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </item>
-   <item row="2" column="0">
-    <layout class="QVBoxLayout" name="vertLayoutL3B">
-     <item>
-      <widget class="QGroupBox" name="L3BgroupBox">
-       <property name="font">
-        <font>
-         <pointsize>15</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
+      <widget class="PyDMEmbeddedDisplay" name="L3B">
+       <property name="toolTip">
+        <string/>
        </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(40, 40, 40);
-color: rgb(255, 255, 255);</string>
+       <property name="accessibleName">
+        <string>cavityDisplay_L3B</string>
        </property>
-       <property name="title">
-        <string>L3B</string>
+       <property name="macros" stdset="0">
+        <string>linac=L3B</string>
        </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
+       <property name="filename" stdset="0">
+        <string>linac.ui</string>
        </property>
-       <layout class="QGridLayout" name="gridLayout_5">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item row="0" column="0">
-         <widget class="PyDMTemplateRepeater" name="linac3">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="toolTip">
-           <string/>
-          </property>
-          <property name="styleSheet">
-           <string notr="true"/>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::Box</enum>
-          </property>
-          <property name="layoutType" stdset="0">
-           <enum>PyDMTemplateRepeater::Horizontal</enum>
-          </property>
-          <property name="layoutSpacing" stdset="0">
-           <number>0</number>
-          </property>
-          <property name="countShownInDesigner" stdset="0">
-           <number>20</number>
-          </property>
-          <property name="templateFilename" stdset="0">
-           <string>cryomodule.ui</string>
-          </property>
-          <property name="dataSource" stdset="0">
-           <string>linac3.json</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
       </widget>
      </item>
     </layout>
@@ -329,10 +117,9 @@ color: rgb(255, 255, 255);</string>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>PyDMTemplateRepeater</class>
+   <class>PyDMEmbeddedDisplay</class>
    <extends>QFrame</extends>
-   <header>pydm.widgets.template_repeater</header>
-   <container>1</container>
+   <header>pydm.widgets.embedded_display</header>
   </customwidget>
  </customwidgets>
  <resources/>

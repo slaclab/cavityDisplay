@@ -4,7 +4,7 @@ from epics import PV
 import sys
 
 sys.path.insert(0, '..')
-from scLinac import LINACS, Cavity
+from lcls_tools.devices.scLinac import LINACS, Cavity
 
 
 class PvInvalid(Exception):

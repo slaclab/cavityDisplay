@@ -78,6 +78,11 @@ color: rgb(255, 255, 255);</string>
      <property name="showIcon" stdset="0">
       <bool>false</bool>
      </property>
+     <property name="macros" stdset="0">
+      <stringlist>
+       <string>cryomodule=${cryoNum}</string>
+      </stringlist>
+     </property>
     </widget>
    </item>
    <item>

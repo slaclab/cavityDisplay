@@ -17,7 +17,7 @@ from cavityWidget import CavityWidget
 from frontEnd_constants import shapeParameterDict
 
 sys.path.insert(0, '..')
-from scLinac import LINAC_OBJECTS
+from lcls_tools.devices.scLinac import LINAC_OBJECTS
 from constants import STATUS_SUFFIX, SEVERITY_SUFFIX
 
 

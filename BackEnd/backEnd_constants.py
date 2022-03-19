@@ -5,7 +5,7 @@ import sys
 
 sys.path.insert(0, '..')
 from constants import STATUS_SUFFIX, SEVERITY_SUFFIX
-from scLinac import LINACS, Linac, Cavity
+from lcls_tools.devices.scLinac import LINACS, Linac, Cavity
 
 
 class DisplayCavity(Cavity, object):

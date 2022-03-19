@@ -23,7 +23,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>${cryomodule}</string>
+      <string>CM ${cryomodule}</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -53,6 +53,7 @@
    <class>PyDMTemplateRepeater</class>
    <extends>QFrame</extends>
    <header>pydm.widgets.template_repeater</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -13,7 +13,8 @@ class PvInvalid(Exception):
 
 
 class Fault:
-    def __init__(self, tlc, severity, rank, level, suffix, okValue, faultValue, rack):
+    def __init__(self, tlc, severity, rank, level, suffix, okValue, faultValue,
+                 rack):
         self.tlc = tlc
         self.severity = int(severity)
         self.rank = rank

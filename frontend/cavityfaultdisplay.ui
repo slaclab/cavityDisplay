@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>376</width>
+    <height>316</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>CM ${cryomodule} Cavity ${cavityNumber}</string>
+      <string>CM ${cryomodule} Cavity 0${cavityNumber}</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -40,13 +40,49 @@
      </property>
     </widget>
    </item>
+   <item alignment="Qt::AlignRight">
+    <widget class="PyDMRelatedDisplayButton" name="PyDMRelatedDisplayButton">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>364</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="text">
+      <string>3-Letter Codes</string>
+     </property>
+     <property name="filenames" stdset="0">
+      <stringlist>
+       <string>3letterfaults.ui</string>
+      </stringlist>
+     </property>
+     <property name="openInNewWindow" stdset="0">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
+   <class>PyDMRelatedDisplayButton</class>
+   <extends>QPushButton</extends>
+   <header>pydm.widgets.related_display_button</header>
+  </customwidget>
+  <customwidget>
    <class>PyDMTemplateRepeater</class>
    <extends>QFrame</extends>
    <header>pydm.widgets.template_repeater</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

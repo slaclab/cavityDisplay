@@ -1,4 +1,4 @@
-﻿Heirarchy Group,Order Within Group,Name,Level,Rack,PV Prefix,PV Suffix,OK If Equal To,Faulted If Equal To,Three Letter Code,Severity,Short description for display help,Comments
+﻿Heirarchy Group,Order Within Group,Name,Level,Rack,PV Prefix,PV Suffix,OK If Equal To,Faulted If Equal To,Three Letter Code,Severity,Description,Comments
 0,0,Parked,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,PARK,,1,PKD,4,Cavity is tuned off frequency so it doesn’t affect the beam.,
 0,1,Any of the PVs needed by the display are offline,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,,,,INV,3,Invalid: one of the PVs necessary is not responding to caget or has INVALID status,
 1,1,Awaiting Run Up: Station needs attention from LLRF/SRF groups before can be used. A status set and cleared by experts. ,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,,,,ARU,2,Awaiting Run Up: Cavity is ready to be commissioned by experts but not ready to be used to accelerate beam,

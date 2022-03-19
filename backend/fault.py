@@ -1,7 +1,6 @@
+import sys
 from csv import reader, DictReader
 from epics import PV
-
-import sys
 
 sys.path.insert(0, '..')
 from lcls_tools.devices.scLinac import LINACS, Cavity
@@ -13,13 +12,16 @@ class PvInvalid(Exception):
 
 
 class Fault:
-    def __init__(self, tlc, severity, rank, level, suffix, okValue, faultValue, rack):
+    def __init__(self, tlc, severity, rank, level, suffix, okValue, faultValue,
+                 rack, description, name):
         self.tlc = tlc
         self.severity = int(severity)
         self.rank = rank
         self.level = level
         self.rack = rack
         self.suffix = suffix
+        self.description = description
+        self.name = name
         self.okValue = float(okValue) if okValue else None
         self.faultValue = float(faultValue) if faultValue else None
 
@@ -50,7 +52,13 @@ csvFile = DictReader(open("faults.csv"))
 next(csvFile)
 for row in csvFile:
     if row["PV Suffix"]:
-        faults.append(Fault(row["Three Letter Code"], row["Severity"],
-                            csvFile.line_num, row["Level"],
-                            row["PV Suffix"], row["OK If Equal To"],
-                            row["Faulted If Equal To"], row["Rack"]))
+        faults.append(Fault(tlc=row["Three Letter Code"],
+                            severity=row["Severity"],
+                            rank=csvFile.line_num,
+                            level=row["Level"],
+                            suffix=row["PV Suffix"],
+                            okValue=row["OK If Equal To"],
+                            faultValue=row["Faulted If Equal To"],
+                            rack=row["Rack"],
+                            description=row["Description"],
+                            name=row["Name"]))

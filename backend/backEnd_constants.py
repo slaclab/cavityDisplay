@@ -27,7 +27,8 @@ class DisplayCavity(Cavity, object):
 
             prefix = csvFault["PV Prefix"].format(LINAC=self.linac.name,
                                                   CRYOMODULE=self.cryomodule.name,
-                                                  RACK=self.rack.rackName)
+                                                  RACK=self.rack.rackName,
+                                                  CAVITY=self.number)
 
             self.faults.append(Fault(tlc=csvFault["Severity"],
                                      severity=csvFault["Severity"],

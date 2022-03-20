@@ -43,10 +43,8 @@ class Fault:
 
 csvFile = DictReader(open("faults.csv"))
 
-# Skipping over "parked"
-next(csvFile)
-
 CSV_FAULTS: List[Dict] = []
 for row in csvFile:
+    print(row)
     if row["PV Suffix"]:
         CSV_FAULTS.append(row)

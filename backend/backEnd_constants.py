@@ -1,11 +1,12 @@
-from fault import faults, PvInvalid
+import sys
 from epics import PV
 
-import sys
+from fault import CSV_FAULTS, Fault, PvInvalid
 
 sys.path.insert(0, '..')
 from constants import STATUS_SUFFIX, SEVERITY_SUFFIX
 from lcls_tools.devices.scLinac import LINACS, Linac, Cavity
+from typing import List
 
 
 class DisplayCavity(Cavity, object):
@@ -14,29 +15,35 @@ class DisplayCavity(Cavity, object):
         self.statusPV = PV(self.pvPrefix + STATUS_SUFFIX)
         self.severityPV = PV(self.pvPrefix + SEVERITY_SUFFIX)
 
-        self.faultPVs = []
-        for fault in faults:
-            # Decided to use timeout of 0.01 seconds after some trial and error
-            timeout = 0.01
-            if fault.level == "RACK":
-                if fault.rack != self.rack.rackName:
-                    continue
-                prefix = self.rack.pvPrefix
-            elif fault.level == "CAV":
-                prefix = self.pvPrefix
-            else:
-                prefix = self.cryomodule.pvPrefix
+        self.faults: List[Fault] = []
 
-            self.faultPVs.append((fault, PV(prefix + fault.suffix,
-                                            connection_timeout=timeout)))
+        for csvFault in CSV_FAULTS:
+
+            if csvFault["Level"] == "RACK":
+
+                # Rack A cavities don't care about faults for Rack B and vice versa
+                if csvFault["Rack"] != self.rack.rackName:
+                    continue
+
+            prefix = csvFault["PV Prefix"].format(LINAC=self.linac.name,
+                                                  CRYOMODULE=self.cryomodule.name,
+                                                  RACK=self.rack.rackName)
+
+            self.faults.append(Fault(tlc=csvFault["Severity"],
+                                     severity=csvFault["Severity"],
+                                     suffix=csvFault["PV Suffix"],
+                                     okValue=csvFault["OK If Equal To"],
+                                     faultValue=csvFault["Faulted If Equal To"],
+                                     description=csvFault["Description"],
+                                     name=csvFault["Name"], prefix=prefix))
 
     def runThroughFaults(self):
         isOkay = True
         invalid = False
 
-        for fault, pv in self.faultPVs:
+        for fault in self.faults:
             try:
-                if fault.isFaulted(pv):
+                if fault.isFaulted():
                     isOkay = False
                     break
             except PvInvalid as e:

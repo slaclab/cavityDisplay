@@ -45,6 +45,5 @@ csvFile = DictReader(open("faults.csv"))
 
 CSV_FAULTS: List[Dict] = []
 for row in csvFile:
-    print(row)
     if row["PV Suffix"]:
         CSV_FAULTS.append(row)

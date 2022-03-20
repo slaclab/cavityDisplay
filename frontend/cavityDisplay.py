@@ -1,17 +1,10 @@
 import sys
 from functools import partial
 
-import epics
-from PyQt5 import QtGui, QtCore, QtWidgets
-from PyQt5.QtCore import Qt, QObject
-from PyQt5.QtGui import QPainter, QColor, QBrush, QPen
-from PyQt5.QtWidgets import (QWidgetItem, QPushButton, QGroupBox, QVBoxLayout,
-                             QHBoxLayout, QWidget, QLabel, QGridLayout)
+from PyQt5.QtWidgets import (QHBoxLayout)
 from epics import PV
-from epics import caget, caput
 from pydm import Display
-from pydm.widgets import PyDMDrawingRectangle, PyDMLabel, PyDMTemplateRepeater, PyDMEmbeddedDisplay
-from pydm.widgets.drawing import PyDMDrawingPolygon
+from pydm.widgets import PyDMEmbeddedDisplay
 
 from cavityWidget import CavityWidget
 from frontEnd_constants import shapeParameterDict
@@ -19,6 +12,7 @@ from frontEnd_constants import shapeParameterDict
 sys.path.insert(0, '..')
 from lcls_tools.devices.scLinac import LINAC_OBJECTS
 from constants import STATUS_SUFFIX, SEVERITY_SUFFIX
+from typing import List
 
 
 class cavityDisplay(Display):
@@ -52,23 +46,23 @@ class cavityDisplay(Display):
                 cmTemplateRepeater = cryomodule.children()[2]  # template repeater of 8 cavities
 
                 cryomoduleObject = linacObject.cryomodules[str(cmNumber.text())]
-                cavityList = cmTemplateRepeater.findChildren(CavityWidget)
+                cavityList: List[CavityWidget] = cmTemplateRepeater.findChildren(CavityWidget)
 
-                for cavity in cavityList:
-                    cavityObject = cryomoduleObject.cavities[int(cavity.cavityText)]
+                for cavityWidget in cavityList:
+                    cavityObject = cryomoduleObject.cavities[int(cavityWidget.cavityText)]
 
                     severityPV = PV(cavityObject.pvPrefix + SEVERITY_SUFFIX)
                     statusPV = PV(cavityObject.pvPrefix + STATUS_SUFFIX)
 
-                    # This line is meant to initialize the cavity colors and shapes when first launched
-                    self.severityCallback(cavity, severityPV.value)
-                    self.statusCallback(cavity, statusPV.value)
+                    # This line is meant to initialize the cavityWidget colors and shapes when first launched
+                    self.severityCallback(cavityWidget, severityPV.value)
+                    self.statusCallback(cavityWidget, statusPV.value)
 
                     # .add_callback is called when severityPV changes value
-                    severityPV.add_callback(partial(self.severityCallback, cavity))
+                    severityPV.add_callback(partial(self.severityCallback, cavityWidget))
 
                     # .add_callback is called when statusPV changes value
-                    statusPV.add_callback(partial(self.statusCallback, cavity))
+                    statusPV.add_callback(partial(self.statusCallback, cavityWidget))
 
     # Updates shape depending on pv value
     def severityCallback(self, cavity_widget, value, **kw):

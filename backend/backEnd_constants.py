@@ -23,14 +23,17 @@ class DisplayCavity(Cavity, object):
 
                 # Rack A cavities don't care about faults for Rack B and vice versa
                 if csvFault["Rack"] != self.rack.rackName:
+                    # Takes us to the next iteration of the for loop
                     continue
 
+            # tested in the python console that strings without one of these
+            # formatting keys just ignores them and moves on
             prefix = csvFault["PV Prefix"].format(LINAC=self.linac.name,
                                                   CRYOMODULE=self.cryomodule.name,
                                                   RACK=self.rack.rackName,
                                                   CAVITY=self.number)
 
-            self.faults.append(Fault(tlc=csvFault["Severity"],
+            self.faults.append(Fault(tlc=csvFault["Three Letter Code"],
                                      severity=csvFault["Severity"],
                                      suffix=csvFault["PV Suffix"],
                                      okValue=csvFault["OK If Equal To"],

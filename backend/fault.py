@@ -22,9 +22,6 @@ class Fault:
 
         self.pv: PV = PV(prefix + ":" + suffix, connection_timeout=PV_TIMEOUT)
 
-    def __str__(self):
-        return ', '.join("%s: %s" % item for item in vars(self).items())
-
     def isFaulted(self):
         if self.pv.status is None:
             raise PvInvalid(self.pv.pvname)

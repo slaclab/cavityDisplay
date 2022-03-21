@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>170</width>
+    <width>226</width>
     <height>44</height>
    </rect>
   </property>
@@ -16,16 +16,44 @@
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <widget class="PyDMRelatedDisplayButton" name="PyDMRelatedDisplayButton">
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="mouseTracking">
+      <bool>false</bool>
+     </property>
+     <property name="acceptDrops">
+      <bool>false</bool>
+     </property>
      <property name="toolTip">
       <string/>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(35, 35, 35); 
+color: rgb(255, 255, 255);
+
+</string>
+     </property>
      <property name="text">
       <string>Cavity 0${cavityNumber}</string>
+     </property>
+     <property name="default">
+      <bool>false</bool>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
      </property>
      <property name="filenames" stdset="0">
       <stringlist>
        <string>cavityfaultdisplay.ui</string>
       </stringlist>
+     </property>
+     <property name="showIcon" stdset="0">
+      <bool>true</bool>
      </property>
      <property name="openInNewWindow" stdset="0">
       <bool>true</bool>

@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="label">
@@ -22,8 +25,15 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>24</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
-      <string>CM ${cryomodule} Cavity 0${cavityNumber}</string>
+      <string>CM ${cryomodule} Cavity 0${cavityNumber} Faults</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -54,16 +64,27 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <kerning>true</kerning>
+      </font>
+     </property>
      <property name="toolTip">
       <string/>
      </property>
      <property name="text">
-      <string>3-Letter Codes</string>
+      <string>TLC</string>
+     </property>
+     <property name="default">
+      <bool>false</bool>
      </property>
      <property name="filenames" stdset="0">
       <stringlist>
        <string>3letterfaults.ui</string>
       </stringlist>
+     </property>
+     <property name="showIcon" stdset="0">
+      <bool>true</bool>
      </property>
      <property name="openInNewWindow" stdset="0">
       <bool>true</bool>

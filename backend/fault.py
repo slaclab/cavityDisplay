@@ -1,9 +1,8 @@
-import sys
-from csv import reader, DictReader
+from csv import DictReader
 from epics import PV
+from typing import Dict, List
 
-sys.path.insert(0, '..')
-from lcls_tools.devices.scLinac import LINACS, Cavity
+PV_TIMEOUT = 0.01
 
 
 class PvInvalid(Exception):
@@ -12,53 +11,36 @@ class PvInvalid(Exception):
 
 
 class Fault:
-    def __init__(self, tlc, severity, rank, level, suffix, okValue, faultValue,
-                 rack, description, name):
+    def __init__(self, tlc, severity, suffix, okValue, faultValue, description,
+                 name, prefix):
         self.tlc = tlc
         self.severity = int(severity)
-        self.rank = rank
-        self.level = level
-        self.rack = rack
-        self.suffix = suffix
         self.description = description
         self.name = name
         self.okValue = float(okValue) if okValue else None
         self.faultValue = float(faultValue) if faultValue else None
 
-    def __str__(self):
-        return ', '.join("%s: %s" % item for item in vars(self).items())
+        self.pv: PV = PV(prefix + ":" + suffix, connection_timeout=PV_TIMEOUT)
 
-    def __gt__(self, other):
-        return self.rank > other.rank
-
-    def isFaulted(self, faultPV):
-
-        if faultPV.status is None:
-            raise PvInvalid(faultPV)
+    def isFaulted(self):
+        if self.pv.status is None:
+            raise PvInvalid(self.pv.pvname)
 
         if self.okValue is not None:
-            return faultPV.value != self.okValue
+            return self.pv.value != self.okValue
 
         elif self.faultValue is not None:
-            return faultPV.value == self.faultValue
+            return self.pv.value == self.faultValue
 
         else:
             print(self)
-            raise Exception("Weird state, oh no")
+            raise Exception("Fault has neither \'Fault if equal to\' nor"
+                            " \'OK if equal to\' parameter")
 
 
-faults = []
 csvFile = DictReader(open("faults.csv"))
-next(csvFile)
+
+CSV_FAULTS: List[Dict] = []
 for row in csvFile:
     if row["PV Suffix"]:
-        faults.append(Fault(tlc=row["Three Letter Code"],
-                            severity=row["Severity"],
-                            rank=csvFile.line_num,
-                            level=row["Level"],
-                            suffix=row["PV Suffix"],
-                            okValue=row["OK If Equal To"],
-                            faultValue=row["Faulted If Equal To"],
-                            rack=row["Rack"],
-                            description=row["Description"],
-                            name=row["Name"]))
+        CSV_FAULTS.append(row)

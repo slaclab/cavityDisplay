@@ -1,6 +1,4 @@
-from csv import DictReader
 from epics import PV
-from typing import Dict, List
 
 PV_TIMEOUT = 0.01
 
@@ -36,11 +34,3 @@ class Fault:
             print(self)
             raise Exception("Fault has neither \'Fault if equal to\' nor"
                             " \'OK if equal to\' parameter")
-
-
-csvFile = DictReader(open("faults.csv"))
-
-CSV_FAULTS: List[Dict] = []
-for row in csvFile:
-    if row["PV Suffix"]:
-        CSV_FAULTS.append(row)

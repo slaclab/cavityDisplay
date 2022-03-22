@@ -1,15 +1,13 @@
-import sys
 from epics import PV
-
-from fault import CSV_FAULTS, Fault, PvInvalid
-
-sys.path.insert(0, '..')
-from constants import STATUS_SUFFIX, SEVERITY_SUFFIX
-from lcls_tools.devices.scLinac import LINACS, Linac, Cavity
 from typing import List
 
+from CavityDisplay import SEVERITY_SUFFIX, STATUS_SUFFIX
+from Fault import Fault, PvInvalid
+from constants import CSV_FAULTS
+from lcls_tools.devices.scLinac import Cavity, LINAC_TUPLES, Linac
 
-class DisplayCavity(Cavity, object):
+
+class DisplayCavity(Cavity):
     def __init__(self, cavityNum, rackObject):
         super(DisplayCavity, self).__init__(cavityNum, rackObject)
         self.statusPV = PV(self.pvPrefix + STATUS_SUFFIX)
@@ -67,6 +65,7 @@ class DisplayCavity(Cavity, object):
                 self.severityPV.put(3)
 
 
-DISPLAY_LINACS = []
-for name, cryomoduleList in LINACS:
-    DISPLAY_LINACS.append(Linac(name, cryomoduleList, cavityClass=DisplayCavity))
+DISPLAY_LINAC_OBJECTS: List[Linac] = []
+for name, cryomoduleList in LINAC_TUPLES:
+    DISPLAY_LINAC_OBJECTS.append(Linac(name, cryomoduleList,
+                                       cavityClass=DisplayCavity))

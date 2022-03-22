@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>376</width>
+    <width>599</width>
     <height>316</height>
    </rect>
   </property>
@@ -41,14 +41,7 @@
     </widget>
    </item>
    <item>
-    <widget class="PyDMTemplateRepeater" name="PyDMTemplateRepeater">
-     <property name="toolTip">
-      <string/>
-     </property>
-     <property name="templateFilename" stdset="0">
-      <string>cavityfaultline.ui</string>
-     </property>
-    </widget>
+    <layout class="QVBoxLayout" name="cavityfaultslayout"/>
    </item>
    <item alignment="Qt::AlignRight">
     <widget class="PyDMRelatedDisplayButton" name="PyDMRelatedDisplayButton">
@@ -98,12 +91,6 @@
    <class>PyDMRelatedDisplayButton</class>
    <extends>QPushButton</extends>
    <header>pydm.widgets.related_display_button</header>
-  </customwidget>
-  <customwidget>
-   <class>PyDMTemplateRepeater</class>
-   <extends>QFrame</extends>
-   <header>pydm.widgets.template_repeater</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

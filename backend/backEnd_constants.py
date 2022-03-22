@@ -1,4 +1,5 @@
 import sys
+
 from epics import PV
 
 from fault import CSV_FAULTS, Fault, PvInvalid
@@ -51,7 +52,7 @@ class DisplayCavity(Cavity, object):
                     isOkay = False
                     break
             except PvInvalid as e:
-                print(e)
+                print(e, " is disconnected")
                 isOkay = False
                 invalid = True
                 break

@@ -3,7 +3,7 @@ from functools import partial
 from pydm import Display
 from typing import List
 
-from DisplayCavity import DISPLAY_LINAC_OBJECTS
+from displayCavity import DISPLAY_LINAC_OBJECTS
 from Fault import Fault, PvInvalid
 
 

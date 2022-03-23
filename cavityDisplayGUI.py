@@ -48,13 +48,11 @@ SHAPE_PARAMETER_DICT = {0: ShapeParameters(GREEN_FILL_COLOR, GREEN_FILL_COLOR,
                                            10, 0)}
 
 
-class CavityDisplay(Display):
-
-    def ui_filename(self):
-        return 'frontend/cavityDisplay.ui'
+class CavityDisplayGUI(Display):
 
     def __init__(self, parent=None, args=None):
-        super(CavityDisplay, self).__init__(parent=parent, args=args)
+        super().__init__(parent=parent, args=args,
+                         ui_filename="frontend/cavityDisplay.ui")
 
         embeddedDisplays: List[PyDMEmbeddedDisplay] = [self.ui.L0B,
                                                        self.ui.L1B,

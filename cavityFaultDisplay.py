@@ -42,11 +42,12 @@ class CavityFaultDisplay(Display):
             horizontalLayout.addWidget(statusLabel)
 
             verticalLayout.addLayout(horizontalLayout)
+            self.statusLabelCallback(statusLabel, fault)
 
             fault.pv.add_callback(partial(self.statusLabelCallback, statusLabel, fault))
 
     @staticmethod
-    def statusLabelCallback(label: QLabel, fault: Fault, value, **kw):
+    def statusLabelCallback(label: QLabel, fault: Fault, **kw):
         try:
             if fault.isFaulted():
                 label.setText("Faulted")

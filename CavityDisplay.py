@@ -1,18 +1,19 @@
 from dataclasses import dataclass
-
-from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import (QHBoxLayout)
-from epics import PV
 from functools import partial
-from pydm import Display
-from pydm.widgets import PyDMEmbeddedDisplay
 from typing import List
 
+from PyQt5.QtGui import QColor
+from PyQt5.QtWidgets import (QHBoxLayout, QWidget)
 from cavityWidget import CavityWidget
+from epics import PV
+from pydm import Display
+from pydm.widgets import PyDMEmbeddedDisplay
+
 from lcls_tools.devices.scLinac import LINAC_OBJECTS
 
 STATUS_SUFFIX = "CUDSTATUS"
 SEVERITY_SUFFIX = "CUDSEVR"
+DESCRIPTION_SUFFIX = "CUDDESC"
 
 GREEN_FILL_COLOR = QColor(9, 141, 0)
 YELLOW_FILL_COLOR = QColor(244, 230, 67)
@@ -86,6 +87,7 @@ class CavityDisplay(Display):
 
                     severityPV = PV(cavityObject.pvPrefix + SEVERITY_SUFFIX)
                     statusPV = PV(cavityObject.pvPrefix + STATUS_SUFFIX)
+                    descriptionPV = PV(cavityObject.pvPrefix + DESCRIPTION_SUFFIX)
 
                     # This line is meant to initialize the cavityWidget colors and shapes when first launched
                     self.severityCallback(cavityWidget, severityPV.value)
@@ -97,12 +99,18 @@ class CavityDisplay(Display):
                     # .add_callback is called when statusPV changes value
                     statusPV.add_callback(partial(self.statusCallback, cavityWidget))
 
+                    # .add_callback is called when descriptionPV
+                    descriptionPV.add_callback(partial(self.descriptionCallback, cavityWidget))
+
     # Updates shape depending on pv value
     def severityCallback(self, cavity_widget, value, **kw):
         self.changeShape(cavity_widget,
                          SHAPE_PARAMETER_DICT[value]
                          if value in SHAPE_PARAMETER_DICT
                          else SHAPE_PARAMETER_DICT[3])
+
+    def descriptionCallback(self, cavity_widget: QWidget, value, **kw):
+        cavity_widget.setToolTip(''.join(chr(i) for i in value))
 
     # Change PyDMDrawingPolygon color
     @staticmethod

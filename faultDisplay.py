@@ -1,7 +1,8 @@
-from PyQt5.QtWidgets import QHBoxLayout, QLabel, QVBoxLayout
 from functools import partial
-from pydm import Display
 from typing import List
+
+from PyQt5.QtWidgets import QHBoxLayout, QLabel, QVBoxLayout
+from pydm import Display
 
 from DisplayCavity import DISPLAY_LINAC_OBJECTS
 from Fault import Fault, PvInvalid
@@ -17,18 +18,22 @@ class FaultDisplay(Display):
 
         for linacObject in DISPLAY_LINAC_OBJECTS:
             for cryomoduleObject in linacObject.cryomodules.values():
+                # TODO get cryomodule related display
+                pass
+
                 for cavityObject in cryomoduleObject.cavities.values():
                     faults: List[Fault] = cavityObject.faults
 
                     # TODO this is not correct, I'm making a new Display object here but we want the one that comes out of the related display button
                     cavityFaultWindow = Display(ui_filename=self.getPath("cavityfaultdisplay.ui"),
-                                                macros={"cryomodule"  : cryomoduleObject.name,
+                                                macros={"cryomodule": cryomoduleObject.name,
                                                         "cavityNumber": cavityObject.number})
 
                     verticalLayout: QVBoxLayout = cavityFaultWindow.ui.cavityFaultLayout
 
                     for fault in faults:
                         horizontalLayout = QHBoxLayout()
+
                         statusLabel = QLabel()
 
                         codeLabel = QLabel()

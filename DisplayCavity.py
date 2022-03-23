@@ -1,7 +1,8 @@
-from epics import PV
 from typing import List
 
-from CavityDisplay import SEVERITY_SUFFIX, STATUS_SUFFIX
+from epics import PV
+
+from CavityDisplay import SEVERITY_SUFFIX, STATUS_SUFFIX, DESCRIPTION_SUFFIX
 from Fault import Fault, PvInvalid
 from constants import CSV_FAULTS
 from lcls_tools.devices.scLinac import Cavity, LINAC_TUPLES, Linac
@@ -12,6 +13,7 @@ class DisplayCavity(Cavity):
         super(DisplayCavity, self).__init__(cavityNum, rackObject)
         self.statusPV = PV(self.pvPrefix + STATUS_SUFFIX)
         self.severityPV = PV(self.pvPrefix + SEVERITY_SUFFIX)
+        self.descriptionPV = PV(self.pvPrefix + DESCRIPTION_SUFFIX)
 
         self.faults: List[Fault] = []
 
@@ -36,8 +38,8 @@ class DisplayCavity(Cavity):
                                      suffix=csvFault["PV Suffix"],
                                      okValue=csvFault["OK If Equal To"],
                                      faultValue=csvFault["Faulted If Equal To"],
-                                     description=csvFault["Description"],
-                                     name=csvFault["Name"], prefix=prefix))
+                                     longDescription=csvFault["Long Description"],
+                                     shortDescription=csvFault["Short Description"], prefix=prefix))
 
     def runThroughFaults(self):
         isOkay = True
@@ -57,8 +59,10 @@ class DisplayCavity(Cavity):
         if isOkay:
             self.statusPV.put("{num}".format(num=str(self.number)))
             self.severityPV.put(0)
+            self.descriptionPV.put("")
         else:
             self.statusPV.put(fault.tlc)
+            self.descriptionPV.put(fault.shortDescription)
             if not invalid:
                 self.severityPV.put(fault.severity)
             else:

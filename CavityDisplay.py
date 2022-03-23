@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 
 from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import (QHBoxLayout)
+from PyQt5.QtWidgets import QHBoxLayout
 from epics import PV
 from functools import partial
 from pydm import Display
-from pydm.widgets import PyDMEmbeddedDisplay
+from pydm.widgets import PyDMEmbeddedDisplay, PyDMRelatedDisplayButton, PyDMTemplateRepeater
 from typing import List
 
 from cavityWidget import CavityWidget
@@ -66,19 +66,20 @@ class CavityDisplay(Display):
             linacObject = LINAC_OBJECTS[index]
             print("loading {linac}".format(linac=linacObject.name))
 
-            linacHorizLayoutRepeater = linacEmbeddedDisplay.findChild(QHBoxLayout)
-            totalCryosInLinac = linacHorizLayoutRepeater.count()
+            linacHorizLayout = linacEmbeddedDisplay.findChild(QHBoxLayout)
+            totalCryosInLinac = linacHorizLayout.count()
 
             # linac will be a list of cryomodules
-            linac = []
-            for cryo in range(0, totalCryosInLinac):
-                linac.append(linacHorizLayoutRepeater.itemAt(cryo).widget())
+            cryoDisplayList: List[Display] = []
+            for itemIndex in range(totalCryosInLinac):
+                cryoDisplayList.append(linacHorizLayout.itemAt(itemIndex).widget())
 
-            for cryomodule in linac:
-                cmNumber = cryomodule.children()[1]  # cryo number pydmDisplayButton
-                cmTemplateRepeater = cryomodule.children()[2]  # template repeater of 8 cavities
+            for cryomoduleDisplay in cryoDisplayList:
+                cmButton: PyDMRelatedDisplayButton = cryomoduleDisplay.children()[1]
 
-                cryomoduleObject = linacObject.cryomodules[str(cmNumber.text())]
+                cmTemplateRepeater: PyDMTemplateRepeater = cryomoduleDisplay.children()[2]
+
+                cryomoduleObject = linacObject.cryomodules[str(cmButton.text())]
                 cavityWidgetList: List[CavityWidget] = cmTemplateRepeater.findChildren(CavityWidget)
 
                 for cavityWidget in cavityWidgetList:

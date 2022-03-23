@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>226</width>
+    <width>237</width>
     <height>44</height>
    </rect>
   </property>
@@ -49,7 +49,7 @@ color: rgb(255, 255, 255);
      </property>
      <property name="filenames" stdset="0">
       <stringlist>
-       <string>cavityfaultdisplay.ui</string>
+       <string>../cavityFaultDisplay.py</string>
       </stringlist>
      </property>
      <property name="showIcon" stdset="0">

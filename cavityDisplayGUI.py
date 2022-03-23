@@ -1,14 +1,14 @@
 from dataclasses import dataclass
-
-from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import QHBoxLayout
-from epics import PV
 from functools import partial
-from pydm import Display
-from pydm.widgets import PyDMEmbeddedDisplay, PyDMRelatedDisplayButton, PyDMTemplateRepeater
 from typing import List
 
+from PyQt5.QtGui import QColor
+from PyQt5.QtWidgets import QHBoxLayout, QWidget
 from cavityWidget import CavityWidget
+from epics import PV
+from pydm import Display
+from pydm.widgets import PyDMEmbeddedDisplay, PyDMRelatedDisplayButton, PyDMTemplateRepeater
+
 from lcls_tools.devices.scLinac import LINAC_OBJECTS
 
 STATUS_SUFFIX = "CUDSTATUS"

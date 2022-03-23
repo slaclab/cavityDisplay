@@ -1,8 +1,9 @@
-from epics import PV
 from typing import List
 
-from cavityDisplayGUI import SEVERITY_SUFFIX, STATUS_SUFFIX
+from epics import PV
+
 from Fault import Fault, PvInvalid
+from cavityDisplayGUI import SEVERITY_SUFFIX, STATUS_SUFFIX, DESCRIPTION_SUFFIX
 from constants import CSV_FAULTS
 from lcls_tools.devices.scLinac import Cavity, LINAC_TUPLES, Linac
 

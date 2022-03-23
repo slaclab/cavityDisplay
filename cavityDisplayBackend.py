@@ -1,6 +1,6 @@
 from time import time
 
-from DisplayCavity import DISPLAY_LINAC_OBJECTS
+from displayCavity import DISPLAY_LINAC_OBJECTS
 
 while True:
     start = time()

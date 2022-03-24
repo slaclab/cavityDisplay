@@ -92,11 +92,14 @@
      </property>
      <property name="filenames" stdset="0">
       <stringlist>
-       <string>3letterfaults.ui</string>
+       <string>../3letterfault.py</string>
       </stringlist>
      </property>
      <property name="showIcon" stdset="0">
       <bool>true</bool>
+     </property>
+     <property name="macros" stdset="0">
+      <stringlist/>
      </property>
      <property name="openInNewWindow" stdset="0">
       <bool>true</bool>

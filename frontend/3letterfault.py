@@ -6,11 +6,10 @@ from typing import List
 from displayCavity import DISPLAY_LINAC_OBJECTS
 from Fault import Fault, PvInvalid
 
-
-class CavityFaultDisplay(Display):
+class ThreeLetterFaultDisplay(Display):
     def __init__(self, parent=None, args=None, macros=None):
         super().__init__(parent=parent, args=args,
-                         ui_filename="frontend/cavityfaultdisplay.ui",
+                         ui_filename="frontend/3letterfaults.ui",
                          macros=macros)
 
         linacIdx = int(macros["linac"][1])
@@ -20,14 +19,14 @@ class CavityFaultDisplay(Display):
         cavityObject = DISPLAY_LINAC_OBJECTS[linacIdx].cryomodules[cryomoduleName].cavities[cavityNumber]
 
         faults: List[Fault] = cavityObject.faults
-        verticalLayout: QVBoxLayout = self.ui.cavityfaultslayout
+        verticalLayout: QVBoxLayout = self.ui.tlclayout
 
         for fault in faults:
             horizontalLayout = QHBoxLayout()
-            statusLabel = QLabel()
-            statusLabel.setStyleSheet("font-weight: bold")
-            statusLabel.setSizePolicy(QSizePolicy.MinimumExpanding,
-                                      QSizePolicy.MinimumExpanding)
+            descriptionLabel = QLabel()
+            descriptionLabel.setText(fault.description)
+            descriptionLabel.setSizePolicy(QSizePolicy.MinimumExpanding,
+                                           QSizePolicy.MinimumExpanding)
 
             codeLabel = QLabel()
             codeLabel.setText(fault.tlc)
@@ -39,22 +38,6 @@ class CavityFaultDisplay(Display):
 
             horizontalLayout.addWidget(codeLabel)
             horizontalLayout.addWidget(nameLabel)
-            horizontalLayout.addWidget(statusLabel)
+            horizontalLayout.addWidget(descriptionLabel)
 
             verticalLayout.addLayout(horizontalLayout)
-            self.statusLabelCallback(statusLabel, fault)
-
-            fault.pv.add_callback(partial(self.statusLabelCallback, statusLabel, fault))
-
-
-
-
-    @staticmethod
-    def statusLabelCallback(label: QLabel, fault: Fault, **kw):
-        try:
-            if fault.isFaulted():
-                label.setText("Faulted")
-            else:
-                label.setText("OK")
-        except PvInvalid:
-            label.setText("Invalid")

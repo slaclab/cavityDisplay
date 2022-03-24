@@ -1,10 +1,10 @@
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
 from functools import partial
 from pydm import Display
-from typing import List
+from typing import Dict
 
-from displayCavity import DISPLAY_LINAC_OBJECTS
 from Fault import Fault, PvInvalid
+from displayCavity import DISPLAY_LINAC_OBJECTS
 
 
 class CavityFaultDisplay(Display):
@@ -19,10 +19,10 @@ class CavityFaultDisplay(Display):
 
         cavityObject = DISPLAY_LINAC_OBJECTS[linacIdx].cryomodules[cryomoduleName].cavities[cavityNumber]
 
-        faults: List[Fault] = cavityObject.faults
+        faults: Dict[str, Fault] = cavityObject.faults
         verticalLayout: QVBoxLayout = self.ui.cavityfaultslayout
 
-        for fault in faults:
+        for fault in faults.values():
             horizontalLayout = QHBoxLayout()
             statusLabel = QLabel()
             statusLabel.setStyleSheet("font-weight: bold")

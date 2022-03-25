@@ -26,8 +26,7 @@ class CavityFaultDisplay(Display):
 
         for fault in faults.values():
             horizontalLayout = QHBoxLayout()
-            horizontalLayout.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
-            
+
             statusLabel = QLabel()
             statusLabel.setStyleSheet("font-weight: bold")
             statusLabel.setSizePolicy(QSizePolicy.MinimumExpanding,
@@ -35,20 +34,27 @@ class CavityFaultDisplay(Display):
 
             codeLabel = QLabel()
             codeLabel.setText(fault.tlc)
+            codeLabel.setMinimumSize(30, 30)
             codeLabel.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
 
             nameLabel = QLabel()
             nameLabel.setText(fault.name)
-            nameLabel.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
+            nameLabel.setMinimumSize(200, 30)
+            nameLabel.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
+            nameLabel.setWordWrap(True)
 
             horizontalLayout.addWidget(codeLabel)
             horizontalLayout.addWidget(nameLabel)
             horizontalLayout.addWidget(statusLabel)
 
+            horizontalLayout.setAlignment(Qt.AlignLeft | Qt.AlignHCenter)
+            horizontalLayout.setSpacing(50)
+
             verticalLayout.addLayout(horizontalLayout)
             self.statusLabelCallback(statusLabel, fault)
 
             fault.pv.add_callback(partial(self.statusLabelCallback, statusLabel, fault))
+        verticalLayout.setSpacing(10)
 
     @staticmethod
     def statusLabelCallback(label: QLabel, fault: Fault, **kw):

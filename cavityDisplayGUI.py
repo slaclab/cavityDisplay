@@ -92,7 +92,9 @@ class CavityDisplayGUI(Display):
                     statusPV = PV(cavityObject.pvPrefix + STATUS_SUFFIX)
                     descriptionPV = PV(cavityObject.pvPrefix + DESCRIPTION_SUFFIX)
 
-                    # These lines are meant to initialize the cavityWidget color, shape, and descriptionPV values when first launched
+                    # These lines are meant to initialize the cavityWidget color, shape, and descriptionPV values
+                    # when first launched. If we don't initialize the description PV, it would remain empty
+                    # until the pv value changes
                     self.severityCallback(cavityWidget, severityPV.value)
                     self.statusCallback(cavityWidget, statusPV.value)
                     self.descriptionCallback(cavityWidget, descriptionPV)

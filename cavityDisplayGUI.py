@@ -4,11 +4,11 @@ from typing import List
 
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QHBoxLayout, QWidget
-from cavityWidget import CavityWidget
 from epics import PV
 from pydm import Display
 from pydm.widgets import PyDMEmbeddedDisplay, PyDMRelatedDisplayButton, PyDMTemplateRepeater
 
+from cavityWidget import CavityWidget
 from lcls_tools.devices.scLinac import LINAC_OBJECTS
 
 STATUS_SUFFIX = "CUDSTATUS"
@@ -98,7 +98,7 @@ class CavityDisplayGUI(Display):
                     # .add_callback is called when statusPV changes value
                     statusPV.add_callback(partial(self.statusCallback, cavityWidget))
 
-                    # .add_callback is called when descriptionPV
+                    # .add_callback is called when descriptionPV changes value
                     descriptionPV.add_callback(partial(self.descriptionCallback, cavityWidget))
 
     # Updates shape depending on pv value
@@ -108,6 +108,8 @@ class CavityDisplayGUI(Display):
                          if value in SHAPE_PARAMETER_DICT
                          else SHAPE_PARAMETER_DICT[3])
 
+    # Change the hover text to show a description for the tlc fault
+    @staticmethod
     def descriptionCallback(self, cavity_widget: QWidget, value, **kw):
         cavity_widget.setToolTip(''.join(chr(i) for i in value))
 

@@ -95,7 +95,7 @@ class CavityDisplayGUI(Display):
                     # These lines are meant to initialize the cavityWidget color, shape, and descriptionPV values when first launched
                     self.severityCallback(cavityWidget, severityPV.value)
                     self.statusCallback(cavityWidget, statusPV.value)
-                    cavityWidget.setToolTip('initial fault description')
+                    self.descriptionCallback(cavityWidget, descriptionPV)
 
                     # .add_callback is called when severityPV changes value
                     severityPV.add_callback(partial(self.severityCallback, cavityWidget))
@@ -113,7 +113,7 @@ class CavityDisplayGUI(Display):
                          if value in SHAPE_PARAMETER_DICT
                          else SHAPE_PARAMETER_DICT[3])
 
-    # Change the hover text to show a description for the tlc fault
+    # Change the hover text of each cavity to show a description for the tlc fault
     @staticmethod
     def descriptionCallback(cavity_widget: QWidget, pv_name, **kw):
         shortFaultDescription = pv_name.get(as_string=True)

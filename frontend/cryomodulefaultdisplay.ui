@@ -101,9 +101,7 @@
       <string>TLC</string>
      </property>
      <property name="filenames" stdset="0">
-      <stringlist>
-       <string>tlcbuttonfileforcryopanel.py</string>
-      </stringlist>
+      <stringlist/>
      </property>
      <property name="openInNewWindow" stdset="0">
       <bool>true</bool>

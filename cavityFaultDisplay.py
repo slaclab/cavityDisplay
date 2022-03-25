@@ -1,7 +1,9 @@
-from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
 from functools import partial
-from pydm import Display
 from typing import Dict
+
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
+from pydm import Display
 
 from Fault import Fault, PvInvalid
 from displayCavity import DISPLAY_LINAC_OBJECTS
@@ -24,6 +26,8 @@ class CavityFaultDisplay(Display):
 
         for fault in faults.values():
             horizontalLayout = QHBoxLayout()
+            horizontalLayout.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+            
             statusLabel = QLabel()
             statusLabel.setStyleSheet("font-weight: bold")
             statusLabel.setSizePolicy(QSizePolicy.MinimumExpanding,
@@ -45,9 +49,6 @@ class CavityFaultDisplay(Display):
             self.statusLabelCallback(statusLabel, fault)
 
             fault.pv.add_callback(partial(self.statusLabelCallback, statusLabel, fault))
-
-
-
 
     @staticmethod
     def statusLabelCallback(label: QLabel, fault: Fault, **kw):

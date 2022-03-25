@@ -92,7 +92,7 @@
      </property>
      <property name="filenames" stdset="0">
       <stringlist>
-       <string>../3letterfault.py</string>
+       <string>3letterfault.py</string>
       </stringlist>
      </property>
      <property name="showIcon" stdset="0">

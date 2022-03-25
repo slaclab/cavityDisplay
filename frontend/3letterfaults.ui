@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>370</width>
-    <height>251</height>
+    <width>358</width>
+    <height>246</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,21 +27,15 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>344</width>
-        <height>225</height>
+        <width>332</width>
+        <height>220</height>
        </rect>
       </property>
-      <widget class="QWidget" name="verticalLayoutWidget">
-       <property name="geometry">
-        <rect>
-         <x>9</x>
-         <y>9</y>
-         <width>321</width>
-         <height>201</height>
-        </rect>
-       </property>
-       <layout class="QVBoxLayout" name="tlclayout"/>
-      </widget>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <layout class="QVBoxLayout" name="tlclayout"/>
+       </item>
+      </layout>
      </widget>
     </widget>
    </item>

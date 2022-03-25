@@ -1,10 +1,11 @@
-from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
-from functools import partial
-from pydm import Display
 from typing import List
 
+from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
+from pydm import Display
+
+from Fault import Fault
 from displayCavity import DISPLAY_LINAC_OBJECTS
-from Fault import Fault, PvInvalid
+
 
 class ThreeLetterFaultDisplay(Display):
     def __init__(self, parent=None, args=None, macros=None):
@@ -21,7 +22,7 @@ class ThreeLetterFaultDisplay(Display):
         faults: List[Fault] = cavityObject.faults
         verticalLayout: QVBoxLayout = self.ui.tlclayout
 
-        for fault in faults:
+        for fault in faults.values():
             horizontalLayout = QHBoxLayout()
             descriptionLabel = QLabel()
             descriptionLabel.setText(fault.description)

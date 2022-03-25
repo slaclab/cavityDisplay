@@ -24,6 +24,32 @@ class CavityFaultDisplay(Display):
         faults: Dict[str, Fault] = cavityObject.faults
         verticalLayout: QVBoxLayout = self.ui.cavityfaultslayout
 
+        headerLayout = QHBoxLayout()
+        statusheaderLabel = QLabel()
+        statusheaderLabel.setText("Status")
+        statusheaderLabel.setStyleSheet("text-decoration: underline")
+
+        nameheaderLabel = QLabel()
+        nameheaderLabel.setText("Name")
+        nameheaderLabel.setMinimumSize(200, 30)
+        nameheaderLabel.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
+        nameheaderLabel.setStyleSheet("text-decoration: underline")
+
+        codeheaderLabel = QLabel()
+        codeheaderLabel.setText("Code")
+        codeheaderLabel.setMinimumSize(30, 30)
+        codeheaderLabel.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
+        codeheaderLabel.setStyleSheet("text-decoration: underline")
+
+        headerLayout.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
+
+        headerLayout.addWidget(codeheaderLabel)
+        headerLayout.addWidget(nameheaderLabel)
+        headerLayout.addWidget(statusheaderLabel)
+        headerLayout.setSpacing(50)
+
+        verticalLayout.addLayout(headerLayout)
+
         for fault in faults.values():
             horizontalLayout = QHBoxLayout()
 
@@ -47,9 +73,8 @@ class CavityFaultDisplay(Display):
             horizontalLayout.addWidget(nameLabel)
             horizontalLayout.addWidget(statusLabel)
 
-            horizontalLayout.setAlignment(Qt.AlignLeft | Qt.AlignHCenter)
             horizontalLayout.setSpacing(50)
-
+            horizontalLayout.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
             verticalLayout.addLayout(horizontalLayout)
             self.statusLabelCallback(statusLabel, fault)
 

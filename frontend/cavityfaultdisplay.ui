@@ -32,11 +32,24 @@
        <bold>true</bold>
       </font>
      </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
      <property name="text">
       <string>CM ${cryomodule} Cavity 0${cavityNumber} Faults</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
@@ -51,7 +64,7 @@
         <x>0</x>
         <y>0</y>
         <width>573</width>
-        <height>687</height>
+        <height>672</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -92,7 +105,7 @@
      </property>
      <property name="filenames" stdset="0">
       <stringlist>
-       <string>3letterfault.py</string>
+       <string>tlcbuttonfileforcryopanel.py</string>
       </stringlist>
      </property>
      <property name="showIcon" stdset="0">

@@ -1,6 +1,8 @@
 from functools import partial
-from pydm import Display
 from typing import Dict
+
+from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
+from pydm import Display
 
 from Fault import Fault, PvInvalid
 from displayCavity import DISPLAY_LINAC_OBJECTS

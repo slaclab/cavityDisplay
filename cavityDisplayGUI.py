@@ -78,7 +78,7 @@ class CavityDisplayGUI(Display):
 
             for cryomoduleDisplay in cryoDisplayList:
                 cmButton: PyDMRelatedDisplayButton = cryomoduleDisplay.children()[1]
-                cmButton.setToolTip('cryomodule display button')
+                cmButton.setToolTip('cryomodule expert display')
 
                 cmTemplateRepeater: PyDMTemplateRepeater = cryomoduleDisplay.children()[2]
 
@@ -117,8 +117,8 @@ class CavityDisplayGUI(Display):
 
     # Change the hover text of each cavity to show a description for the tlc fault
     @staticmethod
-    def descriptionCallback(cavity_widget: QWidget, pv_name, **kw):
-        shortFaultDescription = pv_name.get(as_string=True)
+    def descriptionCallback(cavity_widget: QWidget, pv_object, **kw):
+        shortFaultDescription = pv_object.get(as_string=True)
         cavity_widget.setToolTip(shortFaultDescription)
 
     # Change PyDMDrawingPolygon color

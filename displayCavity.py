@@ -1,12 +1,12 @@
 from collections import OrderedDict
+from typing import List, Tuple
 
 from epics import PV
-from typing import List, Tuple
+from lcls_tools.devices.scLinac import Cavity, Cryomodule, LINAC_TUPLES, Linac
 
 from Fault import Fault, PV_TIMEOUT, PvInvalid
 from cavityDisplayGUI import SEVERITY_SUFFIX, STATUS_SUFFIX
 from constants import CSV_FAULTS
-from lcls_tools.devices.scLinac import Cavity, Cryomodule, LINAC_TUPLES, Linac
 
 
 class DisplayCavity(Cavity):
@@ -39,8 +39,8 @@ class DisplayCavity(Cavity):
                                      suffix=csvFault["PV Suffix"],
                                      okValue=csvFault["OK If Equal To"],
                                      faultValue=csvFault["Faulted If Equal To"],
-                                     description=csvFault["Description"],
-                                     name=csvFault["Name"], prefix=prefix)
+                                     description=csvFault["Long Description"],
+                                     name=csvFault["Short Description"], prefix=prefix)
 
     def runThroughFaults(self):
         isOkay = True

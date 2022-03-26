@@ -133,3 +133,4 @@ class CavityDisplayGUI(Display):
     @staticmethod
     def statusCallback(cavity_widget, value, **kw):
         cavity_widget.cavityText = value
+        cavity_widget.update()

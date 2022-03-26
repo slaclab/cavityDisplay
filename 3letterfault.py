@@ -1,5 +1,6 @@
 from typing import List
 
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
 from pydm import Display
 
@@ -47,22 +48,25 @@ class ThreeLetterFaultDisplay(Display):
         headerLayout.addWidget(descriptionheaderLabel)
         headerLayout.setSpacing(50)
 
+        verticalLayout.addLayout(headerLayout)
+
         for fault in faults.values():
             horizontalLayout = QHBoxLayout()
             descriptionLabel = QLabel()
             descriptionLabel.setText(fault.description)
-            descriptionLabel.setMinimumSize(300, 30)
+            descriptionLabel.setMinimumSize(300, 50)
             descriptionLabel.setSizePolicy(QSizePolicy.Minimum,
                                            QSizePolicy.Minimum)
             descriptionLabel.setWordWrap(True)
 
             codeLabel = QLabel()
             codeLabel.setText(fault.tlc)
+            codeLabel.setMinimumSize(30, 30)
             codeLabel.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
 
             nameLabel = QLabel()
             nameLabel.setText(fault.name)
-            nameLabel.setMinimumSize(200, 30)
+            nameLabel.setMinimumSize(200, 50)
             nameLabel.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
             nameLabel.setWordWrap(True)
 
@@ -71,6 +75,6 @@ class ThreeLetterFaultDisplay(Display):
             horizontalLayout.addWidget(descriptionLabel)
 
             horizontalLayout.setSpacing(50)
-            horizontalLayout.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
+            horizontalLayout.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
             verticalLayout.addLayout(horizontalLayout)
         verticalLayout.setSpacing(10)

@@ -9,12 +9,12 @@ class PvInvalid(Exception):
 
 
 class Fault:
-    def __init__(self, tlc, severity, suffix, okValue, faultValue, description,
-                 name, prefix):
+    def __init__(self, tlc, severity, suffix, okValue, faultValue, longDescription,
+                 shortDescription, prefix):
         self.tlc = tlc
         self.severity = int(severity)
-        self.description = description
-        self.name = name
+        self.longDescription = longDescription
+        self.shortDescription = shortDescription
         self.okValue = float(okValue) if okValue else None
         self.faultValue = float(faultValue) if faultValue else None
         self.suffix = suffix

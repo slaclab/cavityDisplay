@@ -63,14 +63,14 @@ class CavityFaultDisplay(Display):
             codeLabel.setMinimumSize(30, 30)
             codeLabel.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
 
-            nameLabel = QLabel()
-            nameLabel.setText(fault.name)
-            nameLabel.setMinimumSize(200, 30)
-            nameLabel.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
-            nameLabel.setWordWrap(True)
+            shortDescriptionLabel = QLabel()
+            shortDescriptionLabel.setText(fault.shortDescription)
+            shortDescriptionLabel.setMinimumSize(200, 30)
+            shortDescriptionLabel.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
+            shortDescriptionLabel.setWordWrap(True)
 
             horizontalLayout.addWidget(codeLabel)
-            horizontalLayout.addWidget(nameLabel)
+            horizontalLayout.addWidget(shortDescriptionLabel)
             horizontalLayout.addWidget(statusLabel)
 
             horizontalLayout.setSpacing(50)

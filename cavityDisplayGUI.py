@@ -1,18 +1,22 @@
+import sys
 from dataclasses import dataclass
-
-from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import QHBoxLayout
-from epics import PV
 from functools import partial
-from pydm import Display
-from pydm.widgets import PyDMEmbeddedDisplay, PyDMRelatedDisplayButton, PyDMTemplateRepeater
 from typing import List
 
-from cavityWidget import CavityWidget
+from PyQt5.QtGui import QColor
+from PyQt5.QtWidgets import QHBoxLayout, QWidget
+from epics import PV
+from pydm import Display
+from pydm.widgets import PyDMEmbeddedDisplay, PyDMRelatedDisplayButton, PyDMTemplateRepeater
+
 from lcls_tools.devices.scLinac import LINAC_OBJECTS
+
+sys.path.insert(0, './frontend')
+from cavityWidget import CavityWidget
 
 STATUS_SUFFIX = "CUDSTATUS"
 SEVERITY_SUFFIX = "CUDSEVR"
+DESCRIPTION_SUFFIX = "CUDDESC"
 
 GREEN_FILL_COLOR = QColor(9, 141, 0)
 YELLOW_FILL_COLOR = QColor(244, 230, 67)
@@ -74,6 +78,7 @@ class CavityDisplayGUI(Display):
 
             for cryomoduleDisplay in cryoDisplayList:
                 cmButton: PyDMRelatedDisplayButton = cryomoduleDisplay.children()[1]
+                cmButton.setToolTip('cryomodule expert display')
 
                 cmTemplateRepeater: PyDMTemplateRepeater = cryomoduleDisplay.children()[2]
 
@@ -85,10 +90,14 @@ class CavityDisplayGUI(Display):
 
                     severityPV = PV(cavityObject.pvPrefix + SEVERITY_SUFFIX)
                     statusPV = PV(cavityObject.pvPrefix + STATUS_SUFFIX)
+                    descriptionPV = PV(cavityObject.pvPrefix + DESCRIPTION_SUFFIX)
 
-                    # This line is meant to initialize the cavityWidget colors and shapes when first launched
+                    # These lines are meant to initialize the cavityWidget color, shape, and descriptionPV values
+                    # when first launched. If we don't initialize the description PV, it would remain empty
+                    # until the pv value changes
                     self.severityCallback(cavityWidget, severityPV.value)
                     self.statusCallback(cavityWidget, statusPV.value)
+                    self.descriptionCallback(cavityWidget, descriptionPV)
 
                     # .add_callback is called when severityPV changes value
                     severityPV.add_callback(partial(self.severityCallback, cavityWidget))
@@ -96,12 +105,21 @@ class CavityDisplayGUI(Display):
                     # .add_callback is called when statusPV changes value
                     statusPV.add_callback(partial(self.statusCallback, cavityWidget))
 
+                    # .add_callback is called when descriptionPV changes value
+                    descriptionPV.add_callback(partial(self.descriptionCallback, cavityWidget, descriptionPV))
+
     # Updates shape depending on pv value
     def severityCallback(self, cavity_widget, value, **kw):
         self.changeShape(cavity_widget,
                          SHAPE_PARAMETER_DICT[value]
                          if value in SHAPE_PARAMETER_DICT
                          else SHAPE_PARAMETER_DICT[3])
+
+    # Change the hover text of each cavity to show a description for the tlc fault
+    @staticmethod
+    def descriptionCallback(cavity_widget: QWidget, pv_object, **kw):
+        shortFaultDescription = pv_object.get(as_string=True)
+        cavity_widget.setToolTip(shortFaultDescription)
 
     # Change PyDMDrawingPolygon color
     @staticmethod
@@ -115,3 +133,4 @@ class CavityDisplayGUI(Display):
     @staticmethod
     def statusCallback(cavity_widget, value, **kw):
         cavity_widget.cavityText = value
+        cavity_widget.update()

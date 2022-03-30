@@ -1,4 +1,6 @@
+from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
 from functools import partial
+from pydm import Display
 from typing import Dict
 
 from PyQt5.QtCore import Qt

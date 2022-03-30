@@ -1,13 +1,13 @@
-import sys
 from dataclasses import dataclass
-from functools import partial
-from typing import List
 
+import sys
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QHBoxLayout, QWidget
 from epics import PV
+from functools import partial
 from pydm import Display
 from pydm.widgets import PyDMEmbeddedDisplay, PyDMRelatedDisplayButton, PyDMTemplateRepeater
+from typing import List
 
 from lcls_tools.devices.scLinac import LINAC_OBJECTS
 
@@ -17,6 +17,7 @@ from cavityWidget import CavityWidget
 STATUS_SUFFIX = "CUDSTATUS"
 SEVERITY_SUFFIX = "CUDSEVR"
 DESCRIPTION_SUFFIX = "CUDDESC"
+RF_STATUS_SUFFIX = "RFSTATE"
 
 GREEN_FILL_COLOR = QColor(9, 141, 0)
 YELLOW_FILL_COLOR = QColor(244, 230, 67)
@@ -91,6 +92,7 @@ class CavityDisplayGUI(Display):
                     severityPV = PV(cavityObject.pvPrefix + SEVERITY_SUFFIX)
                     statusPV = PV(cavityObject.pvPrefix + STATUS_SUFFIX)
                     descriptionPV = PV(cavityObject.pvPrefix + DESCRIPTION_SUFFIX)
+                    rfStatePV = PV(cavityObject.pvPrefix + RF_STATUS_SUFFIX)
 
                     # These lines are meant to initialize the cavityWidget color, shape, and descriptionPV values
                     # when first launched. If we don't initialize the description PV, it would remain empty
@@ -98,6 +100,7 @@ class CavityDisplayGUI(Display):
                     self.severityCallback(cavityWidget, severityPV.value)
                     self.statusCallback(cavityWidget, statusPV.value)
                     self.descriptionCallback(cavityWidget, descriptionPV)
+                    self.rfStatusCallback(cavityWidget, rfStatePV)
 
                     # .add_callback is called when severityPV changes value
                     severityPV.add_callback(partial(self.severityCallback, cavityWidget))
@@ -107,6 +110,11 @@ class CavityDisplayGUI(Display):
 
                     # .add_callback is called when descriptionPV changes value
                     descriptionPV.add_callback(partial(self.descriptionCallback, cavityWidget, descriptionPV))
+
+                    rfStatePV.add_callback(partial(self.rfStatusCallback, cavityWidget))
+
+    def rfStatusCallback(self, cavityWidget: CavityWidget, value: int, **kw):
+        cavityWidget.underline = True if value == 1 else False
 
     # Updates shape depending on pv value
     def severityCallback(self, cavity_widget, value, **kw):

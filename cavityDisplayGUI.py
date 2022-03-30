@@ -100,7 +100,7 @@ class CavityDisplayGUI(Display):
                     self.severityCallback(cavityWidget, severityPV.value)
                     self.statusCallback(cavityWidget, statusPV.value)
                     self.descriptionCallback(cavityWidget, descriptionPV)
-                    self.rfStatusCallback(cavityWidget, rfStatePV)
+                    self.rfStatusCallback(cavityWidget, rfStatePV.value)
 
                     # .add_callback is called when severityPV changes value
                     severityPV.add_callback(partial(self.severityCallback, cavityWidget))
@@ -113,11 +113,12 @@ class CavityDisplayGUI(Display):
 
                     rfStatePV.add_callback(partial(self.rfStatusCallback, cavityWidget))
 
-    def rfStatusCallback(self, cavityWidget: CavityWidget, value: int, **kw):
+    @staticmethod
+    def rfStatusCallback(cavityWidget: CavityWidget, value: int, **kw):
         cavityWidget.underline = True if value == 1 else False
 
     # Updates shape depending on pv value
-    def severityCallback(self, cavity_widget, value, **kw):
+    def severityCallback(self, cavity_widget: CavityWidget, value: int, **kw):
         self.changeShape(cavity_widget,
                          SHAPE_PARAMETER_DICT[value]
                          if value in SHAPE_PARAMETER_DICT
@@ -125,7 +126,7 @@ class CavityDisplayGUI(Display):
 
     # Change the hover text of each cavity to show a description for the tlc fault
     @staticmethod
-    def descriptionCallback(cavity_widget: QWidget, pv_object, **kw):
+    def descriptionCallback(cavity_widget: QWidget, pv_object: PV, **kw):
         shortFaultDescription = pv_object.get(as_string=True)
         cavity_widget.setToolTip(shortFaultDescription)
 

@@ -116,6 +116,7 @@ class CavityDisplayGUI(Display):
     @staticmethod
     def rfStatusCallback(cavityWidget: CavityWidget, value: int, **kw):
         cavityWidget.underline = True if value == 1 else False
+        cavityWidget.update()
 
     # Updates shape depending on pv value
     def severityCallback(self, cavity_widget: CavityWidget, value: int, **kw):

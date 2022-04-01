@@ -7,8 +7,8 @@ from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QHBoxLayout, QWidget
 from epics import PV
 from pydm import Display
-from pydm.widgets import PyDMEmbeddedDisplay, PyDMRelatedDisplayButton, PyDMTemplateRepeater, \
-    PyDMDrawingLine
+from pydm.widgets import (PyDMEmbeddedDisplay, PyDMRelatedDisplayButton, PyDMTemplateRepeater,
+                          PyDMDrawingLine)
 
 from lcls_tools.devices.scLinac import LINAC_OBJECTS
 
@@ -94,6 +94,9 @@ class CavityDisplayGUI(Display):
                     descriptionPV = PV(cavityObject.pvPrefix + DESCRIPTION_SUFFIX)
                     rfStatePV = PV(cavityObject.pvPrefix + RF_STATUS_SUFFIX)
 
+                    # Set hover text of RF status bar to RFSTATE pv
+                    rfStatusBar.setToolTip(rfStatusBar.accessibleName())
+
                     # These lines are meant to initialize the cavityWidget color, shape, and descriptionPV values
                     # when first launched. If we don't initialize the description PV, it would remain empty
                     # until the pv value changes
@@ -115,15 +118,15 @@ class CavityDisplayGUI(Display):
                     rfStatePV.add_callback(partial(self.rfStatusCallback, rfStatusBar))
 
     # Underlines cavity if RF is on
-    def rfStatusCallback(self, rf_StatusBar, value: int, **kw):
+    @staticmethod
+    def rfStatusCallback(rf_StatusBar, value: int, **kw):
         if value == 1:
             rf_StatusBar.penColor = BLUE_FILL_COLOR
         elif value == 0:
             rf_StatusBar.penColor = DARK_GRAY_COLOR
         else:
             print("RFSTATUS pv value is not On or Off, nor disconnected")
-
-        # cavityWidget.underline = True if value == 1 else False
+        rf_StatusBar.update()
 
     # Updates shape depending on pv value
     def severityCallback(self, cavity_widget: CavityWidget, value: int, **kw):

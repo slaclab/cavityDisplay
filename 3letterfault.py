@@ -1,11 +1,23 @@
-from typing import List
+from collections import OrderedDict
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
 from pydm import Display
 
 from Fault import Fault
-from displayCavity import DISPLAY_LINAC_OBJECTS
+from constants import CSV_FAULTS
+
+faults = OrderedDict()
+
+for csvFault in CSV_FAULTS:
+    tlc = csvFault["Three Letter Code"]
+    faults[tlc] = Fault(tlc=tlc,
+                        severity=csvFault["Severity"],
+                        suffix=csvFault["PV Suffix"],
+                        okValue=csvFault["OK If Equal To"],
+                        faultValue=csvFault["Faulted If Equal To"],
+                        longDescription=csvFault["Long Description"],
+                        shortDescription=csvFault["Short Description"], prefix=csvFault["PV Prefix"])
 
 
 class ThreeLetterFaultDisplay(Display):
@@ -14,13 +26,6 @@ class ThreeLetterFaultDisplay(Display):
                          ui_filename="frontend/3letterfaults.ui",
                          macros=macros)
 
-        linacIdx = int(macros["linac"][1])
-        cryomoduleName = macros["cryoNum"]
-        cavityNumber = macros["cavityNumber"]
-
-        cavityObject = DISPLAY_LINAC_OBJECTS[linacIdx].cryomodules[cryomoduleName].cavities[cavityNumber]
-
-        faults: List[Fault] = cavityObject.faults
         verticalLayout: QVBoxLayout = self.ui.tlclayout
 
         headerLayout = QHBoxLayout()

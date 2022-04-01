@@ -36,10 +36,28 @@
     <number>3</number>
    </property>
    <item row="0" column="0">
-    <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1">
+    <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,1">
      <property name="spacing">
       <number>0</number>
      </property>
+     <item alignment="Qt::AlignRight">
+      <widget class="PyDMRelatedDisplayButton" name="TLC_Button">
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="text">
+        <string>TLC</string>
+       </property>
+       <property name="filenames" stdset="0">
+        <stringlist>
+         <string>3letterfault.py</string>
+        </stringlist>
+       </property>
+       <property name="openInNewWindow" stdset="0">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,4,11">
        <property name="spacing">
@@ -120,6 +138,11 @@
    <class>PyDMEmbeddedDisplay</class>
    <extends>QFrame</extends>
    <header>pydm.widgets.embedded_display</header>
+  </customwidget>
+  <customwidget>
+   <class>PyDMRelatedDisplayButton</class>
+   <extends>QPushButton</extends>
+   <header>pydm.widgets.related_display_button</header>
   </customwidget>
  </customwidgets>
  <resources/>

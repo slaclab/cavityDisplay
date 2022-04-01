@@ -77,9 +77,32 @@
      </property>
     </widget>
    </item>
+   <item alignment="Qt::AlignRight">
+    <widget class="PyDMRelatedDisplayButton" name="tlc_Button">
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="text">
+      <string>TLC</string>
+     </property>
+     <property name="filenames" stdset="0">
+      <stringlist>
+       <string>3letterfault.py</string>
+      </stringlist>
+     </property>
+     <property name="openInNewWindow" stdset="0">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>PyDMRelatedDisplayButton</class>
+   <extends>QPushButton</extends>
+   <header>pydm.widgets.related_display_button</header>
+  </customwidget>
   <customwidget>
    <class>PyDMTemplateRepeater</class>
    <extends>QFrame</extends>

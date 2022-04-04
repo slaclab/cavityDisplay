@@ -53,7 +53,7 @@ class ThreeLetterFaultDisplay(Display):
         for fault in faults.values():
             horizontalLayout = QHBoxLayout()
             descriptionLabel = QLabel()
-            descriptionLabel.setText(fault.description)
+            descriptionLabel.setText(fault.longDescription)
             descriptionLabel.setMinimumSize(300, 50)
             descriptionLabel.setSizePolicy(QSizePolicy.Minimum,
                                            QSizePolicy.Minimum)
@@ -65,7 +65,7 @@ class ThreeLetterFaultDisplay(Display):
             codeLabel.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
 
             nameLabel = QLabel()
-            nameLabel.setText(fault.name)
+            nameLabel.setText(fault.shortDescription)
             nameLabel.setMinimumSize(200, 50)
             nameLabel.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
             nameLabel.setWordWrap(True)

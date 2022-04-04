@@ -1,9 +1,12 @@
+from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
 from functools import partial
+from pydm import Display
 from typing import Dict
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
 from pydm import Display
+from typing import Dict
 
 from Fault import Fault, PvInvalid
 from displayCavity import DISPLAY_LINAC_OBJECTS
@@ -63,14 +66,14 @@ class CavityFaultDisplay(Display):
             codeLabel.setMinimumSize(30, 30)
             codeLabel.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
 
-            nameLabel = QLabel()
-            nameLabel.setText(fault.name)
-            nameLabel.setMinimumSize(200, 30)
-            nameLabel.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
-            nameLabel.setWordWrap(True)
+            shortDescriptionLabel = QLabel()
+            shortDescriptionLabel.setText(fault.shortDescription)
+            shortDescriptionLabel.setMinimumSize(200, 30)
+            shortDescriptionLabel.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
+            shortDescriptionLabel.setWordWrap(True)
 
             horizontalLayout.addWidget(codeLabel)
-            horizontalLayout.addWidget(nameLabel)
+            horizontalLayout.addWidget(shortDescriptionLabel)
             horizontalLayout.addWidget(statusLabel)
 
             horizontalLayout.setSpacing(50)

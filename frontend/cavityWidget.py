@@ -1,6 +1,6 @@
+from PyQt5.QtGui import QColor, QFont, QFontMetrics, QPainter, QPen
 from pydm.widgets.drawing import PyDMDrawingPolygon
-from qtpy.QtCore import Property, Qt, QRect
-from PyQt5.QtGui import QColor, QPen, QFontMetrics
+from qtpy.QtCore import Property as qtProperty, QRect, Qt
 
 
 class CavityWidget(PyDMDrawingPolygon):
@@ -8,12 +8,13 @@ class CavityWidget(PyDMDrawingPolygon):
         super(CavityWidget, self).__init__(parent, init_channel)
         self._num_points = 4
         self._cavityText = "TEXT"
+        self._underline = False
         self._pen = QPen(QColor(46, 248, 10))  # Shape's border color
         self._rotation = 0
         self._brush.setColor(QColor(201, 255, 203))  # Shape's fill color
         self._pen.setWidth(5.0)
 
-    @Property(str)
+    @qtProperty(str)
     def cavityText(self):
         return self._cavityText
 
@@ -21,7 +22,15 @@ class CavityWidget(PyDMDrawingPolygon):
     def cavityText(self, text):
         self._cavityText = text
 
-    def draw_item(self, painter):
+    @qtProperty(bool)
+    def underline(self):
+        return self._underline
+
+    @underline.setter
+    def underline(self, underline: bool):
+        self._underline = underline
+
+    def draw_item(self, painter: QPainter):
         super(CavityWidget, self).draw_item(painter)
         x, y, w, h = self.get_bounds()
         rect = QRect(x, y, w, h)
@@ -34,8 +43,13 @@ class CavityWidget(PyDMDrawingPolygon):
         painter.scale(sx, sy)
         painter.translate(-rect.center())
 
-        pen = QPen(QColor(240, 240, 240))  # Text color
+        # Text color
+        pen = QPen(QColor(240, 240, 240))
         pen.setWidth(5.0)
+
+        font = QFont()
+        font.setUnderline(self.underline)
+        painter.setFont(font)
 
         painter.setPen(pen)
         painter.drawText(rect, Qt.AlignCenter, self.cavityText)

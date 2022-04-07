@@ -2,11 +2,11 @@ from collections import OrderedDict
 from typing import List, Tuple
 
 from epics import PV
-from lcls_tools.devices.scLinac import Cavity, Cryomodule, LINAC_TUPLES, Linac
 
-from Fault import Fault, PV_TIMEOUT, PvInvalid
+from Fault import Fault, PvInvalid
 from cavityDisplayGUI import SEVERITY_SUFFIX, STATUS_SUFFIX, DESCRIPTION_SUFFIX
 from constants import CSV_FAULTS
+from lcls_tools.devices.scLinac import Cavity, Cryomodule, LINAC_TUPLES, Linac
 
 
 class DisplayCavity(Cavity):
@@ -17,9 +17,7 @@ class DisplayCavity(Cavity):
         self.descriptionPV = PV(self.pvPrefix + DESCRIPTION_SUFFIX)
 
         self.faults: OrderedDict[str, Fault] = OrderedDict()
-
-        for csvFault in CSV_FAULTS:
-
+        for rowNumber, csvFault in enumerate(CSV_FAULTS):
             if csvFault["Level"] == "RACK":
 
                 # Rack A cavities don't care about faults for Rack B and vice versa
@@ -34,14 +32,16 @@ class DisplayCavity(Cavity):
                                                   RACK=self.rack.rackName,
                                                   CAVITY=self.number)
 
-            tlc = csvFault["Three Letter Code"]
-            self.faults[tlc] = Fault(tlc=tlc,
-                                     severity=csvFault["Severity"],
-                                     suffix=csvFault["PV Suffix"],
-                                     okValue=csvFault["OK If Equal To"],
-                                     faultValue=csvFault["Faulted If Equal To"],
-                                     longDescription=csvFault["Long Description"],
-                                     shortDescription=csvFault["Short Description"], prefix=prefix)
+            key = (hash(csvFault["Rack"]) ^ hash(csvFault["Faulted If Equal To"])
+                   ^ hash(csvFault["OK If Equal To"]) ^ hash(csvFault["Three Letter Code"]))
+            # setting key of faults dictionary to be row number b/c it's unique (i.e. not repeated)
+            self.faults[rowNumber] = Fault(tlc=csvFault["Three Letter Code"],
+                                           severity=csvFault["Severity"],
+                                           suffix=csvFault["PV Suffix"],
+                                           okValue=csvFault["OK If Equal To"],
+                                           faultValue=csvFault["Faulted If Equal To"],
+                                           longDescription=csvFault["Long Description"],
+                                           shortDescription=csvFault["Short Description"], prefix=prefix)
 
     def runThroughFaults(self):
         isOkay = True
@@ -88,6 +88,7 @@ HL_CAVITY_NUMBER_PAIRS: List[Tuple[int, int]] = [(1, 5), (2, 6), (3, 7), (4, 8)]
 
 # This hard coding is unfortunate, but I don't see any other way of handling the
 # HL SSA PVs
+'''
 for (leader, follower) in HL_CAVITY_NUMBER_PAIRS:
     ssaTLC = "SSA"
     ssaPVSuffix = "SSA:AlarmSummary.SEVR"
@@ -98,3 +99,4 @@ for (leader, follower) in HL_CAVITY_NUMBER_PAIRS:
     leadingCavityH2 = h2.cavities[leader]
     h2.cavities[follower].faults[ssaTLC].pv = PV(leadingCavityH2.pvPrefix + ssaPVSuffix,
                                                  connection_timeout=PV_TIMEOUT)
+'''

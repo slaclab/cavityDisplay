@@ -9,15 +9,14 @@ from constants import CSV_FAULTS
 
 faults = OrderedDict()
 
-for csvFault in CSV_FAULTS:
-    tlc = csvFault["Three Letter Code"]
-    faults[tlc] = Fault(tlc=tlc,
-                        severity=csvFault["Severity"],
-                        suffix=csvFault["PV Suffix"],
-                        okValue=csvFault["OK If Equal To"],
-                        faultValue=csvFault["Faulted If Equal To"],
-                        longDescription=csvFault["Long Description"],
-                        shortDescription=csvFault["Short Description"], prefix=csvFault["PV Prefix"])
+for rowNumber, csvFault in enumerate(CSV_FAULTS):
+    faults[rowNumber] = Fault(tlc=csvFault["Three Letter Code"],
+                              severity=csvFault["Severity"],
+                              suffix=csvFault["PV Suffix"],
+                              okValue=csvFault["OK If Equal To"],
+                              faultValue=csvFault["Faulted If Equal To"],
+                              longDescription=csvFault["Long Description"],
+                              shortDescription=csvFault["Short Description"], prefix=csvFault["PV Prefix"])
 
 
 class ThreeLetterFaultDisplay(Display):

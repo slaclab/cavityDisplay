@@ -11,7 +11,7 @@
 3,0,NIRP or individual SSA interlock,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,,,,,,NIRP or other individual SSA interlocks like PPS,12/7/21 The group decided to not have this line
 3,1,SSA Permit,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,SSA_LTCH,0,,SSP,2,SSA permit to turn on faulted,
 3,2,SSA Faulted,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,SSA:AlarmSummary.SEVR,,3,SSA,2,SSA not on,
-3,2,SSA Faulted,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,SSA:AlarmSummary.SEVR,,2,SSA,2,SSA not on,more 
+3,2,SSA Faulted,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,SSA:AlarmSummary.SEVR,,2,SSA,2,SSA not on,more
 3,3,LLRF Frequency Offset,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,FREQ_OFFSET.SEVR,0,,FRO,2,LLRF Frequency is offset from nominal - look at PV severity. LLRF has shifted the frequency,
 3,4,Cryo Summary,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,CRYO_LTCH,0,,CSI,2,"CM Cryo Summary (He pressure, He Level, Cryo Heartbeat, and CP Ready) faulted",we need to find out from andrew where he's alarming (what limits is he using)
 4,1,Resonance/Interlock Link,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0,RESLINK_LTCH,0,,RLK,2,Resonance/ Interlock Link,

@@ -3,9 +3,9 @@ from typing import List, Tuple
 
 from epics import PV
 
-from Fault import Fault, PvInvalid
+from Fault import Fault, PvInvalid, PV_TIMEOUT
 from cavityDisplayGUI import SEVERITY_SUFFIX, STATUS_SUFFIX, DESCRIPTION_SUFFIX
-from constants import CSV_FAULTS
+from constants import CSV_FAULTS, displayHash
 from lcls_tools.devices.scLinac import Cavity, Cryomodule, LINAC_TUPLES, Linac
 
 
@@ -16,32 +16,35 @@ class DisplayCavity(Cavity):
         self.severityPV = PV(self.pvPrefix + SEVERITY_SUFFIX)
         self.descriptionPV = PV(self.pvPrefix + DESCRIPTION_SUFFIX)
 
-        self.faults: OrderedDict[str, Fault] = OrderedDict()
-        for rowNumber, csvFault in enumerate(CSV_FAULTS):
-            if csvFault["Level"] == "RACK":
+        self.faults: OrderedDict[int, Fault] = OrderedDict()
+        for csvFaultDict in CSV_FAULTS:
+            if csvFaultDict["Level"] == "RACK":
 
                 # Rack A cavities don't care about faults for Rack B and vice versa
-                if csvFault["Rack"] != self.rack.rackName:
+                if csvFaultDict["Rack"] != self.rack.rackName:
                     # Takes us to the next iteration of the for loop
                     continue
 
             # tested in the python console that strings without one of these
             # formatting keys just ignores them and moves on
-            prefix = csvFault["PV Prefix"].format(LINAC=self.linac.name,
-                                                  CRYOMODULE=self.cryomodule.name,
-                                                  RACK=self.rack.rackName,
-                                                  CAVITY=self.number)
+            prefix = csvFaultDict["PV Prefix"].format(LINAC=self.linac.name,
+                                                      CRYOMODULE=self.cryomodule.name,
+                                                      RACK=self.rack.rackName,
+                                                      CAVITY=self.number)
 
-            key = (hash(csvFault["Rack"]) ^ hash(csvFault["Faulted If Equal To"])
-                   ^ hash(csvFault["OK If Equal To"]) ^ hash(csvFault["Three Letter Code"]))
+            key = displayHash(rack=csvFaultDict["Rack"],
+                              faultCondition=csvFaultDict["Faulted If Equal To"],
+                              okCondition=csvFaultDict["OK If Equal To"],
+                              tlc=csvFaultDict["Three Letter Code"])
+
             # setting key of faults dictionary to be row number b/c it's unique (i.e. not repeated)
-            self.faults[rowNumber] = Fault(tlc=csvFault["Three Letter Code"],
-                                           severity=csvFault["Severity"],
-                                           suffix=csvFault["PV Suffix"],
-                                           okValue=csvFault["OK If Equal To"],
-                                           faultValue=csvFault["Faulted If Equal To"],
-                                           longDescription=csvFault["Long Description"],
-                                           shortDescription=csvFault["Short Description"], prefix=prefix)
+            self.faults[key] = Fault(tlc=csvFaultDict["Three Letter Code"],
+                                     severity=csvFaultDict["Severity"],
+                                     suffix=csvFaultDict["PV Suffix"],
+                                     okValue=csvFaultDict["OK If Equal To"],
+                                     faultValue=csvFaultDict["Faulted If Equal To"],
+                                     longDescription=csvFaultDict["Long Description"],
+                                     shortDescription=csvFaultDict["Short Description"], prefix=prefix)
 
     def runThroughFaults(self):
         isOkay = True
@@ -88,15 +91,21 @@ HL_CAVITY_NUMBER_PAIRS: List[Tuple[int, int]] = [(1, 5), (2, 6), (3, 7), (4, 8)]
 
 # This hard coding is unfortunate, but I don't see any other way of handling the
 # HL SSA PVs
-'''
+
 for (leader, follower) in HL_CAVITY_NUMBER_PAIRS:
-    ssaTLC = "SSA"
+    key3 = displayHash(rack="", faultCondition="3", okCondition="", tlc="SSA")
+    key2 = displayHash(rack="", faultCondition="2", okCondition="", tlc="SSA")
+
     ssaPVSuffix = "SSA:AlarmSummary.SEVR"
 
     leadingCavityH1 = h1.cavities[leader]
-    h1.cavities[follower].faults[ssaTLC].pv = PV(leadingCavityH1.pvPrefix + ssaPVSuffix,
-                                                 connection_timeout=PV_TIMEOUT)
     leadingCavityH2 = h2.cavities[leader]
-    h2.cavities[follower].faults[ssaTLC].pv = PV(leadingCavityH2.pvPrefix + ssaPVSuffix,
-                                                 connection_timeout=PV_TIMEOUT)
-'''
+
+    h1.cavities[follower].faults[key3].pv = PV(leadingCavityH1.pvPrefix + ssaPVSuffix,
+                                               connection_timeout=PV_TIMEOUT)
+    h2.cavities[follower].faults[key3].pv = PV(leadingCavityH2.pvPrefix + ssaPVSuffix,
+                                               connection_timeout=PV_TIMEOUT)
+    h1.cavities[follower].faults[key2].pv = PV(leadingCavityH1.pvPrefix + ssaPVSuffix,
+                                               connection_timeout=PV_TIMEOUT)
+    h2.cavities[follower].faults[key2].pv = PV(leadingCavityH2.pvPrefix + ssaPVSuffix,
+                                               connection_timeout=PV_TIMEOUT)

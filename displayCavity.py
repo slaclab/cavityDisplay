@@ -5,8 +5,8 @@ from epics import PV
 
 from Fault import Fault, PvInvalid, PV_TIMEOUT
 from cavityDisplayGUI import SEVERITY_SUFFIX, STATUS_SUFFIX, DESCRIPTION_SUFFIX
-from constants import CSV_FAULTS, displayHash
 from lcls_tools.devices.scLinac import Cavity, Cryomodule, LINAC_TUPLES, Linac
+from utils import CSV_FAULTS, displayHash
 
 
 class DisplayCavity(Cavity):

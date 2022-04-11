@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
 from pydm import Display
 
-from constants import CSV_FAULTS
+from utils import CSV_FAULTS
 
 rows = {}
 

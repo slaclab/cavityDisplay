@@ -117,7 +117,7 @@ class CavityDisplayGUI(Display):
                     # .add_callback is called when rfStatePV changes value
                     rfStatePV.add_callback(partial(self.rfStatusCallback, rfStatusBar))
 
-    # Underlines cavity if RF is on
+    # A blue line appears under the cavity if the RF is on
     @staticmethod
     def rfStatusCallback(rf_StatusBar: PyDMDrawingLine, value: int, **kw):
         if value == 1:

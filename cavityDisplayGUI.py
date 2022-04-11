@@ -92,7 +92,7 @@ class CavityDisplayGUI(Display):
                     severityPV = PV(cavityObject.pvPrefix + SEVERITY_SUFFIX)
                     statusPV = PV(cavityObject.pvPrefix + STATUS_SUFFIX)
                     descriptionPV = PV(cavityObject.pvPrefix + DESCRIPTION_SUFFIX)
-                    rfStatePV = PV(cavityObject.pvPrefix + RF_STATUS_SUFFIX)
+                    rfStatePV = PV(rfStatusBar.accessibleName())
 
                     # Set hover text of RF status bar to RFSTATE pv
                     rfStatusBar.setToolTip(rfStatusBar.accessibleName())
@@ -119,7 +119,7 @@ class CavityDisplayGUI(Display):
 
     # Underlines cavity if RF is on
     @staticmethod
-    def rfStatusCallback(rf_StatusBar, value: int, **kw):
+    def rfStatusCallback(rf_StatusBar: PyDMDrawingLine, value: int, **kw):
         if value == 1:
             rf_StatusBar.penColor = BLUE_FILL_COLOR
         elif value == 0:

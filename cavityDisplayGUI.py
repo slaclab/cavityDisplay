@@ -94,9 +94,6 @@ class CavityDisplayGUI(Display):
                     descriptionPV = PV(cavityObject.pvPrefix + DESCRIPTION_SUFFIX)
                     rfStatePV = PV(rfStatusBar.accessibleName())
 
-                    # Set hover text of RF status bar to RFSTATE pv
-                    rfStatusBar.setToolTip(rfStatusBar.accessibleName())
-
                     # These lines are meant to initialize the cavityWidget color, shape, and descriptionPV values
                     # when first launched. If we don't initialize the description PV, it would remain empty
                     # until the pv value changes

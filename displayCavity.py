@@ -18,10 +18,11 @@ class DisplayCavity(Cavity):
 
         self.faults: OrderedDict[int, Fault] = OrderedDict()
         for csvFaultDict in CSV_FAULTS:
+            rack = csvFaultDict["Rack"]
             if csvFaultDict["Level"] == "RACK":
 
                 # Rack A cavities don't care about faults for Rack B and vice versa
-                if csvFaultDict["Rack"] != self.rack.rackName:
+                if rack != self.rack.rackName:
                     # Takes us to the next iteration of the for loop
                     continue
 
@@ -32,17 +33,21 @@ class DisplayCavity(Cavity):
                                                       RACK=self.rack.rackName,
                                                       CAVITY=self.number)
 
-            key = displayHash(rack=csvFaultDict["Rack"],
-                              faultCondition=csvFaultDict["Faulted If Equal To"],
-                              okCondition=csvFaultDict["OK If Equal To"],
-                              tlc=csvFaultDict["Three Letter Code"])
+            tlc = csvFaultDict["Three Letter Code"]
+            okCondition = csvFaultDict["OK If Equal To"]
+            faultCondition = csvFaultDict["Faulted If Equal To"]
+            
+            key = displayHash(rack=rack,
+                              faultCondition=faultCondition,
+                              okCondition=okCondition,
+                              tlc=tlc)
 
             # setting key of faults dictionary to be row number b/c it's unique (i.e. not repeated)
-            self.faults[key] = Fault(tlc=csvFaultDict["Three Letter Code"],
+            self.faults[key] = Fault(tlc=tlc,
                                      severity=csvFaultDict["Severity"],
                                      suffix=csvFaultDict["PV Suffix"],
-                                     okValue=csvFaultDict["OK If Equal To"],
-                                     faultValue=csvFaultDict["Faulted If Equal To"],
+                                     okValue=okCondition,
+                                     faultValue=faultCondition,
                                      longDescription=csvFaultDict["Long Description"],
                                      shortDescription=csvFaultDict["Short Description"], prefix=prefix)
 

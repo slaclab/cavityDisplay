@@ -15,7 +15,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <widget class="PyDMRelatedDisplayButton" name="PyDMRelatedDisplayButton">
+    <widget class="PyDMRelatedDisplayButton" name="cavityFaultDisplay_Button">
      <property name="font">
       <font>
        <pointsize>16</pointsize>

@@ -16,7 +16,7 @@
   <property name="accessibleName">
    <string>cavity.ui Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout" rowstretch="5">
+  <layout class="QGridLayout" name="gridLayout" rowstretch="5,1">
    <property name="leftMargin">
     <number>1</number>
    </property>
@@ -66,9 +66,40 @@
      </property>
     </widget>
    </item>
+   <item row="1" column="0">
+    <widget class="PyDMDrawingLine" name="rfStatus">
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="accessibleName">
+      <string>ACCL:${linac}:${cryoNum}${cavityNumber}0:RFSTATE</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(40, 40, 40);</string>
+     </property>
+     <property name="rules" stdset="0">
+      <string>[]</string>
+     </property>
+     <property name="penColor" stdset="0">
+      <color>
+       <red>14</red>
+       <green>191</green>
+       <blue>255</blue>
+      </color>
+     </property>
+     <property name="penWidth" stdset="0">
+      <double>5.000000000000000</double>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>PyDMDrawingLine</class>
+   <extends>QWidget</extends>
+   <header>pydm.widgets.drawing</header>
+  </customwidget>
   <customwidget>
    <class>PyDMDrawingPolygon</class>
    <extends>QWidget</extends>

@@ -1,23 +1,25 @@
-from collections import OrderedDict
+from dataclasses import dataclass
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
 from pydm import Display
 
-from Fault import Fault
-from constants import CSV_FAULTS
+from utils import CSV_FAULTS
 
-faults = OrderedDict()
+rows = {}
 
-for csvFault in CSV_FAULTS:
-    tlc = csvFault["Three Letter Code"]
-    faults[tlc] = Fault(tlc=tlc,
-                        severity=csvFault["Severity"],
-                        suffix=csvFault["PV Suffix"],
-                        okValue=csvFault["OK If Equal To"],
-                        faultValue=csvFault["Faulted If Equal To"],
-                        longDescription=csvFault["Long Description"],
-                        shortDescription=csvFault["Short Description"], prefix=csvFault["PV Prefix"])
+
+@dataclass
+class Row:
+    tlc: str
+    longDesc: str
+    shortDesc: str
+
+
+for faultRowDict in CSV_FAULTS:
+    tlc = faultRowDict["Three Letter Code"]
+    rows[tlc] = Row(tlc=tlc, longDesc=faultRowDict["Long Description"],
+                    shortDesc=faultRowDict["Short Description"])
 
 
 class ThreeLetterFaultDisplay(Display):
@@ -55,22 +57,22 @@ class ThreeLetterFaultDisplay(Display):
 
         verticalLayout.addLayout(headerLayout)
 
-        for fault in faults.values():
+        for row in rows.values():
             horizontalLayout = QHBoxLayout()
             descriptionLabel = QLabel()
-            descriptionLabel.setText(fault.longDescription)
+            descriptionLabel.setText(row.longDesc)
             descriptionLabel.setMinimumSize(300, 50)
             descriptionLabel.setSizePolicy(QSizePolicy.Minimum,
                                            QSizePolicy.Minimum)
             descriptionLabel.setWordWrap(True)
 
             codeLabel = QLabel()
-            codeLabel.setText(fault.tlc)
+            codeLabel.setText(row.tlc)
             codeLabel.setMinimumSize(30, 30)
             codeLabel.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
 
             nameLabel = QLabel()
-            nameLabel.setText(fault.shortDescription)
+            nameLabel.setText(row.shortDesc)
             nameLabel.setMinimumSize(200, 50)
             nameLabel.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
             nameLabel.setWordWrap(True)
@@ -82,4 +84,3 @@ class ThreeLetterFaultDisplay(Display):
             horizontalLayout.setSpacing(50)
             horizontalLayout.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
             verticalLayout.addLayout(horizontalLayout)
-        verticalLayout.setSpacing(10)

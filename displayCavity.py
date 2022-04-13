@@ -36,7 +36,7 @@ class DisplayCavity(Cavity):
             tlc = csvFaultDict["Three Letter Code"]
             okCondition = csvFaultDict["OK If Equal To"]
             faultCondition = csvFaultDict["Faulted If Equal To"]
-            
+
             key = displayHash(rack=rack,
                               faultCondition=faultCondition,
                               okCondition=okCondition,
@@ -69,7 +69,7 @@ class DisplayCavity(Cavity):
         if isOkay:
             self.statusPV.put("{num}".format(num=str(self.number)))
             self.severityPV.put(0)
-            self.descriptionPV.put("")
+            self.descriptionPV.put(" ")
         else:
             self.statusPV.put(fault.tlc)
             self.descriptionPV.put(fault.shortDescription)

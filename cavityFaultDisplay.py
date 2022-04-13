@@ -1,12 +1,9 @@
-from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
 from functools import partial
-from pydm import Display
 from typing import Dict
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
 from pydm import Display
-from typing import Dict
 
 from Fault import Fault, PvInvalid
 from displayCavity import DISPLAY_LINAC_OBJECTS
@@ -89,7 +86,10 @@ class CavityFaultDisplay(Display):
         try:
             if fault.isFaulted():
                 label.setText("Faulted")
+                label.setStyleSheet("color: red;")
             else:
                 label.setText("OK")
+                label.setStyleSheet("color: green;")
         except PvInvalid:
             label.setText("Invalid")
+            label.setStyleSheet("color: purple;")

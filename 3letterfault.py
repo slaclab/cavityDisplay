@@ -21,6 +21,8 @@ for faultRowDict in CSV_FAULTS:
     rows[tlc] = Row(tlc=tlc, longDesc=faultRowDict["Long Description"],
                     shortDesc=faultRowDict["Short Description"])
 
+sorted_FaultRows = {key: value for key, value in sorted(rows.items())}
+
 
 class ThreeLetterFaultDisplay(Display):
     def __init__(self, parent=None, args=None, macros=None):
@@ -57,7 +59,7 @@ class ThreeLetterFaultDisplay(Display):
 
         verticalLayout.addLayout(headerLayout)
 
-        for row in rows.values():
+        for row in sorted_FaultRows.values():
             horizontalLayout = QHBoxLayout()
             descriptionLabel = QLabel()
             descriptionLabel.setText(row.longDesc)

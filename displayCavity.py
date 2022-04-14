@@ -98,7 +98,6 @@ HL_CAVITY_NUMBER_PAIRS: List[Tuple[int, int]] = [(1, 5), (2, 6), (3, 7), (4, 8)]
 # HL SSA PVs
 
 for (leader, follower) in HL_CAVITY_NUMBER_PAIRS:
-    key3 = displayHash(rack="", faultCondition="3", okCondition="", tlc="SSA")
     key2 = displayHash(rack="", faultCondition="2", okCondition="", tlc="SSA")
 
     ssaPVSuffix = "SSA:AlarmSummary.SEVR"
@@ -106,10 +105,6 @@ for (leader, follower) in HL_CAVITY_NUMBER_PAIRS:
     leadingCavityH1 = h1.cavities[leader]
     leadingCavityH2 = h2.cavities[leader]
 
-    h1.cavities[follower].faults[key3].pv = PV(leadingCavityH1.pvPrefix + ssaPVSuffix,
-                                               connection_timeout=PV_TIMEOUT)
-    h2.cavities[follower].faults[key3].pv = PV(leadingCavityH2.pvPrefix + ssaPVSuffix,
-                                               connection_timeout=PV_TIMEOUT)
     h1.cavities[follower].faults[key2].pv = PV(leadingCavityH1.pvPrefix + ssaPVSuffix,
                                                connection_timeout=PV_TIMEOUT)
     h2.cavities[follower].faults[key2].pv = PV(leadingCavityH2.pvPrefix + ssaPVSuffix,

@@ -40,24 +40,6 @@
      <property name="spacing">
       <number>0</number>
      </property>
-     <item alignment="Qt::AlignRight">
-      <widget class="PyDMRelatedDisplayButton" name="TLC_Button">
-       <property name="toolTip">
-        <string/>
-       </property>
-       <property name="text">
-        <string>TLC</string>
-       </property>
-       <property name="filenames" stdset="0">
-        <stringlist>
-         <string>3letterfault.py</string>
-        </stringlist>
-       </property>
-       <property name="openInNewWindow" stdset="0">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>

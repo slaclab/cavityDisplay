@@ -1,7 +1,8 @@
-from dataclasses import dataclass
+from collections import OrderedDict
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
+from dataclasses import dataclass
 from pydm import Display
 
 from utils import CSV_FAULTS
@@ -20,6 +21,8 @@ for faultRowDict in CSV_FAULTS:
     tlc = faultRowDict["Three Letter Code"]
     rows[tlc] = Row(tlc=tlc, longDesc=faultRowDict["Long Description"],
                     shortDesc=faultRowDict["Short Description"])
+
+sortedFaultRows = OrderedDict([(tlc, rows[tlc]) for tlc in sorted(rows.keys())])
 
 
 class ThreeLetterFaultDisplay(Display):
@@ -57,7 +60,7 @@ class ThreeLetterFaultDisplay(Display):
 
         verticalLayout.addLayout(headerLayout)
 
-        for row in rows.values():
+        for row in sortedFaultRows.values():
             horizontalLayout = QHBoxLayout()
             descriptionLabel = QLabel()
             descriptionLabel.setText(row.longDesc)

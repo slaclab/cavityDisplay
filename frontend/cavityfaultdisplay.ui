@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>599</width>
-    <height>782</height>
+    <width>484</width>
+    <height>761</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
    <item row="0" column="0" colspan="2">
     <widget class="QLabel" name="label">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+      <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -53,14 +53,8 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
+   <item row="3" column="1" alignment="Qt::AlignRight">
     <widget class="PyDMRelatedDisplayButton" name="PyDMRelatedDisplayButton">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
      <property name="maximumSize">
       <size>
        <width>100</width>
@@ -99,6 +93,12 @@
    </item>
    <item row="2" column="0" colspan="2">
     <widget class="QScrollArea" name="scrollArea">
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOn</enum>
+     </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::AdjustToContents</enum>
+     </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
@@ -107,11 +107,11 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>573</width>
-        <height>672</height>
+        <width>442</width>
+        <height>647</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <layout class="QVBoxLayout" name="cavityfaultslayout"/>
        </item>
@@ -121,6 +121,12 @@
    </item>
    <item row="3" column="0">
     <widget class="QLabel" name="label_2">
+     <property name="maximumSize">
+      <size>
+       <width>300</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="text">
       <string>Note: Faults are sorted by decreasing priority.</string>
      </property>

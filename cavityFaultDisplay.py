@@ -27,6 +27,7 @@ class CavityFaultDisplay(Display):
         headerLayout = QHBoxLayout()
         statusheaderLabel = QLabel()
         statusheaderLabel.setText("Status")
+        statusheaderLabel.setMaximumWidth(100)
         statusheaderLabel.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
         statusheaderLabel.setAlignment(Qt.AlignCenter)
         statusheaderLabel.setStyleSheet("text-decoration: underline")
@@ -39,7 +40,7 @@ class CavityFaultDisplay(Display):
 
         codeheaderLabel = QLabel()
         codeheaderLabel.setText("Code")
-        codeheaderLabel.setMaximumWidth(100)
+        codeheaderLabel.setMaximumWidth(50)
         codeheaderLabel.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
         codeheaderLabel.setAlignment(Qt.AlignHCenter)
         codeheaderLabel.setStyleSheet("text-decoration: underline")
@@ -55,16 +56,17 @@ class CavityFaultDisplay(Display):
             horizontalLayout = QHBoxLayout()
 
             statusLabel = QLabel()
-            statusLabel.setStyleSheet("font-weight: bold")
+            statusLabel.setMaximumWidth(100)
+            statusLabel.setMaximumHeight(20)
             statusLabel.setSizePolicy(QSizePolicy.MinimumExpanding,
                                       QSizePolicy.MinimumExpanding)
-            statusLabel.setAlignment(Qt.AlignCenter)
+            statusLabel.setAlignment(Qt.AlignHCenter)
             statusLabel.setFrameStyle(QFrame.Box | QFrame.Plain)
             statusLabel.setLineWidth(2)
 
             codeLabel = QLabel()
             codeLabel.setText(fault.tlc)
-            codeLabel.setMaximumWidth(100)
+            codeLabel.setMaximumWidth(50)
             codeLabel.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
             codeLabel.setAlignment(Qt.AlignHCenter)
 
@@ -81,22 +83,24 @@ class CavityFaultDisplay(Display):
 
             horizontalLayout.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
             verticalLayout.addLayout(horizontalLayout)
-            self.statusLabelCallback(statusLabel, fault)
+            self.statusLabelCallback(statusLabel, codeLabel, fault)
 
-            fault.pv.add_callback(partial(self.statusLabelCallback, statusLabel, fault))
+            fault.pv.add_callback(partial(self.statusLabelCallback, statusLabel, codeLabel, fault))
 
     @staticmethod
-    def statusLabelCallback(label: QLabel, fault: Fault, **kw):
+    def statusLabelCallback(label: QLabel, label2: QLabel, fault: Fault, **kw):
         try:
             if fault.isFaulted():
-                label.setText("Faulted")
-                label.setStyleSheet("background-color: rgb(255,0,0);")
+                label.setText("FAULTED")
+                label.setStyleSheet("background-color: rgb(255,0,0); font-weight: bold;")
+                label2.setStyleSheet("font-weight:bold;")
 
             else:
                 label.setText("OK")
-                label.setStyleSheet("background-color: rgb(0,255,0);")
+                label.setStyleSheet("background-color: rgb(0,255,0);font-weight: bold;")
+
 
 
         except PvInvalid:
-            label.setText("Invalid")
-            label.setStyleSheet("background-color: rgb(255,0,255);")
+            label.setText("INVALID")
+            label.setStyleSheet("background-color: rgb(255,0,255);font-weight: bold;")

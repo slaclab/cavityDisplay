@@ -1,7 +1,7 @@
 from collections import OrderedDict
-from typing import List, Tuple
 
 from epics import PV
+from typing import List, Tuple
 
 from Fault import Fault, PvInvalid, PV_TIMEOUT
 from cavityDisplayGUI import SEVERITY_SUFFIX, STATUS_SUFFIX, DESCRIPTION_SUFFIX
@@ -98,14 +98,14 @@ HL_CAVITY_NUMBER_PAIRS: List[Tuple[int, int]] = [(1, 5), (2, 6), (3, 7), (4, 8)]
 # HL SSA PVs
 
 for (leader, follower) in HL_CAVITY_NUMBER_PAIRS:
-    key2 = displayHash(rack="", faultCondition="2", okCondition="", tlc="SSA")
+    key = displayHash(rack="", faultCondition="2", okCondition="", tlc="SSA")
 
     ssaPVSuffix = "SSA:AlarmSummary.SEVR"
 
     leadingCavityH1 = h1.cavities[leader]
     leadingCavityH2 = h2.cavities[leader]
 
-    h1.cavities[follower].faults[key2].pv = PV(leadingCavityH1.pvPrefix + ssaPVSuffix,
-                                               connection_timeout=PV_TIMEOUT)
-    h2.cavities[follower].faults[key2].pv = PV(leadingCavityH2.pvPrefix + ssaPVSuffix,
-                                               connection_timeout=PV_TIMEOUT)
+    h1.cavities[follower].faults[key].pv = PV(leadingCavityH1.pvPrefix + ssaPVSuffix,
+                                              connection_timeout=PV_TIMEOUT)
+    h2.cavities[follower].faults[key].pv = PV(leadingCavityH2.pvPrefix + ssaPVSuffix,
+                                              connection_timeout=PV_TIMEOUT)

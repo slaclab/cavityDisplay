@@ -2,7 +2,7 @@ from functools import partial
 from typing import Dict
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout, QFrame
+from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
 from pydm import Display
 
 from Fault import Fault, PvInvalid
@@ -57,12 +57,15 @@ class CavityFaultDisplay(Display):
 
             statusLabel = QLabel()
             statusLabel.setMaximumWidth(100)
-            statusLabel.setMaximumHeight(20)
+            statusLabel.setMaximumHeight(28)
+            statusLabel.setMinimumHeight(28)
             statusLabel.setSizePolicy(QSizePolicy.MinimumExpanding,
                                       QSizePolicy.MinimumExpanding)
-            statusLabel.setAlignment(Qt.AlignHCenter)
-            statusLabel.setFrameStyle(QFrame.Box | QFrame.Plain)
-            statusLabel.setLineWidth(2)
+            statusLabel.setAlignment(Qt.AlignCenter)
+
+            # statusLabel.setFrameStyle(QFrame.Box | QFrame.Plain)
+
+            # statusLabel.setLineWidth(2)
 
             codeLabel = QLabel()
             codeLabel.setText(fault.tlc)
@@ -92,15 +95,19 @@ class CavityFaultDisplay(Display):
         try:
             if fault.isFaulted():
                 label.setText("FAULTED")
-                label.setStyleSheet("background-color: rgb(255,0,0); font-weight: bold;")
+                label.setStyleSheet("background-color: rgb(255,0,0); font-weight: "
+                                    "bold; border: 2px solid black; color: white;")
                 label2.setStyleSheet("font-weight:bold;")
 
             else:
                 label.setText("OK")
-                label.setStyleSheet("background-color: rgb(0,255,0);font-weight: bold;")
+                label.setStyleSheet("background-color: rgb(0,255,0);font-weight: bold; "
+                                    "border: 2px solid black;")
+                label2.setStyleSheet("font-weight:plain;")
 
 
 
         except PvInvalid:
             label.setText("INVALID")
-            label.setStyleSheet("background-color: rgb(255,0,255);font-weight: bold;")
+            label.setStyleSheet("background-color: rgb(255,0,255);font-weight: bold;"
+                                "border: 2px solid black;")

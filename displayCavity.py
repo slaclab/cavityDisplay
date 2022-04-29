@@ -1,17 +1,23 @@
 from collections import OrderedDict
 
 from epics import PV
-from typing import List, Tuple
 
-from Fault import Fault, PvInvalid, PV_TIMEOUT
+from Fault import Fault, PvInvalid
 from cavityDisplayGUI import SEVERITY_SUFFIX, STATUS_SUFFIX, DESCRIPTION_SUFFIX
-from lcls_tools.devices.scLinac import Cavity, Cryomodule, LINAC_TUPLES, Linac
+from lcls_tools.devices.scLinac.scLinac import Cavity, SSA, make_lcls_cryomodules
 from utils import CSV_FAULTS, displayHash
 
 
+class DisplaySSA(SSA):
+    def __init__(self, cavity):
+        super().__init__(cavity)
+        self.alarmSevrPV = PV(self.pvPrefix + "AlarmSummary.SEVR")
+
+
 class DisplayCavity(Cavity):
-    def __init__(self, cavityNum, rackObject):
-        super(DisplayCavity, self).__init__(cavityNum, rackObject)
+    def __init__(self, cavityNum, rackObject, length=1.038, ssaClass=DisplaySSA):
+        super(DisplayCavity, self).__init__(cavityNum, rackObject,
+                                            length=length, ssaClass=ssaClass)
         self.statusPV = PV(self.pvPrefix + STATUS_SUFFIX)
         self.severityPV = PV(self.pvPrefix + SEVERITY_SUFFIX)
         self.descriptionPV = PV(self.pvPrefix + DESCRIPTION_SUFFIX)
@@ -79,33 +85,5 @@ class DisplayCavity(Cavity):
                 self.severityPV.put(3)
 
 
-DISPLAY_LINAC_OBJECTS: List[Linac] = []
-DISPLAY_CRYOMODULES = OrderedDict()
-
-for name, cryomoduleList in LINAC_TUPLES:
-    displayLinac = Linac(name, cryomoduleList, cavityClass=DisplayCavity)
-    DISPLAY_LINAC_OBJECTS.append(displayLinac)
-
-    for cryomodule in displayLinac.cryomodules.values():
-        DISPLAY_CRYOMODULES[cryomodule.name] = cryomodule
-
-h1: Cryomodule = DISPLAY_CRYOMODULES["H1"]
-h2: Cryomodule = DISPLAY_CRYOMODULES["H2"]
-
-HL_CAVITY_NUMBER_PAIRS: List[Tuple[int, int]] = [(1, 5), (2, 6), (3, 7), (4, 8)]
-
-# This hard coding is unfortunate, but I don't see any other way of handling the
-# HL SSA PVs
-
-for (leader, follower) in HL_CAVITY_NUMBER_PAIRS:
-    key = displayHash(rack="", faultCondition="2", okCondition="", tlc="SSA")
-
-    ssaPVSuffix = "SSA:AlarmSummary.SEVR"
-
-    leadingCavityH1 = h1.cavities[leader]
-    leadingCavityH2 = h2.cavities[leader]
-
-    h1.cavities[follower].faults[key].pv = PV(leadingCavityH1.pvPrefix + ssaPVSuffix,
-                                              connection_timeout=PV_TIMEOUT)
-    h2.cavities[follower].faults[key].pv = PV(leadingCavityH2.pvPrefix + ssaPVSuffix,
-                                              connection_timeout=PV_TIMEOUT)
+DISPLAY_CRYOMODULES = make_lcls_cryomodules(ssaClass=DisplaySSA,
+                                            cavityClass=DisplayCavity)

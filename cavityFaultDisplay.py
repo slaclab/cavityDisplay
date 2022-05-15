@@ -25,66 +25,83 @@ class CavityFaultDisplay(Display):
         headerLayout = QHBoxLayout()
         statusheaderLabel = QLabel()
         statusheaderLabel.setText("Status")
+        statusheaderLabel.setMaximumWidth(100)
+        statusheaderLabel.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+        statusheaderLabel.setAlignment(Qt.AlignCenter)
         statusheaderLabel.setStyleSheet("text-decoration: underline")
 
         nameheaderLabel = QLabel()
         nameheaderLabel.setText("Name")
-        nameheaderLabel.setMinimumSize(200, 30)
-        nameheaderLabel.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
+        nameheaderLabel.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+        nameheaderLabel.setAlignment(Qt.AlignLeft)
         nameheaderLabel.setStyleSheet("text-decoration: underline")
 
         codeheaderLabel = QLabel()
         codeheaderLabel.setText("Code")
-        codeheaderLabel.setMinimumSize(30, 30)
-        codeheaderLabel.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
+        codeheaderLabel.setMaximumWidth(50)
+        codeheaderLabel.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+        codeheaderLabel.setAlignment(Qt.AlignHCenter)
         codeheaderLabel.setStyleSheet("text-decoration: underline")
-
-        headerLayout.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
 
         headerLayout.addWidget(codeheaderLabel)
         headerLayout.addWidget(nameheaderLabel)
         headerLayout.addWidget(statusheaderLabel)
-        headerLayout.setSpacing(50)
 
+        headerLayout.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
         verticalLayout.addLayout(headerLayout)
 
         for fault in faults.values():
             horizontalLayout = QHBoxLayout()
 
             statusLabel = QLabel()
-            statusLabel.setStyleSheet("font-weight: bold")
+            statusLabel.setMaximumWidth(100)
+            statusLabel.setMaximumHeight(28)
+            statusLabel.setMinimumHeight(28)
             statusLabel.setSizePolicy(QSizePolicy.MinimumExpanding,
                                       QSizePolicy.MinimumExpanding)
+            statusLabel.setAlignment(Qt.AlignCenter)
 
             codeLabel = QLabel()
             codeLabel.setText(fault.tlc)
-            codeLabel.setMinimumSize(30, 30)
-            codeLabel.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
+            codeLabel.setMaximumWidth(50)
+            codeLabel.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+            codeLabel.setAlignment(Qt.AlignHCenter)
 
             shortDescriptionLabel = QLabel()
             shortDescriptionLabel.setText(fault.shortDescription)
-            shortDescriptionLabel.setMinimumSize(200, 30)
-            shortDescriptionLabel.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
+            shortDescriptionLabel.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+            shortDescriptionLabel.setAlignment(Qt.AlignLeft)
+
             shortDescriptionLabel.setWordWrap(True)
 
             horizontalLayout.addWidget(codeLabel)
             horizontalLayout.addWidget(shortDescriptionLabel)
             horizontalLayout.addWidget(statusLabel)
 
-            horizontalLayout.setSpacing(50)
             horizontalLayout.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
             verticalLayout.addLayout(horizontalLayout)
-            self.statusLabelCallback(statusLabel, fault)
+            self.statusLabelCallback(statusLabel, codeLabel, fault)
 
-            fault.pv.add_callback(partial(self.statusLabelCallback, statusLabel, fault))
-        verticalLayout.setSpacing(10)
+            fault.pv.add_callback(partial(self.statusLabelCallback, statusLabel, codeLabel, fault))
 
     @staticmethod
-    def statusLabelCallback(label: QLabel, fault: Fault, **kw):
+    def statusLabelCallback(statuslabel: QLabel, codelabel: QLabel, fault: Fault, **kw):
         try:
             if fault.isFaulted():
-                label.setText("Faulted")
+                statuslabel.setText("FAULTED")
+                statuslabel.setStyleSheet("background-color: rgb(255,0,0); font-weight: "
+                                          "bold; border: 2px solid black; color: white;")
+                codelabel.setStyleSheet("font-weight:bold;")
+
             else:
-                label.setText("OK")
+                statuslabel.setText("OK")
+                statuslabel.setStyleSheet("background-color: rgb(0,255,0);font-weight: bold; "
+                                          "border: 2px solid black;")
+                codelabel.setStyleSheet("font-weight:plain;")
+
+
+
         except PvInvalid:
-            label.setText("Invalid")
+            statuslabel.setText("INVALID")
+            statuslabel.setStyleSheet("background-color: rgb(255,0,255);font-weight: bold;"
+                                      "border: 2px solid black;")

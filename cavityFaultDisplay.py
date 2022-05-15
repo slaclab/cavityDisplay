@@ -62,11 +62,7 @@ class CavityFaultDisplay(Display):
             statusLabel.setSizePolicy(QSizePolicy.MinimumExpanding,
                                       QSizePolicy.MinimumExpanding)
             statusLabel.setAlignment(Qt.AlignCenter)
-
-            # statusLabel.setFrameStyle(QFrame.Box | QFrame.Plain)
-
-            # statusLabel.setLineWidth(2)
-
+            
             codeLabel = QLabel()
             codeLabel.setText(fault.tlc)
             codeLabel.setMaximumWidth(50)

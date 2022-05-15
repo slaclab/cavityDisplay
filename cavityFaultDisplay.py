@@ -62,7 +62,7 @@ class CavityFaultDisplay(Display):
             statusLabel.setSizePolicy(QSizePolicy.MinimumExpanding,
                                       QSizePolicy.MinimumExpanding)
             statusLabel.setAlignment(Qt.AlignCenter)
-            
+
             codeLabel = QLabel()
             codeLabel.setText(fault.tlc)
             codeLabel.setMaximumWidth(50)
@@ -87,23 +87,23 @@ class CavityFaultDisplay(Display):
             fault.pv.add_callback(partial(self.statusLabelCallback, statusLabel, codeLabel, fault))
 
     @staticmethod
-    def statusLabelCallback(label: QLabel, label2: QLabel, fault: Fault, **kw):
+    def statusLabelCallback(statuslabel: QLabel, codelabel: QLabel, fault: Fault, **kw):
         try:
             if fault.isFaulted():
-                label.setText("FAULTED")
-                label.setStyleSheet("background-color: rgb(255,0,0); font-weight: "
-                                    "bold; border: 2px solid black; color: white;")
-                label2.setStyleSheet("font-weight:bold;")
+                statuslabel.setText("FAULTED")
+                statuslabel.setStyleSheet("background-color: rgb(255,0,0); font-weight: "
+                                          "bold; border: 2px solid black; color: white;")
+                codelabel.setStyleSheet("font-weight:bold;")
 
             else:
-                label.setText("OK")
-                label.setStyleSheet("background-color: rgb(0,255,0);font-weight: bold; "
-                                    "border: 2px solid black;")
-                label2.setStyleSheet("font-weight:plain;")
+                statuslabel.setText("OK")
+                statuslabel.setStyleSheet("background-color: rgb(0,255,0);font-weight: bold; "
+                                          "border: 2px solid black;")
+                codelabel.setStyleSheet("font-weight:plain;")
 
 
 
         except PvInvalid:
-            label.setText("INVALID")
-            label.setStyleSheet("background-color: rgb(255,0,255);font-weight: bold;"
-                                "border: 2px solid black;")
+            statuslabel.setText("INVALID")
+            statuslabel.setStyleSheet("background-color: rgb(255,0,255);font-weight: bold;"
+                                      "border: 2px solid black;")

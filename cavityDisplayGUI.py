@@ -9,7 +9,7 @@ from pydm.widgets import (PyDMEmbeddedDisplay, PyDMRelatedDisplayButton, PyDMTem
                           PyDMDrawingLine)
 from typing import List
 
-from lcls_tools.devices.scLinac.scLinac import CRYOMODULE_OBJECTS
+from lcls_tools.superconducting.scLinac import CRYOMODULE_OBJECTS
 
 sys.path.insert(0, './frontend')
 from cavityWidget import CavityWidget

@@ -4,7 +4,7 @@ from epics import PV
 
 from Fault import Fault, PvInvalid
 from cavityDisplayGUI import SEVERITY_SUFFIX, STATUS_SUFFIX, DESCRIPTION_SUFFIX
-from lcls_tools.superconducting.scLinac import Cavity, SSA, make_lcls_cryomodules
+from lcls_tools.superconducting.scLinac import Cavity, SSA, make_lcls_cryomodules, StepperTuner
 from utils import CSV_FAULTS, displayHash
 
 
@@ -13,6 +13,7 @@ class DisplaySSA(SSA):
         super().__init__(cavity)
         self.alarmSevrPV = PV(self.pvPrefix + "AlarmSummary.SEVR")
 
+
 class SpreadsheetError(Exception):
     def __init__(self, message):
         self.message = message
@@ -20,9 +21,9 @@ class SpreadsheetError(Exception):
 
 
 class DisplayCavity(Cavity):
-    def __init__(self, cavityNum, rackObject, length=1.038, ssaClass=DisplaySSA):
-        super(DisplayCavity, self).__init__(cavityNum, rackObject,
-                                            length=length, ssaClass=ssaClass)
+    def __init__(self, cavityNum, rackObject, ssaClass=DisplaySSA,
+                 stepperClass=StepperTuner):
+        super(DisplayCavity, self).__init__(cavityNum, rackObject, ssaClass=ssaClass)
         self.statusPV = PV(self.pvPrefix + STATUS_SUFFIX)
         self.severityPV = PV(self.pvPrefix + SEVERITY_SUFFIX)
         self.descriptionPV = PV(self.pvPrefix + DESCRIPTION_SUFFIX)
@@ -57,7 +58,7 @@ class DisplayCavity(Cavity):
                 prefix = self.cryomodule.pvPrefix
 
             else:
-                raise(SpreadsheetError("Unexpected fault level in fault spreadsheet"))
+                raise (SpreadsheetError("Unexpected fault level in fault spreadsheet"))
 
             tlc = csvFaultDict["Three Letter Code"]
             okCondition = csvFaultDict["OK If Equal To"]

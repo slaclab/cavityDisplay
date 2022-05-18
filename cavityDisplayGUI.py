@@ -9,7 +9,7 @@ from pydm.widgets import (PyDMEmbeddedDisplay, PyDMRelatedDisplayButton, PyDMTem
                           PyDMDrawingLine)
 from typing import List
 
-from lcls_tools.superconducting.scLinac import CRYOMODULE_OBJECTS
+from lcls_tools.superconducting.scLinac import CRYOMODULE_OBJECTS, Cavity
 
 sys.path.insert(0, './frontend')
 from cavityWidget import CavityWidget
@@ -97,13 +97,13 @@ class CavityDisplayGUI(Display):
                         ssaStatusBarList.append(statusBar)
 
                 for cavityWidget, rfStatusBar, ssaStatusBar in zip(cavityWidgetList, rfStatusBarList, ssaStatusBarList):
-                    cavityObject = cryomoduleObject.cavities[int(cavityWidget.cavityText)]
+                    cavityObject: Cavity = cryomoduleObject.cavities[int(cavityWidget.cavityText)]
 
                     severityPV = PV(cavityObject.pvPrefix + SEVERITY_SUFFIX)
                     statusPV = PV(cavityObject.pvPrefix + STATUS_SUFFIX)
                     descriptionPV = PV(cavityObject.pvPrefix + DESCRIPTION_SUFFIX)
-                    rfStatePV = PV(rfStatusBar.accessibleName())
-                    ssaPV = PV(ssaStatusBar.accessibleName())
+                    rfStatePV = cavityObject.rfStatePV
+                    ssaPV = cavityObject.ssa.statusPV
 
                     # These lines are meant to initialize the cavityWidget color, shape, and descriptionPV values
                     # when first launched. If we don't initialize the description PV, it would remain empty

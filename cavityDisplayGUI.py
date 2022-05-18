@@ -134,6 +134,7 @@ class CavityDisplayGUI(Display):
             rf_StatusBar.setToolTip("RF on")
         elif value == 0:
             rf_StatusBar.penColor = DARK_GRAY_COLOR
+            rf_StatusBar.setToolTip("RF off")
         else:
             print("RFSTATUS pv value is not On or Off, nor disconnected")
         rf_StatusBar.update()
@@ -146,6 +147,7 @@ class CavityDisplayGUI(Display):
             ssa_StatusBar.setToolTip("SSA on")
         elif value != 3:
             ssa_StatusBar.penColor = DARK_GRAY_COLOR
+            ssa_StatusBar.setToolTip("SSA off")
         ssa_StatusBar.update()
 
     # Updates shape depending on pv value

@@ -1,37 +1,77 @@
 from collections import OrderedDict
 
 from epics import PV
-from typing import List, Tuple
 
-from Fault import Fault, PvInvalid, PV_TIMEOUT
+from Fault import Fault, PvInvalid
 from cavityDisplayGUI import SEVERITY_SUFFIX, STATUS_SUFFIX, DESCRIPTION_SUFFIX
-from lcls_tools.devices.scLinac import Cavity, Cryomodule, LINAC_TUPLES, Linac
+from lcls_tools.superconducting.scLinac import (Cavity, Cryomodule, Magnet, Rack,
+                                                SSA, make_lcls_cryomodules,
+                                                StepperTuner)
 from utils import CSV_FAULTS, displayHash
 
 
+class DisplaySSA(SSA):
+    def __init__(self, cavity):
+        super().__init__(cavity)
+        self.alarmSevrPV = PV(self.pvPrefix + "AlarmSummary.SEVR")
+
+
+class SpreadsheetError(Exception):
+    def __init__(self, message):
+        self.message = message
+        super().__init__(self.message)
+
+
+class DisplayCryomodule(Cryomodule):
+    def __init__(self, cryoName, linacObject, cavityClass=Cavity,
+                 magnetClass=Magnet, rackClass=Rack, isHarmonicLinearizer=False,
+                 ssaClass=SSA, stepperClass=StepperTuner):
+        super().__init__(cryoName, linacObject, cavityClass=DisplayCavity, ssaClass=DisplaySSA)
+        for cavity in self.cavities.values():
+            cavity.createFaults()
+
+
 class DisplayCavity(Cavity):
-    def __init__(self, cavityNum, rackObject):
-        super(DisplayCavity, self).__init__(cavityNum, rackObject)
+    def __init__(self, cavityNum, rackObject, ssaClass=DisplaySSA,
+                 stepperClass=StepperTuner):
+        super(DisplayCavity, self).__init__(cavityNum, rackObject, ssaClass=ssaClass)
         self.statusPV = PV(self.pvPrefix + STATUS_SUFFIX)
         self.severityPV = PV(self.pvPrefix + SEVERITY_SUFFIX)
         self.descriptionPV = PV(self.pvPrefix + DESCRIPTION_SUFFIX)
 
         self.faults: OrderedDict[int, Fault] = OrderedDict()
+
+    def createFaults(self):
         for csvFaultDict in CSV_FAULTS:
+
+            level = csvFaultDict["Level"]
             rack = csvFaultDict["Rack"]
-            if csvFaultDict["Level"] == "RACK":
+
+            if level == "RACK":
 
                 # Rack A cavities don't care about faults for Rack B and vice versa
                 if rack != self.rack.rackName:
                     # Takes us to the next iteration of the for loop
                     continue
 
-            # tested in the python console that strings without one of these
-            # formatting keys just ignores them and moves on
-            prefix = csvFaultDict["PV Prefix"].format(LINAC=self.linac.name,
-                                                      CRYOMODULE=self.cryomodule.name,
-                                                      RACK=self.rack.rackName,
-                                                      CAVITY=self.number)
+                # tested in the python console that strings without one of these
+                # formatting keys just ignores them and moves on
+                prefix = csvFaultDict["PV Prefix"].format(LINAC=self.linac.name,
+                                                          CRYOMODULE=self.cryomodule.name,
+                                                          RACK=self.rack.rackName,
+                                                          CAVITY=self.number)
+
+            elif level == "SSA":
+                prefix = self.ssa.pvPrefix
+
+            elif level == "CAV":
+                prefix = self.pvPrefix
+
+            elif level == "CM":
+                prefix = self.cryomodule.pvPrefix
+
+            else:
+                raise (SpreadsheetError("Unexpected fault level in fault spreadsheet"))
 
             tlc = csvFaultDict["Three Letter Code"]
             okCondition = csvFaultDict["OK If Equal To"]
@@ -79,33 +119,6 @@ class DisplayCavity(Cavity):
                 self.severityPV.put(3)
 
 
-DISPLAY_LINAC_OBJECTS: List[Linac] = []
-DISPLAY_CRYOMODULES = OrderedDict()
-
-for name, cryomoduleList in LINAC_TUPLES:
-    displayLinac = Linac(name, cryomoduleList, cavityClass=DisplayCavity)
-    DISPLAY_LINAC_OBJECTS.append(displayLinac)
-
-    for cryomodule in displayLinac.cryomodules.values():
-        DISPLAY_CRYOMODULES[cryomodule.name] = cryomodule
-
-h1: Cryomodule = DISPLAY_CRYOMODULES["H1"]
-h2: Cryomodule = DISPLAY_CRYOMODULES["H2"]
-
-HL_CAVITY_NUMBER_PAIRS: List[Tuple[int, int]] = [(1, 5), (2, 6), (3, 7), (4, 8)]
-
-# This hard coding is unfortunate, but I don't see any other way of handling the
-# HL SSA PVs
-
-for (leader, follower) in HL_CAVITY_NUMBER_PAIRS:
-    key = displayHash(rack="", faultCondition="2", okCondition="", tlc="SSA")
-
-    ssaPVSuffix = "SSA:AlarmSummary.SEVR"
-
-    leadingCavityH1 = h1.cavities[leader]
-    leadingCavityH2 = h2.cavities[leader]
-
-    h1.cavities[follower].faults[key].pv = PV(leadingCavityH1.pvPrefix + ssaPVSuffix,
-                                              connection_timeout=PV_TIMEOUT)
-    h2.cavities[follower].faults[key].pv = PV(leadingCavityH2.pvPrefix + ssaPVSuffix,
-                                              connection_timeout=PV_TIMEOUT)
+DISPLAY_CRYOMODULES = make_lcls_cryomodules(ssaClass=DisplaySSA,
+                                            cavityClass=DisplayCavity,
+                                            cryomoduleClass=DisplayCryomodule)

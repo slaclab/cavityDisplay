@@ -4,7 +4,7 @@ from epics import PV
 
 from Fault import Fault, PvInvalid
 from cavityDisplayGUI import SEVERITY_SUFFIX, STATUS_SUFFIX, DESCRIPTION_SUFFIX
-from lcls_tools.devices.scLinac.scLinac import Cavity, SSA, make_lcls_cryomodules
+from lcls_tools.superconducting.scLinac import Cavity, SSA, make_lcls_cryomodules
 from utils import CSV_FAULTS, displayHash
 
 
@@ -12,6 +12,11 @@ class DisplaySSA(SSA):
     def __init__(self, cavity):
         super().__init__(cavity)
         self.alarmSevrPV = PV(self.pvPrefix + "AlarmSummary.SEVR")
+
+class SpreadsheetError(Exception):
+    def __init__(self, message):
+        self.message = message
+        super().__init__(self.message)
 
 
 class DisplayCavity(Cavity):
@@ -24,20 +29,35 @@ class DisplayCavity(Cavity):
 
         self.faults: OrderedDict[int, Fault] = OrderedDict()
         for csvFaultDict in CSV_FAULTS:
+
+            level = csvFaultDict["Level"]
             rack = csvFaultDict["Rack"]
-            if csvFaultDict["Level"] == "RACK":
+
+            if level == "RACK":
 
                 # Rack A cavities don't care about faults for Rack B and vice versa
                 if rack != self.rack.rackName:
                     # Takes us to the next iteration of the for loop
                     continue
 
-            # tested in the python console that strings without one of these
-            # formatting keys just ignores them and moves on
-            prefix = csvFaultDict["PV Prefix"].format(LINAC=self.linac.name,
-                                                      CRYOMODULE=self.cryomodule.name,
-                                                      RACK=self.rack.rackName,
-                                                      CAVITY=self.number)
+                # tested in the python console that strings without one of these
+                # formatting keys just ignores them and moves on
+                prefix = csvFaultDict["PV Prefix"].format(LINAC=self.linac.name,
+                                                          CRYOMODULE=self.cryomodule.name,
+                                                          RACK=self.rack.rackName,
+                                                          CAVITY=self.number)
+
+            elif level == "SSA":
+                prefix = self.ssa.pvPrefix
+
+            elif level == "CAV":
+                prefix = self.pvPrefix
+
+            elif level == "CM":
+                prefix = self.cryomodule.pvPrefix
+
+            else:
+                raise(SpreadsheetError("Unexpected fault level in fault spreadsheet"))
 
             tlc = csvFaultDict["Three Letter Code"]
             okCondition = csvFaultDict["OK If Equal To"]

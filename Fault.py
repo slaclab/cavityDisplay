@@ -19,7 +19,7 @@ class Fault:
         self.faultValue = float(faultValue) if faultValue else None
         self.suffix = suffix
 
-        self.pv: PV = PV(prefix + ":" + suffix, connection_timeout=PV_TIMEOUT)
+        self.pv: PV = PV(prefix + suffix, connection_timeout=PV_TIMEOUT)
 
     def isFaulted(self):
 

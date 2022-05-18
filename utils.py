@@ -1,7 +1,7 @@
 from csv import DictReader
 from typing import Dict, List
 
-DEBUG = True
+DEBUG = False
 BACKEND_SLEEP_TIME = 10
 
 CSV_FAULTS: List[Dict] = []

@@ -89,11 +89,8 @@ class CavityDisplayGUI(Display):
                 statusBarList = cmTemplateRepeater.findChildren(PyDMDrawingLine)
                 for statusBar in statusBarList:
                     if "RFSTATE" in statusBar.accessibleName():
-                        # print(statusBar.accessibleName())
-                        #
                         rfStatusBarList.append(statusBar)
                     elif "SSA" in statusBar.accessibleName():
-                        # print(statusBar.accessibleName())
                         ssaStatusBarList.append(statusBar)
 
                 for cavityWidget, rfStatusBar, ssaStatusBar in zip(cavityWidgetList, rfStatusBarList, ssaStatusBarList):

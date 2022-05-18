@@ -4,7 +4,9 @@ from epics import PV
 
 from Fault import Fault, PvInvalid
 from cavityDisplayGUI import SEVERITY_SUFFIX, STATUS_SUFFIX, DESCRIPTION_SUFFIX
-from lcls_tools.superconducting.scLinac import Cavity, SSA, make_lcls_cryomodules, StepperTuner
+from lcls_tools.superconducting.scLinac import (Cavity, Cryomodule, Magnet, Rack,
+                                                SSA, make_lcls_cryomodules,
+                                                StepperTuner)
 from utils import CSV_FAULTS, displayHash
 
 
@@ -20,6 +22,15 @@ class SpreadsheetError(Exception):
         super().__init__(self.message)
 
 
+class DisplayCryomodule(Cryomodule):
+    def __init__(self, cryoName, linacObject, cavityClass=Cavity,
+                 magnetClass=Magnet, rackClass=Rack, isHarmonicLinearizer=False,
+                 ssaClass=SSA, stepperClass=StepperTuner):
+        super().__init__(cryoName, linacObject, cavityClass=DisplayCavity, ssaClass=DisplaySSA)
+        for cavity in self.cavities.values():
+            cavity.createFaults()
+
+
 class DisplayCavity(Cavity):
     def __init__(self, cavityNum, rackObject, ssaClass=DisplaySSA,
                  stepperClass=StepperTuner):
@@ -29,6 +40,8 @@ class DisplayCavity(Cavity):
         self.descriptionPV = PV(self.pvPrefix + DESCRIPTION_SUFFIX)
 
         self.faults: OrderedDict[int, Fault] = OrderedDict()
+
+    def createFaults(self):
         for csvFaultDict in CSV_FAULTS:
 
             level = csvFaultDict["Level"]
@@ -107,4 +120,5 @@ class DisplayCavity(Cavity):
 
 
 DISPLAY_CRYOMODULES = make_lcls_cryomodules(ssaClass=DisplaySSA,
-                                            cavityClass=DisplayCavity)
+                                            cavityClass=DisplayCavity,
+                                            cryomoduleClass=DisplayCryomodule)

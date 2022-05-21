@@ -35,7 +35,8 @@ class CavityWidget(PyDMDrawingPolygon):
         x, y, w, h = self.get_bounds()
         rect = QRect(x, y, w, h)
         fm = QFontMetrics(painter.font())
-        sx = rect.width() / fm.width(self.cavityText)
+        if self._cavityText:
+            sx = rect.width() / fm.width(self._cavityText)
         sy = rect.height() / fm.height()
 
         painter.save()

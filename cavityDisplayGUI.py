@@ -1,13 +1,13 @@
 import sys
+from dataclasses import dataclass
+from functools import partial
+from typing import List
+
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QHBoxLayout, QWidget
-from dataclasses import dataclass
 from epics import PV
-from functools import partial
 from pydm import Display
-from pydm.widgets import (PyDMEmbeddedDisplay, PyDMRelatedDisplayButton, PyDMTemplateRepeater,
-                          PyDMDrawingLine)
-from typing import List
+from pydm.widgets import (PyDMDrawingLine, PyDMEmbeddedDisplay, PyDMRelatedDisplayButton, PyDMTemplateRepeater)
 
 from lcls_tools.superconducting.scLinac import CRYOMODULE_OBJECTS, Cavity
 
@@ -65,7 +65,7 @@ class CavityDisplayGUI(Display):
 
         for index, linacEmbeddedDisplay in enumerate(embeddedDisplays):
             linacEmbeddedDisplay.loadWhenShown = False
-            print("loading L{linac}B".format(linac=index))
+            print("loading L{linac}B embedded display".format(linac=index))
 
             linacHorizLayout = linacEmbeddedDisplay.findChild(QHBoxLayout)
             totalCryosInLinac = linacHorizLayout.count()

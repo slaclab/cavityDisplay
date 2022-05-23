@@ -97,6 +97,16 @@
         </widget>
        </item>
        <item>
+        <widget class="PyDMLabel" name="label_watcherCounter">
+         <property name="toolTip">
+          <string/>
+         </property>
+         <property name="channel" stdset="0">
+          <string>PHYS:SYS0:1:SC_CAV_FAULT_HEARTBEAT</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="horizontalSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>

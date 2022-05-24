@@ -31,7 +31,7 @@
 4,12,Stepper Hardware Fault,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,STEP:HWSTATSUM,,2,STP,2,Stepper Hardware Fault. Hardware summary status for stepper,
 5,1,Cavity characterization needed,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,CAV:CALSTATSUM,,2,CVC,2,"Due to changes in the LLRF system, the cavity characterization needs to be run.",
 5,2,Cavity Controller problem,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,CTRL_SUM.SEVR,0,,CTL,2,Cavity LLRF controller misconfiguration ,"3/11/22 Added by Sonya, feel free to revisit 3 letter code"
-5,3,RF (not) Ready for Beam,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,RFREADYFORBEAM,1,,,2,RF not ready for beam: mode is not SELAP and/or RF is off,
+5,3,RF (not) Ready for Beam,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,RFREADYFORBEAM,1,,RFR,2,RF not ready for beam: mode is not SELAP and/or RF is off,
 6,1,Piezo feedback off,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PZT:MODECTRL,1,,PZF,2,Piezo Feedback is not on,
 6,2,Piezo feedback problem,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PZT:FBSTATSUM,,2,PZO,2,Piezo Feedback is indicating a problem,"Ask Sonya if such a thing exists and if so, what is it?"
 7,1,Feedback Amplitude out of tolerance,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,AMPFB_SUM,0,,AFB,2,The feedback maintaining the amplitude is unable to keep the amplitude within tolerance. (Must be checked after RFREADYFORBEAM). Amplitude feedback of measured gradient is too low,

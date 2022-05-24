@@ -5,7 +5,7 @@ from pydm import Display
 from typing import Dict
 
 from Fault import Fault, PvInvalid
-from displayCavity import DISPLAY_CRYOMODULES
+from displayLinac import DISPLAY_CRYOMODULES
 
 
 class CavityFaultDisplay(Display):

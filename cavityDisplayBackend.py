@@ -1,15 +1,18 @@
 from datetime import datetime
-from epics import PV
 from time import sleep
 
-from displayCavity import DISPLAY_CRYOMODULES
-from utils import DEBUG, BACKEND_SLEEP_TIME
+from epics import PV
+
+from displayCavity import DISPLAY_CRYOMODULES, DisplayCryomodule
+from lcls_tools.superconducting.scLinac import ALL_CRYOMODULES
+from utils import BACKEND_SLEEP_TIME, DEBUG
 
 WATCHER_PV = PV("PHYS:SYS0:1:SC_CAV_FAULT_HEARTBEAT")
 
 while True:
     start = datetime.now()
-    for cryomodule in DISPLAY_CRYOMODULES.values():
+    for cryomoduleName in ALL_CRYOMODULES:
+        cryomodule: DisplayCryomodule = DISPLAY_CRYOMODULES[cryomoduleName]
         for cavity in cryomodule.cavities.values():
             cavity.runThroughFaults()
     if DEBUG:

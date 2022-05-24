@@ -25,7 +25,9 @@ class DisplayCryomodule(Cryomodule):
     def __init__(self, cryoName, linacObject, cavityClass=Cavity,
                  magnetClass=Magnet, rackClass=Rack, isHarmonicLinearizer=False,
                  ssaClass=SSA, stepperClass=StepperTuner):
-        super().__init__(cryoName, linacObject, cavityClass=DisplayCavity, ssaClass=DisplaySSA)
+        super().__init__(cryoName, linacObject, cavityClass=DisplayCavity,
+                         isHarmonicLinearizer=isHarmonicLinearizer,
+                         ssaClass=DisplaySSA)
         for cavity in self.cavities.values():
             cavity.createFaults()
 

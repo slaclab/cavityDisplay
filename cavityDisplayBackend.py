@@ -1,9 +1,8 @@
 from datetime import datetime
+from epics import PV
 from time import sleep
 
-from epics import PV
-
-from displayCavity import DISPLAY_CRYOMODULES, DisplayCryomodule
+from displayLinac import DISPLAY_CRYOMODULES, DisplayCryomodule
 from lcls_tools.superconducting.scLinac import ALL_CRYOMODULES
 from utils import BACKEND_SLEEP_TIME, DEBUG
 

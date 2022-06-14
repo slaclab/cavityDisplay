@@ -4,8 +4,8 @@ from epics import PV
 
 from Fault import Fault, PvInvalid
 from cavityDisplayGUI import DESCRIPTION_SUFFIX, SEVERITY_SUFFIX, STATUS_SUFFIX
-from lcls_tools.superconducting.scLinac import (Cavity, Cryomodule, Magnet, Rack,
-                                                SSA, StepperTuner, make_lcls_cryomodules)
+from lcls_tools.superconducting.scLinac import (Cavity, CryoDict, Cryomodule, Magnet, Rack,
+                                                SSA, StepperTuner)
 from utils import CSV_FAULTS, displayHash
 
 
@@ -120,6 +120,6 @@ class DisplayCavity(Cavity):
                 self.severityPV.put(3)
 
 
-DISPLAY_CRYOMODULES = make_lcls_cryomodules(ssaClass=DisplaySSA,
-                                            cavityClass=DisplayCavity,
-                                            cryomoduleClass=DisplayCryomodule)
+DISPLAY_CRYOMODULES = CryoDict(ssaClass=DisplaySSA,
+                               cavityClass=DisplayCavity,
+                               cryomoduleClass=DisplayCryomodule)

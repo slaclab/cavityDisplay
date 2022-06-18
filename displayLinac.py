@@ -71,17 +71,22 @@ class DisplayCavity(Cavity):
             elif level == "CM":
                 prefix = self.cryomodule.pvPrefix
 
+            elif level == "ALL":
+                prefix = csvFaultDict["PV Prefix"]
+
             else:
                 raise (SpreadsheetError("Unexpected fault level in fault spreadsheet"))
 
             tlc = csvFaultDict["Three Letter Code"]
             okCondition = csvFaultDict["OK If Equal To"]
             faultCondition = csvFaultDict["Faulted If Equal To"]
+            suffix = csvFaultDict["PV Suffix"]
 
             key = displayHash(rack=rack,
                               faultCondition=faultCondition,
                               okCondition=okCondition,
-                              tlc=tlc)
+                              tlc=tlc,
+                              suffix=suffix)
 
             # setting key of faults dictionary to be row number b/c it's unique (i.e. not repeated)
             self.faults[key] = Fault(tlc=tlc,

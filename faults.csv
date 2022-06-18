@@ -1,5 +1,9 @@
 ﻿Heirarchy Group,Order Within Group,Short Description,Level,Rack,PV Prefix,PV Suffix,OK If Equal To,Faulted If Equal To,Three Letter Code,Severity,Long Description,Comments
 0,0,Parked,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PARK,,1,PKD,4,Cavity is tuned off frequency so it doesn’t affect the beam.,
+,,BSOIC Tripped,ALL,,BSOC:SYSW:2:,SumyA,1,,BSO,2,BSOIC tripped,
+,,BSOIC Tripped,ALL,,BSOC:SYSW:2:,SumyB,1,,BSO,2,BSOIC tripped,
+,,Not Ready for Beam,ALL,,PPS:SYSW:1:,BeamReadyA,1,,PPS,2,PPS: West Global not in Ready for Beam,
+,,Not Ready for Beam,ALL,,PPS:SYSW:1:,BeamReadyB,1,,PPS,2,PPS: West Global not in Ready for Beam,
 0,1,Invalid,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,INV,3,Invalid: one of the PVs necessary is not responding to caget or has INVALID status,
 1,1,Awaiting Run Up,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,ARU,2,Awaiting Run Up: Cavity is ready to be commissioned by experts but not ready to be used to accelerate beam. Station needs attention from LLRF/SRF groups before it can be used. This status is set and cleared by experts,
 1,2,Maintenance,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,MNT,2,Maintenance: Cavity is known to be bad and needs attention from experts,Need Sonya to make these PVs then someone can make a display with these expert stati on it.
@@ -8,12 +12,12 @@
 1,4,Hardware Initialization running,RACK,A,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,HWINITSUM,,1,HWI,1,Hardware Initialization (ak.a. rack checkout) currently running. Don't try to use system until this is complete,
 1,4,Hardware Initialization running,RACK,B,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,HWINITSUM,,1,HWI,1,Hardware Initialization (a.k.a. rack checkout) currently running. Don't try to use system until this is complete,
 2,1,Check Phase,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,CKP,2,Check Phase: Cavity phase is in an indeterminate state and needs to be measured with the beam before being usable. This fault may appear if something is done to the system that makes 0 phase no longer knoable and ops need to re-gold. This status is set and cleared by experts,"Ask Sonya if such a thing exists and if so, what is it and if not, maybe make one and add to the expert stati display."
-3,0,NIRP or individual SSA interlock,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,,,NIRP or other individual SSA interlocks like PPS,12/7/21 The group decided to not have this line
+3,0,NIRP or individual SSA interlock,CM,,ACCL:{LINAC}:{CRYOMODULE}00:,NRP:STATSUMY,0,,NRP,2,NIRP or other individual SSA interlocks like PPS,12/7/21 The group decided to not have this line 6/15/22 decided to add it back in
 3,1,SSA Permit,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,SSA_LTCH,0,,SSP,2,SSA permit to turn on faulted,
 3,2,SSA Faulted,SSA,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:SSA:,AlarmSummary.SEVR,,2,SSA,2,SSA not on,more 
 3,3,LLRF Frequency Offset,RACK,A,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,FREQSUM,,2,FRO,2,"LLRF Frequency is offset from nominal because LLRF has shifted the frequency, or in frequency scan mode",
 3,3,LLRF Frequency Offset,RACK,B,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,FREQSUM,,2,FRO,2,"LLRF Frequency is offset from nominal because LLRF has shifted the frequency, or in frequency scan mode",
-3,4,Cryo Summary,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,CRYO_LTCH,0,,CSI,2,"CM Cryo Summary (He pressure, He Level, Cryo Heartbeat, and CP Ready) faulted",we need to find out from andrew where he's alarming (what limits is he using)
+3,4,Cryo Summary Interlock,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,CRYO_LTCH,0,,CSI,2,"CM Cryo Summary Interlock (He pressure, He Level, Cryo Heartbeat, and CP Ready) faulted",we need to find out from andrew where he's alarming (what limits is he using)
 4,1,Resonance/Interlock Link,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,RESLINK_LTCH,0,,RLK,2,Resonance/ Interlock Link,
 4,2,FPGA PLL Lock,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PLL_LTCH,0,,FPG,2,,
 4,3,EPICS IOC Watchdog,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,IOCWDOG_LTCH,0,,IOC,2,,

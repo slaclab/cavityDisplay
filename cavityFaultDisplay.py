@@ -1,7 +1,7 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
-from functools import partial
 from pydm import Display
+from pydm.widgets import PyDMLabel
 from typing import Dict
 
 from Fault import Fault, PvInvalid
@@ -10,9 +10,9 @@ from displayLinac import DISPLAY_CRYOMODULES
 
 class CavityFaultDisplay(Display):
     def __init__(self, parent=None, args=None, macros=None):
-        super().__init__(parent=parent, args=args,
-                         ui_filename="frontend/cavityfaultdisplay.ui",
-                         macros=macros)
+        super(CavityFaultDisplay, self).__init__(parent=parent, args=args,
+                                                 ui_filename="frontend/cavityfaultdisplay.ui",
+                                                 macros=macros)
 
         cryomoduleName = macros["cryoNum"]
         cavityNumber = macros["cavityNumber"]
@@ -53,14 +53,6 @@ class CavityFaultDisplay(Display):
         for fault in faults.values():
             horizontalLayout = QHBoxLayout()
 
-            statusLabel = QLabel()
-            statusLabel.setMaximumWidth(100)
-            statusLabel.setMaximumHeight(28)
-            statusLabel.setMinimumHeight(28)
-            statusLabel.setSizePolicy(QSizePolicy.MinimumExpanding,
-                                      QSizePolicy.MinimumExpanding)
-            statusLabel.setAlignment(Qt.AlignCenter)
-
             codeLabel = QLabel()
             codeLabel.setText(fault.tlc)
             codeLabel.setMaximumWidth(50)
@@ -74,34 +66,52 @@ class CavityFaultDisplay(Display):
 
             shortDescriptionLabel.setWordWrap(True)
 
+            statusLabel = EnumLabel(fault=fault, codeLabel=codeLabel)
+
+            horizontalLayout.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
+
             horizontalLayout.addWidget(codeLabel)
             horizontalLayout.addWidget(shortDescriptionLabel)
             horizontalLayout.addWidget(statusLabel)
 
-            horizontalLayout.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
             verticalLayout.addLayout(horizontalLayout)
-            self.statusLabelCallback(statusLabel, codeLabel, fault)
 
-            fault.pv.add_callback(partial(self.statusLabelCallback, statusLabel, codeLabel, fault))
 
-    @staticmethod
-    def statusLabelCallback(statuslabel: QLabel, codelabel: QLabel, fault: Fault, **kw):
+class EnumLabel(PyDMLabel):
+    """
+    PyDMLabel subclass to change PyDMLabel Alarm channel text
+    """
+
+    def __init__(self, fault, codeLabel, parent=None, args=None):
+        super(EnumLabel, self).__init__(parent=parent,
+                                        init_channel=fault.pv.pvname)
+        self.fault = fault
+        self.codeLabel = codeLabel
+
+        self.setMaximumWidth(100)
+        self.setMaximumHeight(28)
+        self.setMinimumHeight(28)
+        self.setSizePolicy(QSizePolicy.MinimumExpanding,
+                           QSizePolicy.MinimumExpanding)
+        self.setAlignment(Qt.AlignCenter)
+
+    def value_changed(self, new_value):
+        super(EnumLabel, self).value_changed(new_value)
         try:
-            if fault.isFaulted():
-                statuslabel.setText("FAULTED")
-                statuslabel.setStyleSheet("background-color: rgb(255,0,0); font-weight: "
-                                          "bold; border: 2px solid black; color: white;")
-                codelabel.setStyleSheet("font-weight:bold;")
+            if self.fault.isFaulted():
+                self.setText("FAULTED")
+                self.setStyleSheet("background-color: rgb(255,0,0); font-weight: "
+                                   "bold; border: 2px solid black; color: white;")
+                self.codeLabel.setStyleSheet("font-weight:bold;")
 
             else:
-                statuslabel.setText("OK")
-                statuslabel.setStyleSheet("background-color: rgb(0,255,0);font-weight: bold; "
-                                          "border: 2px solid black;")
-                codelabel.setStyleSheet("font-weight:plain;")
-
-
+                self.setText("OK")
+                self.setStyleSheet("background-color: rgb(0,255,0);font-weight: bold; "
+                                   "border: 2px solid black;")
+                self.codeLabel.setStyleSheet("font-weight:plain;")
 
         except PvInvalid:
-            statuslabel.setText("INVALID")
-            statuslabel.setStyleSheet("background-color: rgb(255,0,255);font-weight: bold;"
-                                      "border: 2px solid black;")
+            self.setText("INVALID")
+            self.setStyleSheet("background-color: rgb(255,0,255);font-weight: bold;"
+                               "border: 2px solid black;")
+            self.codelabel.setStyleSheet("font-weight:bold;")

@@ -10,9 +10,9 @@ from displayLinac import DISPLAY_CRYOMODULES
 
 class CavityFaultDisplay(Display):
     def __init__(self, parent=None, args=None, macros=None):
-        super(CavityFaultDisplay, self).__init__(parent=parent, args=args,
-                                                 ui_filename="frontend/cavityfaultdisplay.ui",
-                                                 macros=macros)
+        super().__init__(parent=parent, args=args,
+                         ui_filename="frontend/cavityfaultdisplay.ui",
+                         macros=macros)
 
         cryomoduleName = macros["cryoNum"]
         cavityNumber = macros["cavityNumber"]

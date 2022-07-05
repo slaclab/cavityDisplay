@@ -35,23 +35,24 @@ class CavityWidget(PyDMDrawingPolygon):
         x, y, w, h = self.get_bounds()
         rect = QRect(x, y, w, h)
         fm = QFontMetrics(painter.font())
-        sx = rect.width() / fm.width(self.cavityText)
-        sy = rect.height() / fm.height()
+        if self._cavityText:
+            sx = rect.width() / fm.width(self._cavityText)
+            sy = rect.height() / fm.height()
 
-        painter.save()
-        painter.translate(rect.center())
-        painter.scale(sx, sy)
-        painter.translate(-rect.center())
+            painter.save()
+            painter.translate(rect.center())
+            painter.scale(sx, sy)
+            painter.translate(-rect.center())
 
-        # Text color
-        pen = QPen(QColor(240, 240, 240))
-        pen.setWidth(5.0)
+            # Text color
+            pen = QPen(QColor(240, 240, 240))
+            pen.setWidth(5.0)
 
-        font = QFont()
-        font.setUnderline(self.underline)
-        painter.setFont(font)
+            font = QFont()
+            font.setUnderline(self._underline)
+            painter.setFont(font)
 
-        painter.setPen(pen)
-        painter.drawText(rect, Qt.AlignCenter, self.cavityText)
-        painter.setPen(self._pen)
-        painter.restore()
+            painter.setPen(pen)
+            painter.drawText(rect, Qt.AlignCenter, self._cavityText)
+            painter.setPen(self._pen)
+            painter.restore()

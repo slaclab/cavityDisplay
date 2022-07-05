@@ -7,10 +7,9 @@ from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QHBoxLayout, QWidget
 from epics import PV
 from pydm import Display
-from pydm.widgets import (PyDMEmbeddedDisplay, PyDMRelatedDisplayButton, PyDMTemplateRepeater,
-                          PyDMDrawingLine)
+from pydm.widgets import (PyDMDrawingLine, PyDMEmbeddedDisplay, PyDMRelatedDisplayButton, PyDMTemplateRepeater)
 
-from lcls_tools.devices.scLinac import LINAC_OBJECTS
+from lcls_tools.superconducting.scLinac import CRYOMODULE_OBJECTS, Cavity
 
 sys.path.insert(0, './frontend')
 from cavityWidget import CavityWidget
@@ -26,6 +25,7 @@ RED_FILL_COLOR = QColor(150, 0, 0)
 PURPLE_FILL_COLOR = QColor(131, 61, 235)
 GRAY_FILL_COLOR = QColor(127, 127, 127)
 BLUE_FILL_COLOR = QColor(14, 191, 255)
+LIMEGREEN_FILL_COLOR = QColor(92, 253, 92)
 
 BLACK_TEXT_COLOR = QColor(0, 0, 0)
 DARK_GRAY_COLOR = QColor(40, 40, 40)
@@ -65,8 +65,7 @@ class CavityDisplayGUI(Display):
 
         for index, linacEmbeddedDisplay in enumerate(embeddedDisplays):
             linacEmbeddedDisplay.loadWhenShown = False
-            linacObject = LINAC_OBJECTS[index]
-            print("loading {linac}".format(linac=linacObject.name))
+            print("loading L{linac}B embedded display".format(linac=index))
 
             linacHorizLayout = linacEmbeddedDisplay.findChild(QHBoxLayout)
             totalCryosInLinac = linacHorizLayout.count()
@@ -82,17 +81,26 @@ class CavityDisplayGUI(Display):
 
                 cmTemplateRepeater: PyDMTemplateRepeater = cryomoduleDisplay.children()[2]
 
-                cryomoduleObject = linacObject.cryomodules[str(cmButton.text())]
+                cryomoduleObject = CRYOMODULE_OBJECTS[str(cmButton.text())]
                 cavityWidgetList: List[CavityWidget] = cmTemplateRepeater.findChildren(CavityWidget)
-                rfStatusBarList = cmTemplateRepeater.findChildren(PyDMDrawingLine)
 
-                for cavityWidget, rfStatusBar in zip(cavityWidgetList, rfStatusBarList):
-                    cavityObject = cryomoduleObject.cavities[int(cavityWidget.cavityText)]
+                rfStatusBarList = []
+                ssaStatusBarList = []
+                statusBarList = cmTemplateRepeater.findChildren(PyDMDrawingLine)
+                for statusBar in statusBarList:
+                    if "RFSTATE" in statusBar.accessibleName():
+                        rfStatusBarList.append(statusBar)
+                    elif "SSA" in statusBar.accessibleName():
+                        ssaStatusBarList.append(statusBar)
+
+                for cavityWidget, rfStatusBar, ssaStatusBar in zip(cavityWidgetList, rfStatusBarList, ssaStatusBarList):
+                    cavityObject: Cavity = cryomoduleObject.cavities[int(cavityWidget.cavityText)]
 
                     severityPV = PV(cavityObject.pvPrefix + SEVERITY_SUFFIX)
                     statusPV = PV(cavityObject.pvPrefix + STATUS_SUFFIX)
                     descriptionPV = PV(cavityObject.pvPrefix + DESCRIPTION_SUFFIX)
-                    rfStatePV = PV(rfStatusBar.accessibleName())
+                    rfStatePV = cavityObject.rfStatePV
+                    ssaPV = cavityObject.ssa.statusPV
 
                     # These lines are meant to initialize the cavityWidget color, shape, and descriptionPV values
                     # when first launched. If we don't initialize the description PV, it would remain empty
@@ -101,6 +109,7 @@ class CavityDisplayGUI(Display):
                     self.statusCallback(cavityWidget, statusPV.value)
                     self.descriptionCallback(cavityWidget, descriptionPV)
                     self.rfStatusCallback(rfStatusBar, rfStatePV.value)
+                    self.ssaStatusCallback(ssaStatusBar, ssaPV.value)
 
                     # .add_callback is called when severityPV changes value
                     severityPV.add_callback(partial(self.severityCallback, cavityWidget))
@@ -114,16 +123,32 @@ class CavityDisplayGUI(Display):
                     # .add_callback is called when rfStatePV changes value
                     rfStatePV.add_callback(partial(self.rfStatusCallback, rfStatusBar))
 
+                    # .add_callback is called when ssaStatePV changes value
+                    ssaPV.add_callback(partial(self.ssaStatusCallback, ssaStatusBar))
+
     # A blue line appears under the cavity if the RF is on
     @staticmethod
     def rfStatusCallback(rf_StatusBar: PyDMDrawingLine, value: int, **kw):
         if value == 1:
             rf_StatusBar.penColor = BLUE_FILL_COLOR
+            rf_StatusBar.setToolTip("RF on")
         elif value == 0:
             rf_StatusBar.penColor = DARK_GRAY_COLOR
+            rf_StatusBar.setToolTip("RF off")
         else:
             print("RFSTATUS pv value is not On or Off, nor disconnected")
         rf_StatusBar.update()
+
+    # An orange line appears under the cavity if its SSA is on
+    @staticmethod
+    def ssaStatusCallback(ssa_StatusBar: PyDMDrawingLine, value: int, **kw):
+        if value == 3:
+            ssa_StatusBar.penColor = LIMEGREEN_FILL_COLOR
+            ssa_StatusBar.setToolTip("SSA on")
+        elif value != 3:
+            ssa_StatusBar.penColor = DARK_GRAY_COLOR
+            ssa_StatusBar.setToolTip("SSA off")
+        ssa_StatusBar.update()
 
     # Updates shape depending on pv value
     def severityCallback(self, cavity_widget: CavityWidget, value: int, **kw):

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>98</width>
-    <height>52</height>
+    <height>65</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -67,30 +67,60 @@
     </widget>
    </item>
    <item row="1" column="0">
-    <widget class="PyDMDrawingLine" name="rfStatus">
-     <property name="toolTip">
-      <string/>
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,1">
+     <property name="spacing">
+      <number>0</number>
      </property>
-     <property name="accessibleName">
-      <string>ACCL:${linac}:${cryoNum}${cavityNumber}0:RFSTATE</string>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(40, 40, 40);</string>
-     </property>
-     <property name="rules" stdset="0">
-      <string>[]</string>
-     </property>
-     <property name="penColor" stdset="0">
-      <color>
-       <red>14</red>
-       <green>191</green>
-       <blue>255</blue>
-      </color>
-     </property>
-     <property name="penWidth" stdset="0">
-      <double>5.000000000000000</double>
-     </property>
-    </widget>
+     <item>
+      <widget class="PyDMDrawingLine" name="ssaStatus">
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="accessibleName">
+        <string>ACCL:${linac}:${cryoNum}${cavityNumber}0:SSA:StatusMsg</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(40, 40, 40);</string>
+       </property>
+       <property name="rules" stdset="0">
+        <string>[]</string>
+       </property>
+       <property name="penColor" stdset="0">
+        <color>
+         <red>92</red>
+         <green>253</green>
+         <blue>92</blue>
+        </color>
+       </property>
+       <property name="penWidth" stdset="0">
+        <double>5.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMDrawingLine" name="rfStatus">
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="accessibleName">
+        <string>ACCL:${linac}:${cryoNum}${cavityNumber}0:RFSTATE</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(40, 40, 40);</string>
+       </property>
+       <property name="penColor" stdset="0">
+        <color>
+         <red>14</red>
+         <green>191</green>
+         <blue>255</blue>
+        </color>
+       </property>
+       <property name="penWidth" stdset="0">
+        <double>5.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

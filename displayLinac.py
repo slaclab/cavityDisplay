@@ -5,7 +5,7 @@ from epics import PV
 from Fault import Fault, PvInvalid
 from cavityDisplayGUI import DESCRIPTION_SUFFIX, SEVERITY_SUFFIX, STATUS_SUFFIX
 from lcls_tools.superconducting.scLinac import (Cavity, CryoDict, Cryomodule, Magnet, Rack,
-                                                SSA, StepperTuner)
+                                                SSA, StepperTuner, Piezo)
 from utils import CSV_FAULTS, displayHash
 
 
@@ -24,7 +24,7 @@ class SpreadsheetError(Exception):
 class DisplayCryomodule(Cryomodule):
     def __init__(self, cryoName, linacObject, cavityClass=Cavity,
                  magnetClass=Magnet, rackClass=Rack, isHarmonicLinearizer=False,
-                 ssaClass=SSA, stepperClass=StepperTuner):
+                 ssaClass=SSA, stepperClass=StepperTuner, piezoClass=Piezo):
         super().__init__(cryoName, linacObject, cavityClass=DisplayCavity,
                          isHarmonicLinearizer=isHarmonicLinearizer,
                          ssaClass=DisplaySSA)
@@ -34,7 +34,7 @@ class DisplayCryomodule(Cryomodule):
 
 class DisplayCavity(Cavity):
     def __init__(self, cavityNum, rackObject, ssaClass=DisplaySSA,
-                 stepperClass=StepperTuner):
+                 stepperClass=StepperTuner, piezoClass=Piezo):
         super(DisplayCavity, self).__init__(cavityNum, rackObject, ssaClass=ssaClass)
         self.statusPV = PV(self.pvPrefix + STATUS_SUFFIX)
         self.severityPV = PV(self.pvPrefix + SEVERITY_SUFFIX)

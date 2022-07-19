@@ -38,6 +38,7 @@
 5,3,RF (not) Ready for Beam,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,RFREADYFORBEAM,1,,RFR,2,RF not ready for beam: mode is not SELAP and/or RF is off,
 6,1,Piezo feedback off,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PZT:MODECTRL,1,,PZF,2,Piezo Feedback is not on,
 6,2,Piezo feedback problem,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PZT:FBSTATSUM,,2,PZO,2,Piezo Feedback is indicating a problem,"Ask Sonya if such a thing exists and if so, what is it?"
+,,SSA Overrange,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,ASETSUB.VALQ,,1,OVR,2,The SSA is unable to output enough power to attain the desired amplitude. Changing the reactive power fraction can help. ,
 7,1,Feedback Amplitude out of tolerance,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,AMPFB_SUM,0,,AFB,2,The feedback maintaining the amplitude is unable to keep the amplitude within tolerance. (Must be checked after RFREADYFORBEAM). Amplitude feedback of measured gradient is too low,
 7,2,Phase feedback out of tolerance,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PHAFB_SUM,0,,PFB,2,The feedback maintaining the phase is unable to keep the phase within tolerance. (Must be checked after RFREADYFORBEAM),
 7,3,Feedback for phase or amplitude out of tolerance,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,FB_SUM,0,,FBS,2,The feedback is unable to keep either phase or amplitude within tolerance. (Must be checked after RFREADYFORBEAM),

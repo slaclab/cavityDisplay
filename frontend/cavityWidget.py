@@ -33,6 +33,7 @@ class CavityWidget(PyDMDrawingPolygon):
     def value_changed(self, new_val):
         super(CavityWidget, self).value_changed(new_val)
         self.cavityText = new_val
+        self.update()
     
     def draw_item(self, painter: QPainter):
         super(CavityWidget, self).draw_item(painter)

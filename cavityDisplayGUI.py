@@ -1,15 +1,11 @@
 import json
 import sys
-from dataclasses import dataclass
-from functools import partial
 from typing import List
 
-from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QHBoxLayout, QWidget
-from epics import caget, camonitor
 from numpy import array2string, ndarray
 from pydm import Display
-from pydm.widgets import (PyDMByteIndicator, PyDMDrawingLine, PyDMEmbeddedDisplay, PyDMRelatedDisplayButton,
+from pydm.widgets import (PyDMByteIndicator, PyDMEmbeddedDisplay, PyDMRelatedDisplayButton,
                           PyDMTemplateRepeater)
 
 from lcls_tools.superconducting.scLinac import CRYOMODULE_OBJECTS, Cavity
@@ -21,38 +17,6 @@ STATUS_SUFFIX = "CUDSTATUS"
 SEVERITY_SUFFIX = "CUDSEVR"
 DESCRIPTION_SUFFIX = "CUDDESC"
 RF_STATUS_SUFFIX = "RFSTATE"
-
-GREEN_FILL_COLOR = QColor(9, 141, 0)
-YELLOW_FILL_COLOR = QColor(244, 230, 67)
-RED_FILL_COLOR = QColor(150, 0, 0)
-PURPLE_FILL_COLOR = QColor(131, 61, 235)
-GRAY_FILL_COLOR = QColor(127, 127, 127)
-BLUE_FILL_COLOR = QColor(14, 191, 255)
-LIMEGREEN_FILL_COLOR = QColor(92, 253, 92)
-
-BLACK_TEXT_COLOR = QColor(0, 0, 0)
-DARK_GRAY_COLOR = QColor(40, 40, 40)
-WHITE_TEXT_COLOR = QColor(250, 250, 250)
-
-
-@dataclass
-class ShapeParameters:
-    fillColor: QColor
-    borderColor: QColor
-    numPoints: int
-    rotation: float
-
-
-SHAPE_PARAMETER_DICT = {0: ShapeParameters(GREEN_FILL_COLOR, GREEN_FILL_COLOR,
-                                           4, 0),
-                        1: ShapeParameters(YELLOW_FILL_COLOR, YELLOW_FILL_COLOR,
-                                           3, 0),
-                        2: ShapeParameters(RED_FILL_COLOR, RED_FILL_COLOR,
-                                           6, 0),
-                        3: ShapeParameters(PURPLE_FILL_COLOR, PURPLE_FILL_COLOR,
-                                           20, 0),
-                        4: ShapeParameters(GRAY_FILL_COLOR, GRAY_FILL_COLOR,
-                                           10, 0)}
 
 
 class CavityDisplayGUI(Display):
@@ -101,13 +65,15 @@ class CavityDisplayGUI(Display):
                     
                     severityPV: str = (cavityObject.pvPrefix + SEVERITY_SUFFIX)
                     statusPV: str = (cavityObject.pvPrefix + STATUS_SUFFIX)
-                    descriptionPV: str = (cavityObject.pvPrefix + DESCRIPTION_SUFFIX)
+                    # descriptionPV: str = (cavityObject.pvPrefix + DESCRIPTION_SUFFIX)
                     rfStatePV: str = cavityObject.rfStatePV
                     ssaPV: str = cavityObject.ssa.statusPV
                     
                     rfStatusBar.channel = rfStatePV
                     ssaStatusBar.channel = ssaPV
+                    
                     cavityWidget.channel = statusPV
+                    cavityWidget.severity_channel = severityPV
                     
                     rule = [{"channels": [{"channel": ssaPV, "trigger": True, "use_enum": True}],
                              "property": "Visible", "expression": "ch[0] == 'SSA On'", "initial_value": "True",
@@ -118,20 +84,20 @@ class CavityDisplayGUI(Display):
                     # These lines are meant to initialize the cavityWidget color, shape, and descriptionPV values
                     # when first launched. If we don't initialize the description PV, it would remain empty
                     # until the pv value changes
-                    self.severityCallback(cavityWidget, caget(severityPV))
+                    # self.severityCallback(cavityWidget, caget(severityPV))
                     # self.statusCallback(cavityWidget, caget(statusPV))
-                    self.descriptionCallback(cavityWidget, caget(descriptionPV))
+                    # self.descriptionCallback(cavityWidget, caget(descriptionPV))
                     # self.rfStatusCallback(rfStatusBar, caget(rfStatePV, timeout=0.1))
                     # self.ssaStatusCallback(ssaStatusBar, caget(ssaPV))
                     
                     # .add_callback is called when severityPV changes value
-                    camonitor(severityPV, partial(self.severityCallback, cavityWidget))
+                    # camonitor(severityPV, partial(self.severityCallback, cavityWidget))
                     
                     # .add_callback is called when statusPV changes value
                     # camonitor(statusPV, partial(self.statusCallback, cavityWidget))
                     
                     # .add_callback is called when descriptionPV changes value
-                    camonitor(descriptionPV, partial(self.descriptionCallback, cavityWidget))
+                    # camonitor(descriptionPV, partial(self.descriptionCallback, cavityWidget))
                     
                     # .add_callback is called when rfStatePV changes value
                     # camonitor(rfStatePV, partial(self.rfStatusCallback, rfStatusBar))
@@ -139,36 +105,36 @@ class CavityDisplayGUI(Display):
                     # .add_callback is called when ssaStatePV changes value
                     # camonitor(ssaPV, partial(self.ssaStatusCallback, ssaStatusBar))
     
-    # A blue line appears under the cavity if the RF is on
-    @staticmethod
-    def rfStatusCallback(rf_StatusBar: PyDMDrawingLine, value: int, **kw):
-        if value == 1:
-            rf_StatusBar.penColor = BLUE_FILL_COLOR
-            rf_StatusBar.setToolTip("RF on")
-        elif value == 0:
-            rf_StatusBar.penColor = DARK_GRAY_COLOR
-            rf_StatusBar.setToolTip("RF off")
-        else:
-            print("RFSTATE pv value is not On or Off, nor disconnected")
-        rf_StatusBar.update()
-    
-    # An orange line appears under the cavity if its SSA is on
-    @staticmethod
-    def ssaStatusCallback(ssa_StatusBar: PyDMDrawingLine, value: int, **kw):
-        if value == 3:
-            ssa_StatusBar.penColor = LIMEGREEN_FILL_COLOR
-            ssa_StatusBar.setToolTip("SSA on")
-        elif value != 3:
-            ssa_StatusBar.penColor = DARK_GRAY_COLOR
-            ssa_StatusBar.setToolTip("SSA off")
-        ssa_StatusBar.update()
-    
-    # Updates shape depending on pv value
-    def severityCallback(self, cavity_widget: CavityWidget, value: int, **kw):
-        self.changeShape(cavity_widget,
-                         SHAPE_PARAMETER_DICT[value]
-                         if value in SHAPE_PARAMETER_DICT
-                         else SHAPE_PARAMETER_DICT[3])
+    # # A blue line appears under the cavity if the RF is on
+    # @staticmethod
+    # def rfStatusCallback(rf_StatusBar: PyDMDrawingLine, value: int, **kw):
+    #     if value == 1:
+    #         rf_StatusBar.penColor = BLUE_FILL_COLOR
+    #         rf_StatusBar.setToolTip("RF on")
+    #     elif value == 0:
+    #         rf_StatusBar.penColor = DARK_GRAY_COLOR
+    #         rf_StatusBar.setToolTip("RF off")
+    #     else:
+    #         print("RFSTATE pv value is not On or Off, nor disconnected")
+    #     rf_StatusBar.update()
+    #
+    # # An orange line appears under the cavity if its SSA is on
+    # @staticmethod
+    # def ssaStatusCallback(ssa_StatusBar: PyDMDrawingLine, value: int, **kw):
+    #     if value == 3:
+    #         ssa_StatusBar.penColor = LIMEGREEN_FILL_COLOR
+    #         ssa_StatusBar.setToolTip("SSA on")
+    #     elif value != 3:
+    #         ssa_StatusBar.penColor = DARK_GRAY_COLOR
+    #         ssa_StatusBar.setToolTip("SSA off")
+    #     ssa_StatusBar.update()
+    #
+    # # Updates shape depending on pv value
+    # def severityCallback(self, cavity_widget: CavityWidget, value: int, **kw):
+    #     self.changeShape(cavity_widget,
+    #                      SHAPE_PARAMETER_DICT[value]
+    #                      if value in SHAPE_PARAMETER_DICT
+    #                      else SHAPE_PARAMETER_DICT[3])
     
     # Change the hover text of each cavity to show a description for the tlc fault
     @staticmethod

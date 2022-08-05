@@ -1,4 +1,4 @@
-from epics import PV
+from epics import caget
 
 PV_TIMEOUT = 0.01
 
@@ -18,11 +18,12 @@ class Fault:
         self.okValue = float(okValue) if okValue else None
         self.faultValue = float(faultValue) if faultValue else None
         self.suffix = suffix
-
-        self.pv: PV = PV(prefix + suffix, connection_timeout=PV_TIMEOUT)
-
+        
+        self.pv: str = (prefix + suffix)
+    
     def isFaulted(self):
-
+        print(f"Checking {self.pv}")
+        
         """
         Dug through the pyepics source code to find the severity values:
         class AlarmSeverity(DefaultIntEnum):
@@ -31,15 +32,15 @@ class Fault:
             MAJOR = 2
             INVALID = 3
         """
-        if self.pv.severity == 3 or self.pv.status is None:
-            raise PvInvalid(self.pv.pvname)
-
+        if caget(self.pv + ".SEVR") == 3:
+            raise PvInvalid(self.pv)
+        
         if self.okValue is not None:
-            return self.pv.value != self.okValue
-
+            return caget(self.pv) != self.okValue
+        
         elif self.faultValue is not None:
-            return self.pv.value == self.faultValue
-
+            return caget(self.pv) == self.faultValue
+        
         else:
             print(self)
             raise Exception("Fault has neither \'Fault if equal to\' nor"

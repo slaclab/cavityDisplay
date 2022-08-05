@@ -1,3 +1,4 @@
+import json
 import sys
 from dataclasses import dataclass
 from functools import partial
@@ -8,7 +9,8 @@ from PyQt5.QtWidgets import QHBoxLayout, QWidget
 from epics import caget, camonitor
 from numpy import array2string, ndarray
 from pydm import Display
-from pydm.widgets import (PyDMDrawingLine, PyDMEmbeddedDisplay, PyDMRelatedDisplayButton, PyDMTemplateRepeater)
+from pydm.widgets import (PyDMByteIndicator, PyDMDrawingLine, PyDMEmbeddedDisplay, PyDMRelatedDisplayButton,
+                          PyDMTemplateRepeater)
 
 from lcls_tools.superconducting.scLinac import CRYOMODULE_OBJECTS, Cavity
 
@@ -85,9 +87,9 @@ class CavityDisplayGUI(Display):
                 cryomoduleObject = CRYOMODULE_OBJECTS[str(cmButton.text())]
                 cavityWidgetList: List[CavityWidget] = cmTemplateRepeater.findChildren(CavityWidget)
                 
-                rfStatusBarList = []
-                ssaStatusBarList = []
-                statusBarList = cmTemplateRepeater.findChildren(PyDMDrawingLine)
+                rfStatusBarList: List[PyDMByteIndicator] = []
+                ssaStatusBarList: List[PyDMByteIndicator] = []
+                statusBarList = cmTemplateRepeater.findChildren(PyDMByteIndicator)
                 for statusBar in statusBarList:
                     if "RFSTATE" in statusBar.accessibleName():
                         rfStatusBarList.append(statusBar)
@@ -103,29 +105,39 @@ class CavityDisplayGUI(Display):
                     rfStatePV: str = cavityObject.rfStatePV
                     ssaPV: str = cavityObject.ssa.statusPV
                     
+                    rfStatusBar.channel = rfStatePV
+                    ssaStatusBar.channel = ssaPV
+                    cavityWidget.channel = statusPV
+                    
+                    rule = [{"channels": [{"channel": ssaPV, "trigger": True, "use_enum": True}],
+                             "property": "Visible", "expression": "ch[0] == 'SSA On'", "initial_value": "True",
+                             "name"    : "show"}]
+                    
+                    ssaStatusBar.rules = json.dumps(rule)
+                    
                     # These lines are meant to initialize the cavityWidget color, shape, and descriptionPV values
                     # when first launched. If we don't initialize the description PV, it would remain empty
                     # until the pv value changes
                     self.severityCallback(cavityWidget, caget(severityPV))
-                    self.statusCallback(cavityWidget, caget(statusPV))
+                    # self.statusCallback(cavityWidget, caget(statusPV))
                     self.descriptionCallback(cavityWidget, caget(descriptionPV))
-                    self.rfStatusCallback(rfStatusBar, caget(rfStatePV))
-                    self.ssaStatusCallback(ssaStatusBar, caget(ssaPV))
+                    # self.rfStatusCallback(rfStatusBar, caget(rfStatePV, timeout=0.1))
+                    # self.ssaStatusCallback(ssaStatusBar, caget(ssaPV))
                     
                     # .add_callback is called when severityPV changes value
                     camonitor(severityPV, partial(self.severityCallback, cavityWidget))
                     
                     # .add_callback is called when statusPV changes value
-                    camonitor(statusPV, partial(self.statusCallback, cavityWidget))
+                    # camonitor(statusPV, partial(self.statusCallback, cavityWidget))
                     
                     # .add_callback is called when descriptionPV changes value
                     camonitor(descriptionPV, partial(self.descriptionCallback, cavityWidget))
                     
                     # .add_callback is called when rfStatePV changes value
-                    camonitor(rfStatePV, partial(self.rfStatusCallback, rfStatusBar))
+                    # camonitor(rfStatePV, partial(self.rfStatusCallback, rfStatusBar))
                     
                     # .add_callback is called when ssaStatePV changes value
-                    camonitor(ssaPV, partial(self.ssaStatusCallback, ssaStatusBar))
+                    # camonitor(ssaPV, partial(self.ssaStatusCallback, ssaStatusBar))
     
     # A blue line appears under the cavity if the RF is on
     @staticmethod
@@ -137,7 +149,7 @@ class CavityDisplayGUI(Display):
             rf_StatusBar.penColor = DARK_GRAY_COLOR
             rf_StatusBar.setToolTip("RF off")
         else:
-            print("RFSTATUS pv value is not On or Off, nor disconnected")
+            print("RFSTATE pv value is not On or Off, nor disconnected")
         rf_StatusBar.update()
     
     # An orange line appears under the cavity if its SSA is on

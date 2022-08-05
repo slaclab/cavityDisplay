@@ -13,23 +13,27 @@ class CavityWidget(PyDMDrawingPolygon):
         self._rotation = 0
         self._brush.setColor(QColor(201, 255, 203))  # Shape's fill color
         self._pen.setWidth(5.0)
-
+    
     @qtProperty(str)
     def cavityText(self):
         return self._cavityText
-
+    
     @cavityText.setter
     def cavityText(self, text):
         self._cavityText = text
-
+    
     @qtProperty(bool)
     def underline(self):
         return self._underline
-
+    
     @underline.setter
     def underline(self, underline: bool):
         self._underline = underline
-
+    
+    def value_changed(self, new_val):
+        super(CavityWidget, self).value_changed(new_val)
+        self.cavityText = new_val
+    
     def draw_item(self, painter: QPainter):
         super(CavityWidget, self).draw_item(painter)
         x, y, w, h = self.get_bounds()
@@ -38,20 +42,20 @@ class CavityWidget(PyDMDrawingPolygon):
         if self._cavityText:
             sx = rect.width() / fm.width(self._cavityText)
             sy = rect.height() / fm.height()
-
+            
             painter.save()
             painter.translate(rect.center())
             painter.scale(sx, sy)
             painter.translate(-rect.center())
-
+            
             # Text color
             pen = QPen(QColor(240, 240, 240))
             pen.setWidth(5.0)
-
+            
             font = QFont()
             font.setUnderline(self._underline)
             painter.setFont(font)
-
+            
             painter.setPen(pen)
             painter.drawText(rect, Qt.AlignCenter, self._cavityText)
             painter.setPen(self._pen)

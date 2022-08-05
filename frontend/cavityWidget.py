@@ -26,16 +26,16 @@ class ShapeParameters:
     rotation: float
 
 
-SHAPE_PARAMETER_DICT = {"NO_ALARM": ShapeParameters(GREEN_FILL_COLOR, GREEN_FILL_COLOR,
-                                                    4, 0),
-                        "MINOR"   : ShapeParameters(YELLOW_FILL_COLOR, YELLOW_FILL_COLOR,
-                                                    3, 0),
-                        "MAJOR"   : ShapeParameters(RED_FILL_COLOR, RED_FILL_COLOR,
-                                                    6, 0),
-                        "INVALID" : ShapeParameters(PURPLE_FILL_COLOR, PURPLE_FILL_COLOR,
-                                                    20, 0),
-                        "PARKED"  : ShapeParameters(GRAY_FILL_COLOR, GRAY_FILL_COLOR,
-                                                    10, 0)}
+SHAPE_PARAMETER_DICT = {0: ShapeParameters(GREEN_FILL_COLOR, GREEN_FILL_COLOR,
+                                           4, 0),
+                        1: ShapeParameters(YELLOW_FILL_COLOR, YELLOW_FILL_COLOR,
+                                           3, 0),
+                        2: ShapeParameters(RED_FILL_COLOR, RED_FILL_COLOR,
+                                           6, 0),
+                        3: ShapeParameters(PURPLE_FILL_COLOR, PURPLE_FILL_COLOR,
+                                           20, 0),
+                        4: ShapeParameters(GRAY_FILL_COLOR, GRAY_FILL_COLOR,
+                                           10, 0)}
 
 
 class CavityWidget(PyDMDrawingPolygon):
@@ -70,15 +70,13 @@ class CavityWidget(PyDMDrawingPolygon):
                                              value_slot=self.severity_channel_value_changed)
         self._severity_channel.connect()
     
-    @Slot(str)
-    def severity_channel_value_changed(self, value: str):
-        print(f"{self.severity_channel} changed to {value}")
+    @Slot(int)
+    def severity_channel_value_changed(self, value: int):
         self.changeShape(SHAPE_PARAMETER_DICT[value]
                          if value in SHAPE_PARAMETER_DICT
                          else SHAPE_PARAMETER_DICT[3])
     
     def changeShape(self, shapeParameterObject):
-        print(f"Changing shape using {self.severity_channel}")
         self.brush.setColor(shapeParameterObject.fillColor)
         self.penColor = shapeParameterObject.borderColor
         self.numberOfPoints = shapeParameterObject.numPoints

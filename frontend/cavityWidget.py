@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+import numpy as np
 from PyQt5.QtGui import QColor, QFont, QFontMetrics, QPainter, QPen
 from pydm import PyDMChannel
 from pydm.widgets.drawing import PyDMDrawingPolygon
@@ -49,6 +50,7 @@ class CavityWidget(PyDMDrawingPolygon):
         self._brush.setColor(QColor(201, 255, 203))  # Shape's fill color
         self._pen.setWidth(5.0)
         self._severity_channel: PyDMChannel = None
+        self._description_channel: PyDMChannel = None
         self.alarmSensitiveBorder = False
         self.alarmSensitiveContent = False
     
@@ -59,6 +61,25 @@ class CavityWidget(PyDMDrawingPolygon):
     @cavityText.setter
     def cavityText(self, text):
         self._cavityText = text
+    
+    @qtProperty(str)
+    def description_channel(self):
+        return self._description_channel.address
+    
+    @description_channel.setter
+    def description_channel(self, value: str):
+        self._description_channel = PyDMChannel(address=value,
+                                                value_slot=self.description_changed)
+        self._description_channel.connect()
+    
+    @Slot(np.ndarray)
+    def description_changed(self, value: np.ndarray):
+        try:
+            desc = "".join(chr(i) for i in value)
+            self.setToolTip(desc)
+        except TypeError:
+            self.setToolTip(value)
+        self.update()
     
     @qtProperty(str)
     def severity_channel(self):

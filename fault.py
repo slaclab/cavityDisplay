@@ -22,8 +22,6 @@ class Fault:
         self.pv: PV = PV(prefix + suffix, connection_timeout=PV_TIMEOUT)
     
     def isFaulted(self):
-        print(f"Checking {self.pv}")
-        
         """
         Dug through the pyepics source code to find the severity values:
         class AlarmSeverity(DefaultIntEnum):

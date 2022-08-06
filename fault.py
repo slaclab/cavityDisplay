@@ -18,11 +18,10 @@ class Fault:
         self.okValue = float(okValue) if okValue else None
         self.faultValue = float(faultValue) if faultValue else None
         self.suffix = suffix
-
+        
         self.pv: PV = PV(prefix + suffix, connection_timeout=PV_TIMEOUT)
-
+    
     def isFaulted(self):
-
         """
         Dug through the pyepics source code to find the severity values:
         class AlarmSeverity(DefaultIntEnum):
@@ -33,13 +32,13 @@ class Fault:
         """
         if self.pv.severity == 3 or self.pv.status is None:
             raise PvInvalid(self.pv.pvname)
-
+        
         if self.okValue is not None:
             return self.pv.value != self.okValue
-
+        
         elif self.faultValue is not None:
             return self.pv.value == self.faultValue
-
+        
         else:
             print(self)
             raise Exception("Fault has neither \'Fault if equal to\' nor"

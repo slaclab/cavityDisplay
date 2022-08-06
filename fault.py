@@ -1,4 +1,4 @@
-from epics import caget
+from epics import PV
 
 PV_TIMEOUT = 0.01
 
@@ -19,7 +19,7 @@ class Fault:
         self.faultValue = float(faultValue) if faultValue else None
         self.suffix = suffix
         
-        self.pv: str = (prefix + suffix)
+        self.pv: PV = PV(prefix + suffix, connection_timeout=PV_TIMEOUT)
     
     def isFaulted(self):
         print(f"Checking {self.pv}")
@@ -32,14 +32,14 @@ class Fault:
             MAJOR = 2
             INVALID = 3
         """
-        if caget(self.pv + ".SEVR") == 3:
-            raise PvInvalid(self.pv)
+        if self.pv.severity == 3 or self.pv.status is None:
+            raise PvInvalid(self.pv.pvname)
         
         if self.okValue is not None:
-            return caget(self.pv) != self.okValue
+            return self.pv.value != self.okValue
         
         elif self.faultValue is not None:
-            return caget(self.pv) == self.faultValue
+            return self.pv.value == self.faultValue
         
         else:
             print(self)

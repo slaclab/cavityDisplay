@@ -1,12 +1,13 @@
 from datetime import datetime
-from epics import PV
 from time import sleep
+
+from epics import caget, caput
 
 from displayLinac import DISPLAY_CRYOMODULES, DisplayCryomodule
 from lcls_tools.superconducting.scLinac import ALL_CRYOMODULES
 from utils import BACKEND_SLEEP_TIME, DEBUG
 
-WATCHER_PV = PV("PHYS:SYS0:1:SC_CAV_FAULT_HEARTBEAT")
+WATCHER_PV: str = "PHYS:SYS0:1:SC_CAV_FAULT_HEARTBEAT"
 
 while True:
     start = datetime.now()
@@ -17,5 +18,5 @@ while True:
     if DEBUG:
         delta = (datetime.now() - start).total_seconds()
         sleep(BACKEND_SLEEP_TIME - delta if delta < BACKEND_SLEEP_TIME else 0)
-
-    WATCHER_PV.put(WATCHER_PV.value + 1)
+    
+    caput(WATCHER_PV, caget(WATCHER_PV) + 1)

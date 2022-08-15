@@ -4,8 +4,8 @@ from pydm import Display
 from pydm.widgets import PyDMLabel
 from typing import Dict
 
-from Fault import Fault, PvInvalid
 from displayLinac import DISPLAY_CRYOMODULES
+from fault import Fault, PvInvalid
 
 
 class CavityFaultDisplay(Display):

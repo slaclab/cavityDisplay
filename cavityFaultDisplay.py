@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
 from edmbutton import PyDMEDMDisplayButton
 from pydm import Display
-from pydm.widgets import PyDMLabel, PyDMShellCommand
+from pydm.widgets import PyDMLabel, PyDMShellCommand, PyDMRelatedDisplayButton
 
 from displayLinac import DISPLAY_CRYOMODULES
 from fault import Fault, PvInvalid
@@ -29,7 +29,7 @@ class CavityFaultDisplay(Display):
         statusheaderLabel.setText("Status")
         statusheaderLabel.setMaximumWidth(100)
         statusheaderLabel.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
-        statusheaderLabel.setAlignment(Qt.AlignCenter)
+        statusheaderLabel.setAlignment(Qt.AlignHCenter)
         statusheaderLabel.setStyleSheet("text-decoration: underline")
 
         nameheaderLabel = QLabel()
@@ -45,9 +45,17 @@ class CavityFaultDisplay(Display):
         codeheaderLabel.setAlignment(Qt.AlignHCenter)
         codeheaderLabel.setStyleSheet("text-decoration: underline")
 
+        buttonheaderLabel = QLabel()
+        buttonheaderLabel.setText("Panel")
+        buttonheaderLabel.setMaximumWidth(58)
+        buttonheaderLabel.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+        buttonheaderLabel.setAlignment(Qt.AlignHCenter)
+        buttonheaderLabel.setStyleSheet("text-decoration:underline")
+
         headerLayout.addWidget(codeheaderLabel)
         headerLayout.addWidget(nameheaderLabel)
         headerLayout.addWidget(statusheaderLabel)
+        headerLayout.addWidget(buttonheaderLabel)
 
         headerLayout.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
         verticalLayout.addLayout(headerLayout)
@@ -85,6 +93,15 @@ class CavityFaultDisplay(Display):
                 button = PyDMEDMDisplayButton()
                 button.filenames = [fault.button_command]
                 button.macros = fault.macros
+                horizontalLayout.addWidget(button)
+
+            elif fault.button_level == "PyDM":
+                button = PyDMRelatedDisplayButton()
+                button.filenames = [fault.button_command]
+                horizontalLayout.addWidget(button)
+
+            else:
+                button = PyDMRelatedDisplayButton()
                 horizontalLayout.addWidget(button)
 
             verticalLayout.addLayout(horizontalLayout)

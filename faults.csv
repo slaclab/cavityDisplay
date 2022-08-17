@@ -1,5 +1,5 @@
 ﻿Heirarchy Group,Order Within Group,Short Description,Level,Button Level,Button Command,Rack,PV Prefix,PV Suffix,OK If Equal To,Faulted If Equal To,Three Letter Code,Severity,Long Description,Comments
-0,0,Parked,CAV,GUI,cd ~/SLAC/cavityParking; pydm park_gui.py,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PARK,,1,PKD,4,Cavity is tuned off frequency so it doesn’t affect the beam.,
+0,0,Parked,CAV,GUI,cd /Users/lopardog/SLAC/cavityParking; pydm park_gui.py,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PARK,,1,PKD,4,Cavity is tuned off frequency so it doesn’t affect the beam.,
 ,,BSOIC Tripped,ALL,,,,BSOC:SYSW:2:,SumyA,1,,BSO,2,BSOIC tripped,
 ,,BSOIC Tripped,ALL,,,,BSOC:SYSW:2:,SumyB,1,,BSO,2,BSOIC tripped,
 ,,Not Ready for Beam,ALL,,,,PPS:SYSW:1:,BeamReadyA,1,,PPS,2,PPS: West Global not in Ready for Beam,

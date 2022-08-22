@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
 from edmbutton import PyDMEDMDisplayButton
 from pydm import Display
-from pydm.widgets import PyDMLabel, PyDMShellCommand, PyDMRelatedDisplayButton
+from pydm.widgets import PyDMLabel, PyDMRelatedDisplayButton
 
 from displayLinac import DISPLAY_CRYOMODULES
 from fault import Fault, PvInvalid
@@ -85,25 +85,23 @@ class CavityFaultDisplay(Display):
             horizontalLayout.addWidget(statusLabel)
 
             if fault.button_level == "GUI":
-                button = PyDMShellCommand(command=fault.button_command)
-                print(fault.button_command)
-                horizontalLayout.addWidget(button)
+                button = PyDMRelatedDisplayButton(filename=fault.button_command)
 
             elif fault.button_level == "EDM":
                 button = PyDMEDMDisplayButton()
                 button.filenames = [fault.button_command]
                 button.macros = fault.macros
-                horizontalLayout.addWidget(button)
 
             elif fault.button_level == "PyDM":
                 button = PyDMRelatedDisplayButton()
                 button.filenames = [fault.button_command]
-                horizontalLayout.addWidget(button)
 
             else:
                 button = PyDMRelatedDisplayButton()
-                horizontalLayout.addWidget(button)
 
+            horizontalLayout.addWidget(button)
+            button.setText(fault.button_text)
+            button.showIcon = False
             verticalLayout.addLayout(horizontalLayout)
 
 

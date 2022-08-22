@@ -10,7 +10,7 @@ class PvInvalid(Exception):
 
 class Fault:
     def __init__(self, tlc, severity, suffix, okValue, faultValue, longDescription,
-                 shortDescription, prefix, button_level, button_command, macros):
+                 shortDescription, prefix, button_level, button_command, macros, button_text):
         self.tlc = tlc
         self.severity = int(severity)
         self.longDescription = longDescription
@@ -21,6 +21,7 @@ class Fault:
         self.button_level = button_level
         self.button_command = button_command
         self.macros = macros
+        self.button_text = button_text
 
         self.pv: PV = PV(prefix + suffix, connection_timeout=PV_TIMEOUT)
 

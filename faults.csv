@@ -1,49 +1,49 @@
-﻿Heirarchy Group,Order Within Group,Short Description,Level,Button Level,Button Command,Rack,PV Prefix,PV Suffix,OK If Equal To,Faulted If Equal To,Three Letter Code,Severity,Long Description,Comments
-0,0,Parked,CAV,GUI,cd /Users/lopardog/SLAC/cavityParking; pydm park_gui.py,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PARK,,1,PKD,4,Cavity is tuned off frequency so it doesn’t affect the beam.,
-,,BSOIC Tripped,ALL,,,,BSOC:SYSW:2:,SumyA,1,,BSO,2,BSOIC tripped,
-,,BSOIC Tripped,ALL,,,,BSOC:SYSW:2:,SumyB,1,,BSO,2,BSOIC tripped,
-,,Not Ready for Beam,ALL,,,,PPS:SYSW:1:,BeamReadyA,1,,PPS,2,PPS: West Global not in Ready for Beam,
-,,Not Ready for Beam,ALL,,,,PPS:SYSW:1:,BeamReadyB,1,,PPS,2,PPS: West Global not in Ready for Beam,
-0,1,Invalid,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,INV,3,Invalid: one of the PVs necessary is not responding to caget or has INVALID status,
-1,1,Awaiting Run Up,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,ARU,2,Awaiting Run Up: Cavity is ready to be commissioned by experts but not ready to be used to accelerate beam. Station needs attention from LLRF/SRF groups before it can be used. This status is set and cleared by experts,
-1,2,Maintenance,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,MNT,2,Maintenance: Cavity is known to be bad and needs attention from experts,Need Sonya to make these PVs then someone can make a display with these expert stati on it.
-1,3,Hardware Initialization needed,RACK,,,A,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,HWINITSUM,,2,HWI,2,Hardware Initialization (a.k.a. rack checkout) needs to be run or other LLRF chassis problem. Don't trust current values.,
-1,3,Hardware Initialization needed,RACK,,,B,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,HWINITSUM,,2,HWI,2,Hardware Initialization (a.k.a rack checkout) needs to be run or other LLRF chassis problem. Don't trust current values.,
-1,4,Hardware Initialization running,RACK,,,A,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,HWINITSUM,,1,HWI,1,Hardware Initialization (ak.a. rack checkout) currently running. Don't try to use system until this is complete,
-1,4,Hardware Initialization running,RACK,,,B,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,HWINITSUM,,1,HWI,1,Hardware Initialization (a.k.a. rack checkout) currently running. Don't try to use system until this is complete,
-2,1,Check Phase,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,CKP,2,Check Phase: Cavity phase is in an indeterminate state and needs to be measured with the beam before being usable. This fault may appear if something is done to the system that makes 0 phase no longer knoable and ops need to re-gold. This status is set and cleared by experts,"Ask Sonya if such a thing exists and if so, what is it and if not, maybe make one and add to the expert stati display."
-3,0,NIRP or individual SSA interlock,CM,,,,ACCL:{LINAC}:{CRYOMODULE}00:,NRP:STATSUMY,0,,NRP,2,NIRP or other individual SSA interlocks like PPS,12/7/21 The group decided to not have this line 6/15/22 decided to add it back in
-3,1,SSA Permit,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,SSA_LTCH,0,,SSP,2,SSA permit to turn on faulted,
-3,2,SSA Faulted,SSA,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:SSA:,AlarmSummary.SEVR,,2,SSA,2,SSA not on,more 
-3,3,LLRF Frequency Offset,RACK,,,A,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,FREQSUM,,2,FRO,2,"LLRF Frequency is offset from nominal because LLRF has shifted the frequency, or in frequency scan mode",
-3,3,LLRF Frequency Offset,RACK,,,B,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,FREQSUM,,2,FRO,2,"LLRF Frequency is offset from nominal because LLRF has shifted the frequency, or in frequency scan mode",
-3,4,Cryo Summary Interlock,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,CRYO_LTCH,0,,CSI,2,"CM Cryo Summary Interlock (He pressure, He Level, Cryo Heartbeat, and CP Ready) faulted",we need to find out from andrew where he's alarming (what limits is he using)
-4,1,Resonance/Interlock Link,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,RESLINK_LTCH,0,,RLK,2,Resonance/ Interlock Link,
-4,2,FPGA PLL Lock,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PLL_LTCH,0,,FPG,2,,
-4,3,EPICS IOC Watchdog,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,IOCWDOG_LTCH,0,,IOC,2,,
-4,4,Beamline Vacuum,RACK,,,A,ACCL:{LINAC}:{CRYOMODULE}00:,BMLNVACA_LTCH,0,,BLV,2,Beamline Vacuum too high,
-4,4,Beamline Vacuum,RACK,,,B,ACCL:{LINAC}:{CRYOMODULE}00:,BMLNVACB_LTCH,0,,BLV,2,Beamline Vacuum too high,
-4,5,Coupler Vacuum,RACK,,,A,ACCL:{LINAC}:{CRYOMODULE}10:,CPLRVACA_LTCH,0,,CPV,2,Coupler manifold vacuum too high,I think these are {CRYOMODULE}10 for all cavities in a cryomodule
-4,5,Coupler Vacuum,RACK,,,B,ACCL:{LINAC}:{CRYOMODULE}10:,CPLRVACB_LTCH,0,,CPV,2,Coupler manifold vacuum too high,
-4,6,Coupler Temperature 1,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,CPLRTEMP1_LTCH,0,,CP1,2,Temperature sensor on the top of the coupler indicates high temp.,
-4,7,Coupler Temperature 2,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,CPLRTEMP2_LTCH,0,,CP2,2,Temperature sensor on the bottom of the coupler indicates high temp.,
-4,8,Stepper Temperature,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,STEPTEMP_LTCH,0,,STT,2,Temperature sensor on cavity tuner stepper motor out of tolerance.,
-4,9,Quench,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,QUENCH_LTCH,0,,QCH,2,LLRF system detected a cavity quench,
-4,9.5,Resonance Chassis Summary,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,RESINTLK_LTCH,0,,RES,2,Resonance Chassis Summary Fault,"Need to look up this PV, Janice"
-4,10,Interlock Summary Fault,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,RFPERMIT,1,,RFP,2,Latched cavity interlock summary fault,
-4,11,Piezo Hardware Fault Summary,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PZT:HWSTATSUM,,2,PZT,2,Piezo Hardware Fault. Hardware summary status for piezo,
-4,12,Stepper Hardware Fault,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,STEP:HWSTATSUM,,2,STP,2,Stepper Hardware Fault. Hardware summary status for stepper,
-5,1,Cavity characterization needed,CAV,EDM,/usr/local/lcls/tools/edm/display/llrf/rf_srf_char_embed_ramp.edl,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,CAV:CALSTATSUM,,2,CVC,2,"Due to changes in the LLRF system, the cavity characterization needs to be run.",
-5,2,Cavity Controller problem,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,CTRL_SUM.SEVR,0,,CTL,2,Cavity LLRF controller misconfiguration ,"3/11/22 Added by Sonya, feel free to revisit 3 letter code"
-5,3,RF (not) Ready for Beam,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,RFREADYFORBEAM,1,,RFR,2,RF not ready for beam: mode is not SELAP and/or RF is off,
-6,1,Piezo feedback off,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PZT:MODECTRL,1,,PZF,2,Piezo Feedback is not on,
-6,2,Piezo feedback problem,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PZT:FBSTATSUM,,2,PZO,2,Piezo Feedback is indicating a problem,"Ask Sonya if such a thing exists and if so, what is it?"
-,,SSA Overrange,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,ASETSUB.VALQ,,1,OVR,2,The SSA is unable to output enough power to attain the desired amplitude. Changing the reactive power fraction can help. ,
-7,1,Feedback Amplitude out of tolerance,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,AMPFB_SUM,0,,AFB,2,The feedback maintaining the amplitude is unable to keep the amplitude within tolerance. (Must be checked after RFREADYFORBEAM). Amplitude feedback of measured gradient is too low,
-7,2,Phase feedback out of tolerance,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PHAFB_SUM,0,,PFB,2,The feedback maintaining the phase is unable to keep the phase within tolerance. (Must be checked after RFREADYFORBEAM),
-7,3,Feedback for phase or amplitude out of tolerance,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,FB_SUM,0,,FBS,2,The feedback is unable to keep either phase or amplitude within tolerance. (Must be checked after RFREADYFORBEAM),
-8,1,Amplitude Jitter,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,AMJ,1,(maybe not needed),leave these blank for now
-8,2,Phase Jitter,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,PHJ,1,(maybe not needed),
-8,3,,CAV,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,CCR,1 or 2,"Any statuses from teh cryo instrumentationlist for specific cavities (vs CM as a whole)? Heater, HOM coupler clamp temps, including Helium level and pressure. If these turn yellow, put some warning up on the display",leave this blank for now
-8,4,,CM,,,,ACCL:{LINAC}:{CRYOMODULE}00:,,,,,,"Any analog instrumentation that feeds an interlock if it turns yellow, show it, including Helium level and pressure",leave this blank for now
-,,,,,,,,,,,,,,add ds pressure
+﻿Heirarchy Group,Order Within Group,Short Description,Level,Button Level,Button Text,Button Command,Rack,PV Prefix,PV Suffix,OK If Equal To,Faulted If Equal To,Three Letter Code,Severity,Long Description,Comments
+0,0,Parked,CAV,GUI,Parking GUI,/Users/lopardog/SLAC/cavityParking/park_gui.py,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PARK,,1,PKD,4,Cavity is tuned off frequency so it doesn’t affect the beam.,
+,,BSOIC Tripped,ALL,,,,,BSOC:SYSW:2:,SumyA,1,,BSO,2,BSOIC tripped,
+,,BSOIC Tripped,ALL,,,,,BSOC:SYSW:2:,SumyB,1,,BSO,2,BSOIC tripped,
+,,Not Ready for Beam,ALL,,,,,PPS:SYSW:1:,BeamReadyA,1,,PPS,2,PPS: West Global not in Ready for Beam,
+,,Not Ready for Beam,ALL,,,,,PPS:SYSW:1:,BeamReadyB,1,,PPS,2,PPS: West Global not in Ready for Beam,
+0,1,Invalid,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,INV,3,Invalid: one of the PVs necessary is not responding to caget or has INVALID status,
+1,1,Awaiting Run Up,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,ARU,2,Awaiting Run Up: Cavity is ready to be commissioned by experts but not ready to be used to accelerate beam. Station needs attention from LLRF/SRF groups before it can be used. This status is set and cleared by experts,
+1,2,Maintenance,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,MNT,2,Maintenance: Cavity is known to be bad and needs attention from experts,Need Sonya to make these PVs then someone can make a display with these expert stati on it.
+1,3,Hardware Initialization needed,RACK,,,,A,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,HWINITSUM,,2,HWI,2,Hardware Initialization (a.k.a. rack checkout) needs to be run or other LLRF chassis problem. Don't trust current values.,
+1,3,Hardware Initialization needed,RACK,,,,B,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,HWINITSUM,,2,HWI,2,Hardware Initialization (a.k.a rack checkout) needs to be run or other LLRF chassis problem. Don't trust current values.,
+1,4,Hardware Initialization running,RACK,,,,A,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,HWINITSUM,,1,HWI,1,Hardware Initialization (ak.a. rack checkout) currently running. Don't try to use system until this is complete,
+1,4,Hardware Initialization running,RACK,,,,B,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,HWINITSUM,,1,HWI,1,Hardware Initialization (a.k.a. rack checkout) currently running. Don't try to use system until this is complete,
+2,1,Check Phase,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,CKP,2,Check Phase: Cavity phase is in an indeterminate state and needs to be measured with the beam before being usable. This fault may appear if something is done to the system that makes 0 phase no longer knoable and ops need to re-gold. This status is set and cleared by experts,"Ask Sonya if such a thing exists and if so, what is it and if not, maybe make one and add to the expert stati display."
+3,0,NIRP or individual SSA interlock,CM,,,,,ACCL:{LINAC}:{CRYOMODULE}00:,NRP:STATSUMY,0,,NRP,2,NIRP or other individual SSA interlocks like PPS,12/7/21 The group decided to not have this line 6/15/22 decided to add it back in
+3,1,SSA Permit,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,SSA_LTCH,0,,SSP,2,SSA permit to turn on faulted,
+3,2,SSA Faulted,SSA,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:SSA:,AlarmSummary.SEVR,,2,SSA,2,SSA not on,more 
+3,3,LLRF Frequency Offset,RACK,,,,A,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,FREQSUM,,2,FRO,2,"LLRF Frequency is offset from nominal because LLRF has shifted the frequency, or in frequency scan mode",
+3,3,LLRF Frequency Offset,RACK,,,,B,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,FREQSUM,,2,FRO,2,"LLRF Frequency is offset from nominal because LLRF has shifted the frequency, or in frequency scan mode",
+3,4,Cryo Summary Interlock,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,CRYO_LTCH,0,,CSI,2,"CM Cryo Summary Interlock (He pressure, He Level, Cryo Heartbeat, and CP Ready) faulted",we need to find out from andrew where he's alarming (what limits is he using)
+4,1,Resonance/Interlock Link,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,RESLINK_LTCH,0,,RLK,2,Resonance/ Interlock Link,
+4,2,FPGA PLL Lock,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PLL_LTCH,0,,FPG,2,,
+4,3,EPICS IOC Watchdog,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,IOCWDOG_LTCH,0,,IOC,2,,
+4,4,Beamline Vacuum,RACK,,,,A,ACCL:{LINAC}:{CRYOMODULE}00:,BMLNVACA_LTCH,0,,BLV,2,Beamline Vacuum too high,
+4,4,Beamline Vacuum,RACK,,,,B,ACCL:{LINAC}:{CRYOMODULE}00:,BMLNVACB_LTCH,0,,BLV,2,Beamline Vacuum too high,
+4,5,Coupler Vacuum,RACK,,,,A,ACCL:{LINAC}:{CRYOMODULE}10:,CPLRVACA_LTCH,0,,CPV,2,Coupler manifold vacuum too high,I think these are {CRYOMODULE}10 for all cavities in a cryomodule
+4,5,Coupler Vacuum,RACK,,,,B,ACCL:{LINAC}:{CRYOMODULE}10:,CPLRVACB_LTCH,0,,CPV,2,Coupler manifold vacuum too high,
+4,6,Coupler Temperature 1,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,CPLRTEMP1_LTCH,0,,CP1,2,Temperature sensor on the top of the coupler indicates high temp.,
+4,7,Coupler Temperature 2,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,CPLRTEMP2_LTCH,0,,CP2,2,Temperature sensor on the bottom of the coupler indicates high temp.,
+4,8,Stepper Temperature,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,STEPTEMP_LTCH,0,,STT,2,Temperature sensor on cavity tuner stepper motor out of tolerance.,
+4,9,Quench,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,QUENCH_LTCH,0,,QCH,2,LLRF system detected a cavity quench,
+4,9.5,Resonance Chassis Summary,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,RESINTLK_LTCH,0,,RES,2,Resonance Chassis Summary Fault,"Need to look up this PV, Janice"
+4,10,Interlock Summary Fault,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,RFPERMIT,1,,RFP,2,Latched cavity interlock summary fault,
+4,11,Piezo Hardware Fault Summary,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PZT:HWSTATSUM,,2,PZT,2,Piezo Hardware Fault. Hardware summary status for piezo,
+4,12,Stepper Hardware Fault,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,STEP:HWSTATSUM,,2,STP,2,Stepper Hardware Fault. Hardware summary status for stepper,
+5,1,Cavity characterization needed,CAV,EDM,Cav Char Screen,/usr/local/lcls/tools/edm/display/llrf/rf_srf_char_embed_ramp.edl,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,CAV:CALSTATSUM,,2,CVC,2,"Due to changes in the LLRF system, the cavity characterization needs to be run.",
+5,2,Cavity Controller problem,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,CTRL_SUM.SEVR,0,,CTL,2,Cavity LLRF controller misconfiguration ,"3/11/22 Added by Sonya, feel free to revisit 3 letter code"
+5,3,RF (not) Ready for Beam,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,RFREADYFORBEAM,1,,RFR,2,RF not ready for beam: mode is not SELAP and/or RF is off,
+6,1,Piezo feedback off,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PZT:MODECTRL,1,,PZF,2,Piezo Feedback is not on,
+6,2,Piezo feedback problem,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PZT:FBSTATSUM,,2,PZO,2,Piezo Feedback is indicating a problem,"Ask Sonya if such a thing exists and if so, what is it?"
+,,SSA Overrange,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,ASETSUB.VALQ,,1,OVR,2,The SSA is unable to output enough power to attain the desired amplitude. Changing the reactive power fraction can help. ,
+7,1,Feedback Amplitude out of tolerance,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,AMPFB_SUM,0,,AFB,2,The feedback maintaining the amplitude is unable to keep the amplitude within tolerance. (Must be checked after RFREADYFORBEAM). Amplitude feedback of measured gradient is too low,
+7,2,Phase feedback out of tolerance,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PHAFB_SUM,0,,PFB,2,The feedback maintaining the phase is unable to keep the phase within tolerance. (Must be checked after RFREADYFORBEAM),
+7,3,Feedback for phase or amplitude out of tolerance,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,FB_SUM,0,,FBS,2,The feedback is unable to keep either phase or amplitude within tolerance. (Must be checked after RFREADYFORBEAM),
+8,1,Amplitude Jitter,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,AMJ,1,(maybe not needed),leave these blank for now
+8,2,Phase Jitter,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,PHJ,1,(maybe not needed),
+8,3,,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,CCR,1 or 2,"Any statuses from teh cryo instrumentationlist for specific cavities (vs CM as a whole)? Heater, HOM coupler clamp temps, including Helium level and pressure. If these turn yellow, put some warning up on the display",leave this blank for now
+8,4,,CM,,,,,ACCL:{LINAC}:{CRYOMODULE}00:,,,,,,"Any analog instrumentation that feeds an interlock if it turns yellow, show it, including Helium level and pressure",leave this blank for now
+,,,,,,,,,,,,,,,add ds pressure

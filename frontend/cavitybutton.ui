@@ -39,16 +39,14 @@
       <string/>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(48, 48, 48); 
-color: rgb(255, 255, 255);
+      <string notr="true">
+color: rgb(35, 35, 35);
 border-style: outset;
 border-width: 2px;
-border-radius: 8px;
-border-color: rgb(35, 35, 35);
+border-radius: 10px;
+border-color: rgb(50, 50, 50);
 padding: 3px;
-
-
-
+background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.7 rgba(220, 220, 220, 100), stop:1 rgba(150,150,150,50));
 </string>
      </property>
      <property name="text">

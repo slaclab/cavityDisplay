@@ -39,14 +39,7 @@
       <string/>
      </property>
      <property name="styleSheet">
-      <string notr="true">
-color: rgb(35, 35, 35);
-border-style: outset;
-border-width: 1px;
-border-radius: 10px;
-border-color: rgb(50, 50, 50);
-padding: 3px;
-</string>
+      <string notr="true"/>
      </property>
      <property name="text">
       <string>Cavity 0${cavityNumber}</string>

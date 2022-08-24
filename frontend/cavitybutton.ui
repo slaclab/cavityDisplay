@@ -42,11 +42,11 @@
       <string notr="true">
 color: rgb(35, 35, 35);
 border-style: outset;
-border-width: 2px;
+border-width: 1px;
 border-radius: 10px;
 border-color: rgb(50, 50, 50);
 padding: 3px;
-background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.7 rgba(220, 220, 220, 100), stop:1 rgba(150,150,150,50));
+background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.7 rgba(250, 250, 250, 100), stop:1 rgba(180,180,180,50));
 </string>
      </property>
      <property name="text">

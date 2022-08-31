@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>289</width>
-    <height>507</height>
+    <width>236</width>
+    <height>571</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -64,6 +64,9 @@
      <property name="frameShadow">
       <enum>QFrame::Plain</enum>
      </property>
+     <property name="lineWidth">
+      <number>3</number>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -86,7 +89,7 @@
       <string/>
      </property>
      <property name="styleSheet">
-      <string notr="true"/>
+      <string notr="true">style = &quot;Material&quot;</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -120,7 +123,7 @@
       <string/>
      </property>
      <property name="text">
-      <string>Three Letter Codes</string>
+      <string>3-Letter Codes</string>
      </property>
      <property name="filenames" stdset="0">
       <stringlist>

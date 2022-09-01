@@ -57,6 +57,8 @@
     <widget class="PyDMRelatedDisplayButton" name="PyDMRelatedDisplayButton">
      <property name="font">
       <font>
+       <weight>75</weight>
+       <bold>true</bold>
        <kerning>true</kerning>
       </font>
      </property>
@@ -64,7 +66,7 @@
       <string/>
      </property>
      <property name="text">
-      <string>Three Letter Codes</string>
+      <string>3-Letter Codes</string>
      </property>
      <property name="default">
       <bool>false</bool>

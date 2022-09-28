@@ -64,7 +64,7 @@ class CavityDisplayGUI(Display):
                     severityPV: str = (cavityObject.pvPrefix + SEVERITY_SUFFIX)
                     statusPV: str = (cavityObject.pvPrefix + STATUS_SUFFIX)
                     descriptionPV: str = (cavityObject.pvPrefix + DESCRIPTION_SUFFIX)
-                    rfStatePV: str = cavityObject.rfStatePV
+                    rfStatePV: str = cavityObject.rfStatePV.pvname
                     ssaPV: str = cavityObject.ssa.statusPV
 
                     rfStatusBar.channel = rfStatePV

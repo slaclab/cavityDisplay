@@ -12,9 +12,10 @@
 1,4,Hardware Initialization running,RACK,A,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,HWINITSUM,,1,HWI,1,Hardware Initialization (ak.a. rack checkout) currently running. Don't try to use system until this is complete,
 1,4,Hardware Initialization running,RACK,B,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,HWINITSUM,,1,HWI,1,Hardware Initialization (a.k.a. rack checkout) currently running. Don't try to use system until this is complete,
 2,1,Check Phase,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,CKP,2,Check Phase: Cavity phase is in an indeterminate state and needs to be measured with the beam before being usable. This fault may appear if something is done to the system that makes 0 phase no longer knoable and ops need to re-gold. This status is set and cleared by experts,"Ask Sonya if such a thing exists and if so, what is it and if not, maybe make one and add to the expert stati display."
-3,0,NIRP or individual SSA interlock,CM,,ACCL:{LINAC}:{CRYOMODULE}00:,NRP:STATSUMY,0,,NRP,2,NIRP or other individual SSA interlocks like PPS,12/7/21 The group decided to not have this line 6/15/22 decided to add it back in
+3,0,NIRP or individual SSA interlock,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:SSA:,SSA:NRP_PRMT,1,,NRP,2,NIRP or other individual SSA interlocks like PPS,12/7/21 The group decided to not have this line 6/15/22 decided to add it back in
 3,1,SSA Permit,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,SSA_LTCH,0,,SSP,2,SSA permit to turn on faulted,
-3,2,SSA Faulted,SSA,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:SSA:,AlarmSummary.SEVR,,2,SSA,2,SSA not on,more 
+3,2,SSA Faulted,SSA,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:SSA:,AlarmSummary.SEVR,,2,SSA,2,SSA not on,more
+3,2,BCS LLRF Drive Fault,CM,,ACCL:{LINAC}:{CRYOMODULE}00:,BCSDRVSUM,0,,BCS,2,BCS fault is interrupting LLRF drive,This fault only exists for CM01 (and gun/buncher)
 3,3,LLRF Frequency Offset,RACK,A,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,FREQSUM,,2,FRO,2,"LLRF Frequency is offset from nominal because LLRF has shifted the frequency, or in frequency scan mode",
 3,3,LLRF Frequency Offset,RACK,B,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,FREQSUM,,2,FRO,2,"LLRF Frequency is offset from nominal because LLRF has shifted the frequency, or in frequency scan mode",
 3,4,Cryo Summary Interlock,CAV,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,CRYO_LTCH,0,,CSI,2,"CM Cryo Summary Interlock (He pressure, He Level, Cryo Heartbeat, and CP Ready) faulted",we need to find out from andrew where he's alarming (what limits is he using)

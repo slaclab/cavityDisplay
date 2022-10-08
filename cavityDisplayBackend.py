@@ -8,6 +8,7 @@ from lcls_tools.superconducting.scLinac import ALL_CRYOMODULES
 from utils import BACKEND_SLEEP_TIME, DEBUG
 
 WATCHER_PV: str = "PHYS:SYS0:1:SC_CAV_FAULT_HEARTBEAT"
+caput(WATCHER_PV, 0)
 
 while True:
     start = datetime.now()

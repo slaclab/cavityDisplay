@@ -48,8 +48,8 @@ suffix:  RFREADYFORBEAM,RF (not) Ready for Beam,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE
 ,Feedback Amplitude out of tolerance,CAV,,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=5,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,AMPFB_SUM,0,,AFB,2,The feedback maintaining the amplitude is unable to keep the amplitude within tolerance. (Must be checked after RFREADYFORBEAM). Amplitude feedback of measured gradient is too low
 ,Phase feedback out of tolerance,CAV,,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=5,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PHAFB_SUM,0,,PFB,2,The feedback maintaining the phase is unable to keep the phase within tolerance. (Must be checked after RFREADYFORBEAM)
 ,Feedback for phase or amplitude out of tolerance,CAV,,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=5,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,FB_SUM,0,,FBS,2,The feedback is unable to keep either phase or amplitude within tolerance. (Must be checked after RFREADYFORBEAM)
-,Upstream HOM temperature is too high,CRYO,,,,,CTE:CM{CRYOMODULE}1{CAVITY}18:UH:,TEMP.SEVR,,2,HOM,2,Upstream HOM temperature is too high (could indicate an impending quench)
-,Downstream HOM temperature too high,CRYO,,,,,CTE:CM{CRYOMODULE}1{CAVITY}20:DH:,TEMP.SEVR,,2,HOM,2,Downstream HOM temperature too high (could indicate an impending quench)
+,Upstream HOM temperature is too high,CRYO,,,,,CTE:CM{CRYOMODULE}:1{CAVITY}18:UH:,TEMP.SEVR,,2,HOM,2,Upstream HOM temperature is too high (could indicate an impending quench)
+,Downstream HOM temperature too high,CRYO,,,,,CTE:CM{CRYOMODULE}:1{CAVITY}20:DH:,TEMP.SEVR,,2,HOM,2,Downstream HOM temperature too high (could indicate an impending quench)
 leave these blank for now,Amplitude Jitter,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,AMJ,1,(maybe not needed)
 ,Phase Jitter,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,PHJ,1,(maybe not needed)
 leave this blank for now,,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,CCR,1 or 2,"Any statuses from teh cryo instrumentationlist for specific cavities (vs CM as a whole)? Heater, HOM coupler clamp temps, including Helium level and pressure. If these turn yellow, put some warning up on the display"

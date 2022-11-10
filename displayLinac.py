@@ -1,8 +1,7 @@
 from collections import OrderedDict
 
-from epics import caput
-
 from cavityDisplayGUI import DESCRIPTION_SUFFIX, SEVERITY_SUFFIX, STATUS_SUFFIX
+from epics import caput
 from fault import Fault, PvInvalid
 from lcls_tools.superconducting.scLinac import (Cavity, CryoDict, Cryomodule,
                                                 Magnet, Piezo, Rack, SSA,
@@ -31,6 +30,16 @@ class DisplayCryomodule(Cryomodule):
                          ssaClass=DisplaySSA)
         for cavity in self.cavities.values():
             cavity.createFaults()
+    
+    @property
+    def pydm_macros(self):
+        """
+        Currenlty only used for NIRP fault, but I think we can just keep adding
+        to this list
+        :return:
+        """
+        return {"AREA"  : self.linac.name, "CM": self.name,
+                "RFNAME": "CM{}".format(self.name)}
 
 
 class DisplayCavity(Cavity):
@@ -61,6 +70,10 @@ class DisplayCavity(Cavity):
                 prefix = csvFaultDict["PV Prefix"].format(LINAC=self.linac.name,
                                                           CRYOMODULE=self.cryomodule.name,
                                                           RACK=self.rack.rackName,
+                                                          CAVITY=self.number)
+            
+            elif level == "CRYO":
+                prefix = csvFaultDict["PV Prefix"].format(CRYOMODULE=self.cryomodule.name,
                                                           CAVITY=self.number)
             
             elif level == "SSA":

@@ -38,18 +38,19 @@ I think these are {CRYOMODULE}10 for all cavities in a cryomodule,Coupler Vacuum
 ,No RF ,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,RFSTATE,1,,NRF,2,RF is off
 ,Not in SELAP,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,RFMODE,0,,NAP,2,Not in SELAP so there is no regulation on amplitude and/or phase
 suffix:  RFREADYFORBEAM,RF (not) Ready for Beam,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,1,,RFR,2,RF not ready for beam: mode is not SELAP and/or RF is off
-,PRL Problem,RACK,,,,A,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,,0,,PRL?,2,Problem with Phase Reference. Cavity phase may not be locked to global RF.
-,PRL Problem,RACK,,,,B,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,,0,,PRL?,2,Problem with Phase Reference. Cavity phase may not be locked to global RF.
+,PRL Problem,RACK,,,,A,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,PRLSUM.SEVR,0,,PRL,2,Problem with Phase Reference. Cavity phase may not be locked to global RF.
+,PRL Problem,RACK,,,,B,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,PRLSUM.SEVR,0,,PRL,2,Problem with Phase Reference. Cavity phase may not be locked to global RF.
 ,Piezo feedback off,CAV,,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=3,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PZT:MODECTRL,1,,PZF,2,Piezo Feedback is not on
 "Ask Sonya if such a thing exists and if so, what is it?",Piezo feedback problem,CAV,,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=3,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PZT:FBSTATSUM,,2,PZO,2,Piezo Feedback is indicating a problem
-"Ask Sonya if such a thing exists and if so, what is it?",Piezo feedback problem,CAV,,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=3,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PZT:FBSTATSUM,,1,PZO,1,Piezo Feedback is indicating a problem
+"Ask Sonya if such a thing exists and if so, what is it?",Piezo feedback problem,CAV,EDM,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=3,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PZT:FBSTATSUM,,1,PZO,1,Piezo Feedback is indicating a problem
 ,SSA Overrange,CAV,EDM,$EDM/llrf/rf_srf_ampset_diag_embed.edl,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,ASETSUB.VALQ,,1,OVR,2,The SSA is unable to output enough power to attain the desired amplitude. Changing the reactive power fraction can help. 
+,Upstream HOM temperature is too high,CRYO,,,,,CTE:CM{CRYOMODULE}:1{CAVITY}18:UH:,TEMP.SEVR,,2,USH,2,Upstream HOM temperature is too high (could indicate an impending quench)
+,Downstream HOM temperature too high,CRYO,,,,,CTE:CM{CRYOMODULE}:1{CAVITY}20:DH:,TEMP.SEVR,,2,DSH,2,Downstream HOM temperature too high (could indicate an impending quench)
+,Amplitude out of tolerance,CAV,EDM,$EDM/llrf/rf_srf_cavity_main.edl,SELCHAR=3,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,AACTMEAN.SEVR,0,,AOT,2,The amplitude readback is too far away from the desired amplitude
+,Phase out of tolerance,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PACTMEAN.SEVR,0,,POT,2,The phase readback is too far away from the desired phase
 ,Quench Interlock Bypassed,CAV,GUI,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=4,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,QUENCH_BYP_RBV,,1,QBP,1,Quench interlock bypassed
-,Feedback Amplitude out of tolerance,CAV,,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=5,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,AMPFB_SUM,0,,AFB,2,The feedback maintaining the amplitude is unable to keep the amplitude within tolerance. (Must be checked after RFREADYFORBEAM). Amplitude feedback of measured gradient is too low
-,Phase feedback out of tolerance,CAV,,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=5,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PHAFB_SUM,0,,PFB,2,The feedback maintaining the phase is unable to keep the phase within tolerance. (Must be checked after RFREADYFORBEAM)
-,Feedback for phase or amplitude out of tolerance,CAV,,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=5,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,FB_SUM,0,,FBS,2,The feedback is unable to keep either phase or amplitude within tolerance. (Must be checked after RFREADYFORBEAM)
-,Upstream HOM temperature is too high,CRYO,,,,,CTE:CM{CRYOMODULE}:1{CAVITY}18:UH:,TEMP.SEVR,,2,HOM,2,Upstream HOM temperature is too high (could indicate an impending quench)
-,Downstream HOM temperature too high,CRYO,,,,,CTE:CM{CRYOMODULE}:1{CAVITY}20:DH:,TEMP.SEVR,,2,HOM,2,Downstream HOM temperature too high (could indicate an impending quench)
+,Feedback Amplitude out of tolerance,CAV,,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=5,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,AMPFB_SUM,0,,AFB,1,The feedback maintaining the amplitude is unable to keep the amplitude within tolerance. (Must be checked after RFREADYFORBEAM). Amplitude feedback of measured gradient is too low
+,Phase feedback out of tolerance,CAV,,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=5,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PHAFB_SUM,0,,PFB,1,The feedback maintaining the phase is unable to keep the phase within tolerance. (Must be checked after RFREADYFORBEAM)
 leave these blank for now,Amplitude Jitter,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,AMJ,1,(maybe not needed)
 ,Phase Jitter,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,PHJ,1,(maybe not needed)
 leave this blank for now,,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,,,CCR,1 or 2,"Any statuses from teh cryo instrumentationlist for specific cavities (vs CM as a whole)? Heater, HOM coupler clamp temps, including Helium level and pressure. If these turn yellow, put some warning up on the display"

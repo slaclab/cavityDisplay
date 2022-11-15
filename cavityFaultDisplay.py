@@ -142,4 +142,4 @@ class EnumLabel(PyDMLabel):
             self.setText("INVALID")
             self.setStyleSheet("background-color: rgb(255,0,255);font-weight: bold;"
                                "border: 2px solid black;")
-            self.codelabel.setStyleSheet("font-weight:bold;")
+            self.codeLabel.setStyleSheet("font-weight:bold;")

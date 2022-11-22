@@ -1,6 +1,7 @@
 ﻿Comments,Short Description,Level,Button Type,Button Path,Button Macros,Rack,PV Prefix,PV Suffix,OK If Equal To,Faulted If Equal To,Three Letter Code,Severity,Long Description
 ,Offline,CAV,,$EDM/llrf/rf_srf_alim.edl,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,HWMODE,,2,OFF,4,Cavity has been deemed permanently unusable
 Need Sonya to make these PVs then someone can make a display with these expert stati on it.,Maintenance,CAV,,$EDM/llrf/rf_srf_alim.edl,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,HWMODE,,1,MNT,4,Maintenance: Cavity is known to be bad and needs attention from experts
+,Cavity temporarily off,CAV,,$EDM/llrf/rf_srf_alim.edl,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,HWMODE,,4,RDY,4,Cavity is usable but not on
 ,BSOIC Tripped,ALL,,,,,BSOC:SYSW:2:,SumyA,1,,BSO,2,BSOIC tripped
 ,BSOIC Tripped,ALL,,,,,BSOC:SYSW:2:,SumyB,1,,BSO,2,BSOIC tripped
 ,Not Ready for Beam,ALL,EDM,$EDM/pps/pps_linacwest.edl,,,PPS:SYSW:1:,BeamReadyA,1,,PPS,2,PPS: West Global not in Ready for Beam
@@ -47,7 +48,8 @@ suffix:  RFREADYFORBEAM,RF (not) Ready for Beam,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE
 ,Upstream HOM temperature is too high,CRYO,,,,,CTE:CM{CRYOMODULE}:1{CAVITY}18:UH:,TEMP.SEVR,,2,USH,2,Upstream HOM temperature is too high (could indicate an impending quench)
 ,Downstream HOM temperature too high,CRYO,,,,,CTE:CM{CRYOMODULE}:1{CAVITY}20:DH:,TEMP.SEVR,,2,DSH,2,Downstream HOM temperature too high (could indicate an impending quench)
 ,Amplitude out of tolerance,CAV,EDM,$EDM/llrf/rf_srf_cavity_main.edl,SELCHAR=3,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,AACTMEAN.SEVR,0,,AOT,2,The amplitude readback is too far away from the desired amplitude
-,Phase out of tolerance,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PACTMEAN.SEVR,0,,POT,2,The phase readback is too far away from the desired phase
+,Phase out of tolerance,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PACTMEAN.SEVR,0,,POT,2,"5
+"
 ,Quench Interlock Bypassed,CAV,GUI,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=4,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,QUENCH_BYP_RBV,,1,QBP,1,Quench interlock bypassed
 ,Feedback Amplitude out of tolerance,CAV,,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=5,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,AMPFB_SUM,0,,AFB,1,The feedback maintaining the amplitude is unable to keep the amplitude within tolerance. (Must be checked after RFREADYFORBEAM). Amplitude feedback of measured gradient is too low
 ,Phase feedback out of tolerance,CAV,,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=5,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PHAFB_SUM,0,,PFB,1,The feedback maintaining the phase is unable to keep the phase within tolerance. (Must be checked after RFREADYFORBEAM)

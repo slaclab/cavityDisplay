@@ -1,7 +1,8 @@
 ﻿Comments,Short Description,Level,Button Type,Button Path,Button Macros,Rack,PV Prefix,PV Suffix,OK If Equal To,Faulted If Equal To,Three Letter Code,Severity,Long Description
 ,Offline,CAV,,$EDM/llrf/rf_srf_alim.edl,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,HWMODE,,2,OFF,4,Cavity has been deemed permanently unusable
 Need Sonya to make these PVs then someone can make a display with these expert stati on it.,Maintenance,CAV,,$EDM/llrf/rf_srf_alim.edl,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,HWMODE,,1,MNT,4,Maintenance: Cavity is known to be bad and needs attention from experts
-,Cavity temporarily off,CAV,,$EDM/llrf/rf_srf_alim.edl,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,HWMODE,,4,RDY,4,Cavity is usable but not on
+,Maintenance Done,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,HWMODE,,3,MND,4,Maintenance done but cavity has not been run up for validation
+,Ready,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,HWMODE,,4,RDY,4,Cavity usable but turned off for now
 ,BSOIC Tripped,ALL,,,,,BSOC:SYSW:2:,SumyA,1,,BSO,2,BSOIC tripped
 ,BSOIC Tripped,ALL,,,,,BSOC:SYSW:2:,SumyB,1,,BSO,2,BSOIC tripped
 ,Not Ready for Beam,ALL,EDM,$EDM/pps/pps_linacwest.edl,,,PPS:SYSW:1:,BeamReadyA,1,,PPS,2,PPS: West Global not in Ready for Beam

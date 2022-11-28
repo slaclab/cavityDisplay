@@ -46,6 +46,8 @@ suffix:  RFREADYFORBEAM,RF (not) Ready for Beam,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE
 "Ask Sonya if such a thing exists and if so, what is it?",Piezo feedback problem,CAV,,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=3,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PZT:FBSTATSUM,,2,PZO,2,Piezo Feedback is indicating a problem
 "Ask Sonya if such a thing exists and if so, what is it?",Piezo feedback problem,CAV,EDM,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=3,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PZT:FBSTATSUM,,1,PZO,1,Piezo Feedback is indicating a problem
 ,SSA Overrange,CAV,EDM,$EDM/llrf/rf_srf_ampset_diag_embed.edl,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,ASETSUB.VALQ,,1,OVR,2,The SSA is unable to output enough power to attain the desired amplitude. Changing the reactive power fraction can help. 
+,Upstream liquid level out of tolerance,CRYO,,,,,CLL:CM{CRYOMODULE}:2601:US:,LVL.SEVR,,2,USL,2,Cryomodule has insufficient liquid level
+,Upstream liquid level out of tolerance,CRYO,,,,,CLL:CM{CRYOMODULE}:2601:US:,LVL.SEVR,,1,USL,1,Cryomodule has insufficient liquid level
 ,Upstream HOM temperature is too high,CRYO,,,,,CTE:CM{CRYOMODULE}:1{CAVITY}18:UH:,TEMP.SEVR,,2,USH,2,Upstream HOM temperature is too high (could indicate an impending quench)
 ,Downstream HOM temperature too high,CRYO,,,,,CTE:CM{CRYOMODULE}:1{CAVITY}20:DH:,TEMP.SEVR,,2,DSH,2,Downstream HOM temperature too high (could indicate an impending quench)
 ,Amplitude out of tolerance,CAV,EDM,$EDM/llrf/rf_srf_cavity_main.edl,SELCHAR=3,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,AACTMEAN.SEVR,0,,AOT,2,The amplitude readback is too far away from the desired amplitude

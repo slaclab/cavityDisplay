@@ -20,4 +20,7 @@ while True:
         delta = (datetime.now() - start).total_seconds()
         sleep(BACKEND_SLEEP_TIME - delta if delta < BACKEND_SLEEP_TIME else 0)
     
-    caput(WATCHER_PV, caget(WATCHER_PV) + 1)
+    try:
+        caput(WATCHER_PV, caget(WATCHER_PV) + 1)
+    except TypeError as e:
+        print(f"Write to watcher PV failed with error: {e}")

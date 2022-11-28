@@ -35,6 +35,8 @@ SHAPE_PARAMETER_DICT = {0: ShapeParameters(GREEN_FILL_COLOR, GREEN_FILL_COLOR,
                         3: ShapeParameters(PURPLE_FILL_COLOR, PURPLE_FILL_COLOR,
                                            20, 0),
                         4: ShapeParameters(GRAY_FILL_COLOR, GRAY_FILL_COLOR,
+                                           10, 0),
+                        5: ShapeParameters(DARK_GRAY_COLOR, DARK_GRAY_COLOR,
                                            10, 0)}
 
 

@@ -6,12 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>289</width>
-    <height>497</height>
+    <width>236</width>
+    <height>571</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -43,7 +46,7 @@
       <enum>QFrame::Plain</enum>
      </property>
      <property name="text">
-      <string>CM ${cryomodule} </string>
+      <string>CM ${cryomodule}</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -60,6 +63,9 @@
      </property>
      <property name="frameShadow">
       <enum>QFrame::Plain</enum>
+     </property>
+     <property name="lineWidth">
+      <number>3</number>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -83,7 +89,7 @@
       <string/>
      </property>
      <property name="styleSheet">
-      <string notr="true"/>
+      <string notr="true">style = &quot;Material&quot;</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -98,7 +104,7 @@
       <number>8</number>
      </property>
      <property name="templateFilename" stdset="0">
-      <string>cavityfaultbutton.ui</string>
+      <string>cavitybutton.ui</string>
      </property>
      <property name="dataSource" stdset="0">
       <string>cavities.json</string>
@@ -107,16 +113,25 @@
    </item>
    <item alignment="Qt::AlignRight">
     <widget class="PyDMRelatedDisplayButton" name="tlc_Button">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="toolTip">
       <string/>
      </property>
      <property name="text">
-      <string>Three Letter Codes</string>
+      <string>3-Letter Codes</string>
      </property>
      <property name="filenames" stdset="0">
       <stringlist>
        <string>3letterfault.py</string>
       </stringlist>
+     </property>
+     <property name="showIcon" stdset="0">
+      <bool>false</bool>
      </property>
      <property name="openInNewWindow" stdset="0">
       <bool>true</bool>

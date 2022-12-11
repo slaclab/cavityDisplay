@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>237</width>
-    <height>44</height>
+    <width>251</width>
+    <height>51</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,7 +39,10 @@
       <string/>
      </property>
      <property name="styleSheet">
-      <string notr="true"/>
+      <string notr="true">
+
+
+</string>
      </property>
      <property name="text">
       <string>Cavity 0${cavityNumber}</string>

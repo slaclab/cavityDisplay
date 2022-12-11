@@ -26,17 +26,17 @@ class ShapeParameters:
     rotation: float
 
 
-SHAPE_PARAMETER_DICT = {0: ShapeParameters(GREEN_FILL_COLOR, GREEN_FILL_COLOR,
+SHAPE_PARAMETER_DICT = {0: ShapeParameters(GREEN_FILL_COLOR, BLACK_TEXT_COLOR,
                                            4, 0),
-                        1: ShapeParameters(YELLOW_FILL_COLOR, YELLOW_FILL_COLOR,
+                        1: ShapeParameters(YELLOW_FILL_COLOR, BLACK_TEXT_COLOR,
                                            3, 0),
-                        2: ShapeParameters(RED_FILL_COLOR, RED_FILL_COLOR,
+                        2: ShapeParameters(RED_FILL_COLOR, BLACK_TEXT_COLOR,
                                            6, 0),
-                        3: ShapeParameters(PURPLE_FILL_COLOR, PURPLE_FILL_COLOR,
+                        3: ShapeParameters(PURPLE_FILL_COLOR, BLACK_TEXT_COLOR,
                                            20, 0),
-                        4: ShapeParameters(GRAY_FILL_COLOR, GRAY_FILL_COLOR,
+                        4: ShapeParameters(GRAY_FILL_COLOR, BLACK_TEXT_COLOR,
                                            10, 0),
-                        5: ShapeParameters(DARK_GRAY_COLOR, DARK_GRAY_COLOR,
+                        5: ShapeParameters(DARK_GRAY_COLOR, BLACK_TEXT_COLOR,
                                            10, 0)}
 
 
@@ -46,10 +46,10 @@ class CavityWidget(PyDMDrawingPolygon):
         self._num_points = 4
         self._cavityText = "TEXT"
         self._underline = False
-        self._pen = QPen(QColor(46, 248, 10))  # Shape's border color
+        self._pen = QPen(BLACK_TEXT_COLOR)  # Shape's border color
         self._rotation = 0
         self._brush.setColor(QColor(201, 255, 203))  # Shape's fill color
-        self._pen.setWidth(5.0)
+        self._pen.setWidth(1.0)
         self._severity_channel: PyDMChannel = None
         self._description_channel: PyDMChannel = None
         self.alarmSensitiveBorder = False

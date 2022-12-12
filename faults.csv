@@ -1,5 +1,5 @@
 ﻿Comments,Short Description,Level,Button Type,Button Path,Button Macros,Rack,PV Prefix,PV Suffix,OK If Equal To,Faulted If Equal To,Three Letter Code,Severity,Long Description
-,Offline,CAV,,$EDM/llrf/rf_srf_alim.edl,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,HWMODE,,2,OFF,4,Cavity has been deemed permanently unusable
+,Offline,CAV,,$EDM/llrf/rf_srf_alim.edl,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,HWMODE,,2,OFF,5,Cavity has been deemed permanently unusable
 Need Sonya to make these PVs then someone can make a display with these expert stati on it.,Maintenance,CAV,,$EDM/llrf/rf_srf_alim.edl,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,HWMODE,,1,MNT,4,Maintenance: Cavity is known to be bad and needs attention from experts
 ,Maintenance Done,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,HWMODE,,3,MND,4,Maintenance done but cavity has not been run up for validation
 ,Ready,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,HWMODE,,4,RDY,4,Cavity usable but turned off for now

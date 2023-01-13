@@ -86,7 +86,7 @@ class CavityFaultDisplay(Display):
             if fault.button_level == "GUI":
                 button = PyDMRelatedDisplayButton(filename=fault.button_command)
 
-             elif fault.button_level == "EDM":
+            elif fault.button_level == "EDM":
                 button = PyDMEDMDisplayButton()
                 button.filenames = [fault.button_command]
                 button.macros = fault.macros

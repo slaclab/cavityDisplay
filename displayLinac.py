@@ -114,7 +114,8 @@ class DisplayCavity(Cavity):
                                      prefix=prefix, button_level=csvFaultDict["Button Type"],
                                      button_command=csvFaultDict["Button Path"],
                                      macros=self.edm_macro_string,
-                                     button_text=csvFaultDict["Three Letter Code"])
+                                     button_text=csvFaultDict["Three Letter Code"],
+                                     button_macro=csvFaultDict["Button Macros"])
 
     def runThroughFaults(self):
         isOkay = True

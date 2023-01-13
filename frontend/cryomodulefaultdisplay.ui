@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>236</width>
+    <width>386</width>
     <height>571</height>
    </rect>
   </property>
@@ -104,7 +104,7 @@
       <number>8</number>
      </property>
      <property name="templateFilename" stdset="0">
-      <string>cavitybutton.ui</string>
+      <string>cavityfaultbutton.ui</string>
      </property>
      <property name="dataSource" stdset="0">
       <string>cavities.json</string>

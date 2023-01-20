@@ -6,12 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>237</width>
-    <height>44</height>
+    <width>347</width>
+    <height>53</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(35, 35, 35);
+color: rgb(255, 255, 255);</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -39,10 +43,7 @@
       <string/>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(35, 35, 35); 
-color: rgb(255, 255, 255);
-
-</string>
+      <string notr="true"/>
      </property>
      <property name="text">
       <string>Cavity 0${cavityNumber}</string>
@@ -59,7 +60,7 @@ color: rgb(255, 255, 255);
       </stringlist>
      </property>
      <property name="showIcon" stdset="0">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="openInNewWindow" stdset="0">
       <bool>true</bool>

@@ -1,7 +1,8 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
+from edmbutton import PyDMEDMDisplayButton
 from pydm import Display
-from pydm.widgets import PyDMLabel
+from pydm.widgets import PyDMLabel, PyDMRelatedDisplayButton
 from typing import Dict
 
 from displayLinac import DISPLAY_CRYOMODULES
@@ -27,7 +28,7 @@ class CavityFaultDisplay(Display):
         statusheaderLabel.setText("Status")
         statusheaderLabel.setMaximumWidth(100)
         statusheaderLabel.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
-        statusheaderLabel.setAlignment(Qt.AlignCenter)
+        statusheaderLabel.setAlignment(Qt.AlignHCenter)
         statusheaderLabel.setStyleSheet("text-decoration: underline")
 
         nameheaderLabel = QLabel()
@@ -43,9 +44,17 @@ class CavityFaultDisplay(Display):
         codeheaderLabel.setAlignment(Qt.AlignHCenter)
         codeheaderLabel.setStyleSheet("text-decoration: underline")
 
+        buttonheaderLabel = QLabel()
+        buttonheaderLabel.setText("Panel")
+        buttonheaderLabel.setMaximumWidth(58)
+        buttonheaderLabel.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+        buttonheaderLabel.setAlignment(Qt.AlignHCenter)
+        buttonheaderLabel.setStyleSheet("text-decoration:underline")
+
         headerLayout.addWidget(codeheaderLabel)
         headerLayout.addWidget(nameheaderLabel)
         headerLayout.addWidget(statusheaderLabel)
+        headerLayout.addWidget(buttonheaderLabel)
 
         headerLayout.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
         verticalLayout.addLayout(headerLayout)
@@ -74,6 +83,18 @@ class CavityFaultDisplay(Display):
             horizontalLayout.addWidget(shortDescriptionLabel)
             horizontalLayout.addWidget(statusLabel)
 
+            if fault.button_level == "EDM":
+                button = PyDMEDMDisplayButton()
+                button.filenames = [fault.button_command]
+                button.macros = fault.macros + (',' + fault.button_macro if fault.button_macro else "")
+
+            else:
+                button = PyDMRelatedDisplayButton()
+                button.filenames = [fault.button_command]
+
+            horizontalLayout.addWidget(button)
+            button.setText(fault.button_text)
+            button.showIcon = False
             verticalLayout.addLayout(horizontalLayout)
 
 
@@ -114,4 +135,4 @@ class EnumLabel(PyDMLabel):
             self.setText("INVALID")
             self.setStyleSheet("background-color: rgb(255,0,255);font-weight: bold;"
                                "border: 2px solid black;")
-            self.codelabel.setStyleSheet("font-weight:bold;")
+            self.codeLabel.setStyleSheet("font-weight:bold;")

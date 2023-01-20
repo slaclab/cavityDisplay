@@ -69,8 +69,9 @@
       <string>cryoDisplayButton</string>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(35, 35, 35); 
-color: rgb(255, 255, 255);</string>
+      <string notr="true">background-color: rgb(35, 35, 35);
+                            color: rgb(255, 255, 255);
+                        </string>
      </property>
      <property name="text">
       <string>${cryoNum}</string>

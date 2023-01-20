@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>484</width>
-    <height>761</height>
+    <width>527</width>
+    <height>772</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -57,6 +57,8 @@
     <widget class="PyDMRelatedDisplayButton" name="PyDMRelatedDisplayButton">
      <property name="font">
       <font>
+       <weight>75</weight>
+       <bold>true</bold>
        <kerning>true</kerning>
       </font>
      </property>
@@ -64,7 +66,7 @@
       <string/>
      </property>
      <property name="text">
-      <string>Three Letter Codes</string>
+      <string>3-Letter Codes</string>
      </property>
      <property name="default">
       <bool>false</bool>
@@ -75,7 +77,7 @@
       </stringlist>
      </property>
      <property name="showIcon" stdset="0">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="macros" stdset="0">
       <stringlist/>
@@ -101,8 +103,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>442</width>
-        <height>647</height>
+        <width>485</width>
+        <height>658</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">

@@ -1,6 +1,6 @@
 ﻿Comments,Short Description,Level,Button Type,Button Path,Button Macros,Rack,PV Prefix,PV Suffix,OK If Equal To,Faulted If Equal To,Three Letter Code,Severity,Long Description
-,Offline,CAV,EDM,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=10,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,HWMODE,,2,OFF,4,Cavity has been deemed permanently unusable
-Need Sonya to make these PVs then someone can make a display with these expert stati on it.,Maintenance,CAV,EDM,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=10,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,HWMODE,,1,MNT,4,Maintenance: Cavity is known to be bad and needs attention from experts
+,Offline,CAV,EDM,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=10,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,HWMODE,,2,OFF,5,Cavity not usable or not intended to be used for extended period
+Need Sonya to make these PVs then someone can make a display with these expert stati on it.,Maintenance,CAV,EDM,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=10,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,HWMODE,,1,MNT,4,Maintenance: Cavity is known to be bad and is actively being worked on
 ,Maintenance Done,CAV,EDM,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=10,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,HWMODE,,3,MND,4,Maintenance done but cavity has not been run up for validation
 ,Ready,CAV,EDM,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=10,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,HWMODE,,4,RDY,4,Cavity usable but turned off for now
 ,BSOIC Tripped,ALL,EDM,$EDM/pps/pps_sysw.edl,,,BSOC:SYSW:2:,SumyA,1,,BSO,2,BSOIC tripped
@@ -40,8 +40,8 @@ I think these are {CRYOMODULE}10 for all cavities in a cryomodule,Coupler Vacuum
 ,No RF ,CAV,EDM,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=5,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,RFSTATE,1,,NRF,2,RF is off
 ,Not in SELAP,CAV,EDM,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=5,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,RFMODE,0,,NAP,2,Not in SELAP so there is no regulation on amplitude and/or phase
 suffix:  RFREADYFORBEAM,RF (not) Ready for Beam,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,,1,,RFR,2,RF not ready for beam: mode is not SELAP and/or RF is off
-,PRL Problem,RACK,,,,A,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,PRLSUM.SEVR,0,,PRL,2,Problem with Phase Reference. Cavity phase may not be locked to global RF.
-,PRL Problem,RACK,,,,B,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,PRLSUM.SEVR,0,,PRL,2,Problem with Phase Reference. Cavity phase may not be locked to global RF.
+,PRL Problem,RACK,EDM,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=8,SELCHAR=3",A,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,PRLSUM.SEVR,0,,PRL,2,Problem with Phase Reference. Cavity phase may not be locked to global RF.
+,PRL Problem,RACK,EDM,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=8,SELCHAR=3",B,ACCL:{LINAC}:{CRYOMODULE}00:RACK{RACK}:,PRLSUM.SEVR,0,,PRL,2,Problem with Phase Reference. Cavity phase may not be locked to global RF.
 ,Piezo feedback off,CAV,EDM,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=3,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PZT:MODECTRL,1,,PZF,2,Piezo Feedback is not on
 "Ask Sonya if such a thing exists and if so, what is it?",Piezo feedback problem,CAV,EDM,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=3,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PZT:FBSTATSUM,,2,PZO,2,Piezo Feedback is indicating a problem
 "Ask Sonya if such a thing exists and if so, what is it?",Piezo feedback problem,CAV,EDM,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=3,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PZT:FBSTATSUM,,1,PZO,1,Piezo Feedback is indicating a problem
@@ -51,7 +51,7 @@ suffix:  RFREADYFORBEAM,RF (not) Ready for Beam,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE
 ,Upstream HOM temperature is too high,CRYO,,,,,CTE:CM{CRYOMODULE}:1{CAVITY}18:UH:,TEMP.SEVR,,2,USH,2,Upstream HOM temperature is too high (could indicate an impending quench)
 ,Downstream HOM temperature too high,CRYO,,,,,CTE:CM{CRYOMODULE}:1{CAVITY}20:DH:,TEMP.SEVR,,2,DSH,2,Downstream HOM temperature too high (could indicate an impending quench)
 ,Amplitude out of tolerance,CAV,EDM,$EDM/llrf/rf_srf_cavity_main.edl,SELCHAR=3,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,AACTMEAN.SEVR,0,,AOT,2,The amplitude readback is too far away from the desired amplitude
-,Phase out of tolerance,CAV,,,,,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PACTMEAN.SEVR,0,,POT,2,The phase readback is too far away from the desired phase
+,Phase out of tolerance,CAV,EDM,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=5,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PACTMEAN.SEVR,0,,POT,2,The phase readback is too far away from the desired phase
 ,Quench Interlock Bypassed,CAV,EDM,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=4,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,QUENCH_BYP_RBV,,1,QBP,1,Quench interlock bypassed
 ,Feedback Amplitude out of tolerance,CAV,EDM,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=5,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,AMPFB_SUM,0,,AFB,1,The feedback maintaining the amplitude is unable to keep the amplitude within tolerance. (Must be checked after RFREADYFORBEAM). Amplitude feedback of measured gradient is too low
 ,Phase feedback out of tolerance,CAV,EDM,$EDM/llrf/rf_srf_cavity_main.edl,"SELTAB=5,SELCHAR=3",,ACCL:{LINAC}:{CRYOMODULE}{CAVITY}0:,PHAFB_SUM,0,,PFB,1,The feedback maintaining the phase is unable to keep the phase within tolerance. (Must be checked after RFREADYFORBEAM)

@@ -25,7 +25,7 @@ for faultRowDict in CSV_FAULTS:
 sortedFaultRows = OrderedDict([(tlc, rows[tlc]) for tlc in sorted(rows.keys())])
 
 
-class ThreeLetterFaultDisplay(Display):
+class DecoderDisplay(Display):
     def __init__(self, parent=None, args=None, macros=None):
         super().__init__(parent=parent, args=args,
                          ui_filename="frontend/3letterfaults.ui",

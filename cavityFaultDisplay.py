@@ -10,13 +10,12 @@ from fault import Fault, PvInvalid
 
 
 class CavityFaultDisplay(Display):
-    def __init__(self, parent=None, args=None, macros=None):
+    def __init__(self, cavityNumber, cmName, parent=None, args=None):
         super().__init__(parent=parent, args=args,
-                         ui_filename="frontend/cavityfaultdisplay.ui",
-                         macros=macros)
+                         ui_filename="frontend/cavityfaultdisplay.ui")
 
-        cryomoduleName = macros["cryoNum"]
-        cavityNumber = macros["cavityNumber"]
+        cryomoduleName = cmName
+        cavityNumber = cavityNumber
 
         cavityObject = DISPLAY_CRYOMODULES[cryomoduleName].cavities[cavityNumber]
 

@@ -1,9 +1,14 @@
 import numpy as np
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QColor, QFont, QFontMetrics, QPainter, QPen
 from dataclasses import dataclass
-from pydm import PyDMChannel
+from functools import partial
+from lcls_tools.common.pydm_tools.displayUtils import showDisplay
+from pydm import PyDMChannel, Display
 from pydm.widgets.drawing import PyDMDrawingPolygon
 from qtpy.QtCore import Property as qtProperty, QRect, Qt, Slot
+
+from cavityFaultDisplay import CavityFaultDisplay
 
 GREEN_FILL_COLOR = QColor(9, 141, 0)
 YELLOW_FILL_COLOR = QColor(244, 230, 67)
@@ -41,6 +46,9 @@ SHAPE_PARAMETER_DICT = {0: ShapeParameters(GREEN_FILL_COLOR, BLACK_TEXT_COLOR,
 
 
 class CavityWidget(PyDMDrawingPolygon):
+    pressPos = None
+    clicked = pyqtSignal()
+
     def __init__(self, parent=None, init_channel=None):
         super(CavityWidget, self).__init__(parent, init_channel)
         self._num_points = 4
@@ -54,6 +62,31 @@ class CavityWidget(PyDMDrawingPolygon):
         self._description_channel: PyDMChannel = None
         self.alarmSensitiveBorder = False
         self.alarmSensitiveContent = False
+        self._faultDisplay: Display = None
+        self.clicked.connect(partial(showDisplay, self.faultDisplay))
+        self.cavityNumber = None
+        self.cmName = None
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.pressPos = event.pos()
+
+    def mouseReleaseEvent(self, event):
+        # ensure that the left button was pressed *and* released within the
+        # geometry of the widget; if so, emit the signal;
+        if (self.pressPos is not None and
+                event.button() == Qt.LeftButton and
+                event.pos() in self.rect()):
+            self.clicked.emit()
+        self.pressPos = None
+
+    @property
+    def faultDisplay(self):
+        if not self._faultDisplay:
+            self._faultDisplay = CavityFaultDisplay(cavityNumber=self.cavityNumber,
+                                                    cmName=self.cmName)
+            self._faultDisplay.setWindowTitle(f"CM{self.cmName} Cavity {self.cavityNumber} Faults")
+        return self._faultDisplay
 
     @qtProperty(str)
     def cavityText(self):

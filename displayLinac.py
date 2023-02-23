@@ -1,13 +1,12 @@
 from collections import OrderedDict
 
 from epics import caput
-
-from cavityDisplayGUI import DESCRIPTION_SUFFIX, SEVERITY_SUFFIX, STATUS_SUFFIX
-from fault import Fault, PvInvalid
 from lcls_tools.superconducting.scLinac import (Cavity, CryoDict, Cryomodule,
                                                 Magnet, Piezo, Rack, SSA,
                                                 StepperTuner)
-from utils import CSV_FAULTS, displayHash
+
+from fault import Fault, PvInvalid
+from utils import CSV_FAULTS, displayHash, STATUS_SUFFIX, SEVERITY_SUFFIX, DESCRIPTION_SUFFIX
 
 
 class DisplaySSA(SSA):

@@ -1,20 +1,16 @@
 import json
 import sys
 from PyQt5.QtWidgets import QHBoxLayout
+from lcls_tools.superconducting.scLinac import CRYOMODULE_OBJECTS, Cavity
 from pydm import Display
 from pydm.widgets import (PyDMByteIndicator, PyDMEmbeddedDisplay, PyDMRelatedDisplayButton,
                           PyDMTemplateRepeater)
 from typing import List
 
-from lcls_tools.superconducting.scLinac import CRYOMODULE_OBJECTS, Cavity
+from utils import SEVERITY_SUFFIX, STATUS_SUFFIX, DESCRIPTION_SUFFIX
 
 sys.path.insert(0, './frontend')
 from cavityWidget import CavityWidget
-
-STATUS_SUFFIX = "CUDSTATUS"
-SEVERITY_SUFFIX = "CUDSEVR"
-DESCRIPTION_SUFFIX = "CUDDESC"
-RF_STATUS_SUFFIX = "RFSTATE"
 
 
 class CavityDisplayGUI(Display):
@@ -73,6 +69,8 @@ class CavityDisplayGUI(Display):
                     cavityWidget.channel = statusPV
                     cavityWidget.severity_channel = severityPV
                     cavityWidget.description_channel = descriptionPV
+                    cavityWidget.cavityNumber = cavityObject.number
+                    cavityWidget.cmName = cavityObject.cryomodule.name
 
                     rule = [{"channels": [{"channel": ssaPV, "trigger": True, "use_enum": True}],
                              "property": "Opacity", "expression": "ch[0] == 'SSA On'", "initial_value": "0",

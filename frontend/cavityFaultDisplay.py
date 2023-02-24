@@ -1,3 +1,5 @@
+import sys
+
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
 from edmbutton import PyDMEDMDisplayButton
@@ -5,6 +7,7 @@ from pydm import Display
 from pydm.widgets import PyDMLabel, PyDMRelatedDisplayButton
 from typing import Dict
 
+sys.path.insert(0, '..')
 from displayLinac import DISPLAY_CRYOMODULES
 from fault import Fault, PvInvalid
 
@@ -12,10 +15,11 @@ from fault import Fault, PvInvalid
 class CavityFaultDisplay(Display):
     def __init__(self, cavityNumber, cmName, parent=None, args=None):
         super().__init__(parent=parent, args=args,
-                         ui_filename="frontend/cavityfaultdisplay.ui")
+                         ui_filename="cavityfaultdisplay.ui")
 
         cryomoduleName = cmName
         cavityNumber = cavityNumber
+        self.ui.label.setText("Hi")
 
         cavityObject = DISPLAY_CRYOMODULES[cryomoduleName].cavities[cavityNumber]
 

@@ -2,7 +2,6 @@ import numpy as np
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QColor, QFont, QFontMetrics, QPainter, QPen
 from dataclasses import dataclass
-from functools import partial
 from lcls_tools.common.pydm_tools.displayUtils import showDisplay
 from pydm import PyDMChannel, Display
 from pydm.widgets.drawing import PyDMDrawingPolygon
@@ -63,10 +62,14 @@ class CavityWidget(PyDMDrawingPolygon):
         self.alarmSensitiveBorder = False
         self.alarmSensitiveContent = False
         self._faultDisplay: Display = None
-        self.clicked.connect(partial(showDisplay, self.faultDisplay))
+        self.clicked.connect(self.show_fault_display)
         self.cavityNumber = None
         self.cmName = None
 
+    def show_fault_display(self):
+        showDisplay(self.faultDisplay)
+
+    # The following two functions were copy/pasted from stack overflow
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
             self.pressPos = event.pos()

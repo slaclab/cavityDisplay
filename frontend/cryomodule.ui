@@ -42,13 +42,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="PyDMRelatedDisplayButton" name="cmPyDMDisplayButton">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
+    <widget class="QLabel" name="cmLabel">
      <property name="minimumSize">
       <size>
        <width>5</width>
@@ -62,35 +56,18 @@
        <bold>true</bold>
       </font>
      </property>
-     <property name="toolTip">
-      <string/>
-     </property>
      <property name="accessibleName">
       <string>cryoDisplayButton</string>
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(35, 35, 35);
-                            color: rgb(255, 255, 255);
-                        </string>
+                            color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
       <string>${cryoNum}</string>
      </property>
-     <property name="filenames" stdset="0">
-      <stringlist>
-       <string>cryomodulefaultdisplay.ui</string>
-      </stringlist>
-     </property>
-     <property name="showIcon" stdset="0">
-      <bool>true</bool>
-     </property>
-     <property name="macros" stdset="0">
-      <stringlist>
-       <string>cryomodule=${cryoNum}</string>
-      </stringlist>
-     </property>
-     <property name="openInNewWindow" stdset="0">
-      <bool>true</bool>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>
@@ -134,11 +111,6 @@
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>PyDMRelatedDisplayButton</class>
-   <extends>QPushButton</extends>
-   <header>pydm.widgets.related_display_button</header>
-  </customwidget>
   <customwidget>
    <class>PyDMTemplateRepeater</class>
    <extends>QFrame</extends>

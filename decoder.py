@@ -14,13 +14,13 @@ rows = {}
 class Row:
     tlc: str
     longDesc: str
-    shortDesc: str
+    genShortDesc: str
 
 
 for faultRowDict in CSV_FAULTS:
     tlc = faultRowDict["Three Letter Code"]
     rows[tlc] = Row(tlc=tlc, longDesc=faultRowDict["Long Description"],
-                    shortDesc=faultRowDict["Short Description"])
+                    genShortDesc=faultRowDict["Generic Short Description for Decoder"])
 
 sortedFaultRows = OrderedDict([(tlc, rows[tlc]) for tlc in sorted(rows.keys())])
 
@@ -28,34 +28,37 @@ sortedFaultRows = OrderedDict([(tlc, rows[tlc]) for tlc in sorted(rows.keys())])
 class DecoderDisplay(Display):
     def __init__(self, parent=None, args=None, macros=None):
         super().__init__(parent=parent, args=args,
-                         ui_filename="frontend/3letterfaults.ui",
+                         ui_filename="frontend/decoder.ui",
                          macros=macros)
 
-        verticalLayout: QVBoxLayout = self.ui.tlclayout
+        verticalLayout: QVBoxLayout = self.ui.tlc_layout
 
+        # Long description header
         headerLayout = QHBoxLayout()
-        descriptionheaderLabel = QLabel()
-        descriptionheaderLabel.setText("Description")
-        descriptionheaderLabel.setMinimumSize(200, 30)
-        descriptionheaderLabel.setStyleSheet("text-decoration: underline")
+        descriptionHeaderLabel = QLabel()
+        descriptionHeaderLabel.setText("Description")
+        descriptionHeaderLabel.setMinimumSize(200, 30)
+        descriptionHeaderLabel.setStyleSheet("text-decoration: underline")
 
-        nameheaderLabel = QLabel()
-        nameheaderLabel.setText("Name")
-        nameheaderLabel.setMinimumSize(200, 30)
-        nameheaderLabel.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
-        nameheaderLabel.setStyleSheet("text-decoration: underline")
+        # Name (aka short description) header
+        nameHeaderLabel = QLabel()
+        nameHeaderLabel.setText("Name")
+        nameHeaderLabel.setMinimumSize(200, 30)
+        nameHeaderLabel.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
+        nameHeaderLabel.setStyleSheet("text-decoration: underline")
 
-        codeheaderLabel = QLabel()
-        codeheaderLabel.setText("Code")
-        codeheaderLabel.setMinimumSize(30, 30)
-        codeheaderLabel.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
-        codeheaderLabel.setStyleSheet("text-decoration: underline")
+        # Three Letter Code header
+        codeHeaderLabel = QLabel()
+        codeHeaderLabel.setText("Code")
+        codeHeaderLabel.setMinimumSize(30, 30)
+        codeHeaderLabel.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
+        codeHeaderLabel.setStyleSheet("text-decoration: underline")
 
         headerLayout.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
 
-        headerLayout.addWidget(codeheaderLabel)
-        headerLayout.addWidget(nameheaderLabel)
-        headerLayout.addWidget(descriptionheaderLabel)
+        headerLayout.addWidget(codeHeaderLabel)
+        headerLayout.addWidget(nameHeaderLabel)
+        headerLayout.addWidget(descriptionHeaderLabel)
         headerLayout.setSpacing(50)
 
         verticalLayout.addLayout(headerLayout)
@@ -75,7 +78,7 @@ class DecoderDisplay(Display):
             codeLabel.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
 
             nameLabel = QLabel()
-            nameLabel.setText(row.shortDesc)
+            nameLabel.setText(row.genShortDesc)
             nameLabel.setMinimumSize(200, 50)
             nameLabel.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
             nameLabel.setWordWrap(True)

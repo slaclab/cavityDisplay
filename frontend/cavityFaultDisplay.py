@@ -19,7 +19,7 @@ class CavityFaultDisplay(Display):
 
         cryomoduleName = cmName
         cavityNumber = cavityNumber
-        self.ui.label.setText("Hi")
+        self.ui.label.setText(f"CM{cryomoduleName} Cavity {cavityNumber} Faults")
 
         cavityObject = DISPLAY_CRYOMODULES[cryomoduleName].cavities[cavityNumber]
 
@@ -79,6 +79,7 @@ class CavityFaultDisplay(Display):
             shortDescriptionLabel.setWordWrap(True)
 
             statusLabel = EnumLabel(fault=fault, codeLabel=codeLabel)
+            statusLabel.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
 
             horizontalLayout.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
 

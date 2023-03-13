@@ -1,3 +1,5 @@
+import sys
+
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
 from edmbutton import PyDMEDMDisplayButton
@@ -5,18 +7,19 @@ from pydm import Display
 from pydm.widgets import PyDMLabel, PyDMRelatedDisplayButton
 from typing import Dict
 
+sys.path.insert(0, '..')
 from displayLinac import DISPLAY_CRYOMODULES
 from fault import Fault, PvInvalid
 
 
 class CavityFaultDisplay(Display):
-    def __init__(self, parent=None, args=None, macros=None):
+    def __init__(self, cavityNumber, cmName, parent=None, args=None):
         super().__init__(parent=parent, args=args,
-                         ui_filename="frontend/cavityfaultdisplay.ui",
-                         macros=macros)
+                         ui_filename="cavityfaultdisplay.ui")
 
-        cryomoduleName = macros["cryoNum"]
-        cavityNumber = macros["cavityNumber"]
+        cryomoduleName = cmName
+        cavityNumber = cavityNumber
+        self.ui.label.setText(f"CM{cryomoduleName} Cavity {cavityNumber} Faults")
 
         cavityObject = DISPLAY_CRYOMODULES[cryomoduleName].cavities[cavityNumber]
 
@@ -76,6 +79,7 @@ class CavityFaultDisplay(Display):
             shortDescriptionLabel.setWordWrap(True)
 
             statusLabel = EnumLabel(fault=fault, codeLabel=codeLabel)
+            statusLabel.setSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
 
             horizontalLayout.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
 

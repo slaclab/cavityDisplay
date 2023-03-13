@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Cavity Display</string>
   </property>
   <property name="accessibleName">
    <string>cavityDisplay.ui Form</string>
@@ -157,7 +157,7 @@
          </property>
          <property name="filenames" stdset="0">
           <stringlist>
-           <string>3letterfault.py</string>
+           <string>decoder.py</string>
           </stringlist>
          </property>
          <property name="openInNewWindow" stdset="0">

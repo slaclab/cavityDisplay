@@ -1,20 +1,15 @@
 import json
 import sys
-from PyQt5.QtWidgets import QHBoxLayout
+from PyQt5.QtWidgets import QHBoxLayout, QLabel
+from lcls_tools.superconducting.scLinac import CRYOMODULE_OBJECTS, Cavity
 from pydm import Display
-from pydm.widgets import (PyDMByteIndicator, PyDMEmbeddedDisplay, PyDMRelatedDisplayButton,
-                          PyDMTemplateRepeater)
+from pydm.widgets import (PyDMByteIndicator, PyDMEmbeddedDisplay, PyDMTemplateRepeater)
 from typing import List
 
-from lcls_tools.superconducting.scLinac import CRYOMODULE_OBJECTS, Cavity
+from utils import SEVERITY_SUFFIX, STATUS_SUFFIX, DESCRIPTION_SUFFIX
 
 sys.path.insert(0, './frontend')
 from cavityWidget import CavityWidget
-
-STATUS_SUFFIX = "CUDSTATUS"
-SEVERITY_SUFFIX = "CUDSEVR"
-DESCRIPTION_SUFFIX = "CUDDESC"
-RF_STATUS_SUFFIX = "RFSTATE"
 
 
 class CavityDisplayGUI(Display):
@@ -41,12 +36,11 @@ class CavityDisplayGUI(Display):
                 cryoDisplayList.append(linacHorizLayout.itemAt(itemIndex).widget())
 
             for cryomoduleDisplay in cryoDisplayList:
-                cmButton: PyDMRelatedDisplayButton = cryomoduleDisplay.children()[1]
-                cmButton.setToolTip('cryomodule expert display')
+                cryomoduleLabel: QLabel = cryomoduleDisplay.children()[1]
 
                 cmTemplateRepeater: PyDMTemplateRepeater = cryomoduleDisplay.children()[2]
 
-                cryomoduleObject = CRYOMODULE_OBJECTS[str(cmButton.text())]
+                cryomoduleObject = CRYOMODULE_OBJECTS[str(cryomoduleLabel.text())]
                 cavityWidgetList: List[CavityWidget] = cmTemplateRepeater.findChildren(CavityWidget)
 
                 rfStatusBarList: List[PyDMByteIndicator] = []
@@ -73,6 +67,8 @@ class CavityDisplayGUI(Display):
                     cavityWidget.channel = statusPV
                     cavityWidget.severity_channel = severityPV
                     cavityWidget.description_channel = descriptionPV
+                    cavityWidget.cavityNumber = cavityObject.number
+                    cavityWidget.cmName = cavityObject.cryomodule.name
 
                     rule = [{"channels": [{"channel": ssaPV, "trigger": True, "use_enum": True}],
                              "property": "Opacity", "expression": "ch[0] == 'SSA On'", "initial_value": "0",

@@ -11,14 +11,14 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Cavity Fault Three Letter Codes</string>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="tlc_header">
      <property name="font">
       <font>
        <pointsize>24</pointsize>
@@ -60,7 +60,7 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <layout class="QVBoxLayout" name="tlclayout"/>
+        <layout class="QVBoxLayout" name="tlc_layout"/>
        </item>
       </layout>
      </widget>

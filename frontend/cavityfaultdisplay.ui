@@ -73,7 +73,7 @@
      </property>
      <property name="filenames" stdset="0">
       <stringlist>
-       <string>3letterfault.py</string>
+       <string>decoder.py</string>
       </stringlist>
      </property>
      <property name="showIcon" stdset="0">
@@ -116,7 +116,7 @@
     </widget>
    </item>
    <item row="3" column="0">
-    <widget class="QLabel" name="label_2">
+    <widget class="QLabel" name="note">
      <property name="maximumSize">
       <size>
        <width>300</width>

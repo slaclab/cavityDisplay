@@ -1,6 +1,11 @@
 from csv import DictReader
 from typing import Dict, List
 
+STATUS_SUFFIX = "CUDSTATUS"
+SEVERITY_SUFFIX = "CUDSEVR"
+DESCRIPTION_SUFFIX = "CUDDESC"
+RF_STATUS_SUFFIX = "RFSTATE"
+
 DEBUG = False
 BACKEND_SLEEP_TIME = 10
 

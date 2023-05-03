@@ -1,6 +1,6 @@
 import numpy as np
 from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtGui import QColor, QFont, QFontMetrics, QPainter, QPen
+from PyQt5.QtGui import QColor, QFont, QFontMetrics, QPainter, QPen, QCursor
 from dataclasses import dataclass
 from lcls_tools.common.pydm_tools.displayUtils import showDisplay
 from pydm import PyDMChannel, Display
@@ -65,6 +65,7 @@ class CavityWidget(PyDMDrawingPolygon):
         self.clicked.connect(self.show_fault_display)
         self.cavityNumber = None
         self.cmName = None
+        self.setCursor(QCursor(Qt.PointingHandCursor))
 
     def show_fault_display(self):
         showDisplay(self.faultDisplay)

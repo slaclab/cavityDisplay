@@ -95,9 +95,11 @@ class CavityFaultDisplay(Display):
             elif fault.button_level == "SCRIPT":
                 button = PyDMShellCommand()
                 button.commands = [fault.button_command]
+                print(button.commands)
             
             elif fault.button_level == "PYDM":
                 button = PyDMRelatedDisplayButton()
+                button.openInNewWindow = True
                 button.filenames = [fault.button_command]
                 button.macros = cavityObject.cryomodule.pydm_macros
             

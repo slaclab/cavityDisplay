@@ -94,7 +94,7 @@ class CavityFaultDisplay(Display):
             
             elif fault.button_level == "SCRIPT":
                 button = PyDMShellCommand()
-                button.command = fault.button_command
+                button.commands = [fault.button_command]
             
             elif fault.button_level == "PYDM":
                 button = PyDMRelatedDisplayButton()

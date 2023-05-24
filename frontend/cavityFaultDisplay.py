@@ -12,6 +12,16 @@ from displayLinac import DISPLAY_CRYOMODULES
 from fault import Fault, PvInvalid
 
 
+class PyDMFaultButton(PyDMRelatedDisplayButton):
+    def __init__(self):
+        super().__init__()
+    
+    def push_button_release_event(self, mouse_event) -> None:
+        for item in self._get_items():
+            self.open_display(item['filename'], item['macros'],
+                              target=PyDMRelatedDisplayButton.NEW_WINDOW)
+
+
 class CavityFaultDisplay(Display):
     def __init__(self, cavityNumber, cmName, parent=None, args=None):
         super().__init__(parent=parent, args=args,
@@ -98,7 +108,7 @@ class CavityFaultDisplay(Display):
                 print(button.commands)
             
             elif fault.button_level == "PYDM":
-                button = PyDMRelatedDisplayButton()
+                button = PyDMFaultButton()
                 button.openInNewWindow = True
                 button.filenames = [fault.button_command]
                 button.macros = cavityObject.cryomodule.pydm_macros

@@ -38,8 +38,8 @@ class DisplayCryomodule(Cryomodule):
         to this list
         :return:
         """
-        return '{"AREA"  : {linac_name}, "CM": {cm_name}, "RFNAME": "CM{cm_name}"}'.format(linac_name=self.linac.name,
-                                                                                           cm_name=self.name)
+        return 'AREA={linac_name},CM={cm_name},RFNAME=CM{cm_name}'.format(linac_name=self.linac.name,
+                                                                          cm_name=self.name)
 
 
 class DisplayCavity(Cavity):

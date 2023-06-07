@@ -24,7 +24,7 @@ class SpreadsheetError(Exception):
 class DisplayCryomodule(Cryomodule):
     def __init__(self, cryo_name, linac_object, cavity_class=Cavity,
                  magnet_class=Magnet, rack_class=Rack, is_harmonic_linearizer=False,
-                 ssa_class=SSA, stepper_class=StepperTuner, piezoClass=Piezo):
+                 ssa_class=SSA, stepper_class=StepperTuner, piezo_class=Piezo):
         super().__init__(cryo_name, linac_object, cavity_class=DisplayCavity,
                          is_harmonic_linearizer=is_harmonic_linearizer,
                          ssa_class=DisplaySSA)

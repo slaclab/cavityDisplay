@@ -1,14 +1,14 @@
 from datetime import datetime
 from time import sleep
 
-from epics import caget, caput
+from lcls_tools.common.pyepics_tools.pyepics_utils import PV
+from lcls_tools.superconducting.sc_linac_utils import ALL_CRYOMODULES
 
 from displayLinac import DISPLAY_CRYOMODULES, DisplayCryomodule
-from lcls_tools.superconducting.scLinac import ALL_CRYOMODULES
 from utils import BACKEND_SLEEP_TIME, DEBUG
 
-WATCHER_PV: str = "PHYS:SYS0:1:SC_CAV_FAULT_HEARTBEAT"
-caput(WATCHER_PV, 0)
+WATCHER_PV: PV = PV("PHYS:SYS0:1:SC_CAV_FAULT_HEARTBEAT")
+WATCHER_PV.put(0)
 
 while True:
     start = datetime.now()
@@ -21,6 +21,6 @@ while True:
         sleep(BACKEND_SLEEP_TIME - delta if delta < BACKEND_SLEEP_TIME else 0)
     
     try:
-        caput(WATCHER_PV, caget(WATCHER_PV) + 1)
+        WATCHER_PV.put(WATCHER_PV.get() + 1)
     except TypeError as e:
         print(f"Write to watcher PV failed with error: {e}")

@@ -12,7 +12,7 @@ from utils import CSV_FAULTS, DESCRIPTION_SUFFIX, SEVERITY_SUFFIX, STATUS_SUFFIX
 class DisplaySSA(SSA):
     def __init__(self, cavity):
         super().__init__(cavity)
-        self.alarmSevrPV: str = (self.pvPrefix + "AlarmSummary.SEVR")
+        self.alarmSevrPV: str = self.pv_addr("AlarmSummary.SEVR")
 
 
 class SpreadsheetError(Exception):
@@ -22,12 +22,12 @@ class SpreadsheetError(Exception):
 
 
 class DisplayCryomodule(Cryomodule):
-    def __init__(self, cryoName, linacObject, cavityClass=Cavity,
-                 magnetClass=Magnet, rackClass=Rack, isHarmonicLinearizer=False,
-                 ssaClass=SSA, stepperClass=StepperTuner, piezoClass=Piezo):
-        super().__init__(cryoName, linacObject, cavityClass=DisplayCavity,
-                         isHarmonicLinearizer=isHarmonicLinearizer,
-                         ssaClass=DisplaySSA)
+    def __init__(self, cryoName, linacObject, cavity_class=Cavity,
+                 magnet_class=Magnet, rack_class=Rack, is_harmonic_linearizer=False,
+                 ssa_class=SSA, stepper_class=StepperTuner, piezoClass=Piezo):
+        super().__init__(cryoName, linacObject, cavity_class=DisplayCavity,
+                         is_harmonic_linearizer=is_harmonic_linearizer,
+                         ssa_class=DisplaySSA)
         for cavity in self.cavities.values():
             cavity.createFaults()
     
@@ -46,9 +46,9 @@ class DisplayCavity(Cavity):
     def __init__(self, cavityNum, rackObject, ssaClass=DisplaySSA,
                  stepperClass=StepperTuner, piezoClass=Piezo):
         super(DisplayCavity, self).__init__(cavityNum, rackObject, ssaClass=ssaClass)
-        self.statusPV: str = (self.pvPrefix + STATUS_SUFFIX)
-        self.severityPV: str = (self.pvPrefix + SEVERITY_SUFFIX)
-        self.descriptionPV: str = (self.pvPrefix + DESCRIPTION_SUFFIX)
+        self.statusPV: str = self.pv_addr(STATUS_SUFFIX)
+        self.severityPV: str = self.pv_addr(SEVERITY_SUFFIX)
+        self.descriptionPV: str = self.pv_addr(DESCRIPTION_SUFFIX)
         
         self.faults: OrderedDict[int, Fault] = OrderedDict()
     
@@ -77,13 +77,13 @@ class DisplayCavity(Cavity):
                                                           CAVITY=self.number)
             
             elif level == "SSA":
-                prefix = self.ssa.pvPrefix
+                prefix = self.ssa.pv_prefix
             
             elif level == "CAV":
-                prefix = self.pvPrefix
+                prefix = self.pv_prefix
             
             elif level == "CM":
-                prefix = self.cryomodule.pvPrefix
+                prefix = self.cryomodule.pv_prefix
             
             elif level == "ALL":
                 prefix = csvFaultDict["PV Prefix"]

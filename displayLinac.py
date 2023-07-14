@@ -77,7 +77,7 @@ class DisplayCavity(Cavity):
                                                           CAVITY=self.number)
             
             elif level == "SSA":
-                prefix = self.ssa.pv_prefix
+                prefix = self.ssa.pv_addr("")
             
             elif level == "CAV":
                 prefix = self.pv_prefix

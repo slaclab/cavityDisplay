@@ -57,6 +57,7 @@ class DisplayCavity(Cavity):
             
             level = csvFaultDict["Level"]
             rack = csvFaultDict["Rack"]
+            suffix = csvFaultDict["PV Suffix"]
             
             if level == "RACK":
                 
@@ -71,22 +72,25 @@ class DisplayCavity(Cavity):
                                                           CRYOMODULE=self.cryomodule.name,
                                                           RACK=self.rack.rackName,
                                                           CAVITY=self.number)
+                pv = prefix + suffix
             
             elif level == "CRYO":
                 prefix = csvFaultDict["PV Prefix"].format(CRYOMODULE=self.cryomodule.name,
                                                           CAVITY=self.number)
+                pv = prefix + suffix
             
             elif level == "SSA":
-                prefix = self.ssa.pv_addr("")
+                pv = self.ssa.pv_addr(suffix)
             
             elif level == "CAV":
-                prefix = self.pv_prefix
+                pv = self.pv_addr(suffix)
             
             elif level == "CM":
-                prefix = self.cryomodule.pv_prefix
+                pv = self.cryomodule.pv_addr(suffix)
             
             elif level == "ALL":
                 prefix = csvFaultDict["PV Prefix"]
+                pv = prefix + suffix
             
             else:
                 raise (SpreadsheetError("Unexpected fault level in fault spreadsheet"))
@@ -94,8 +98,7 @@ class DisplayCavity(Cavity):
             tlc = csvFaultDict["Three Letter Code"]
             okCondition = csvFaultDict["OK If Equal To"]
             faultCondition = csvFaultDict["Faulted If Equal To"]
-            suffix = csvFaultDict["PV Suffix"]
-            
+
             key = displayHash(rack=rack,
                               faultCondition=faultCondition,
                               okCondition=okCondition,
@@ -105,12 +108,12 @@ class DisplayCavity(Cavity):
             # setting key of faults dictionary to be row number b/c it's unique (i.e. not repeated)
             self.faults[key] = Fault(tlc=tlc,
                                      severity=csvFaultDict["Severity"],
-                                     suffix=csvFaultDict["PV Suffix"],
+                                     pv=pv,
                                      okValue=okCondition,
                                      faultValue=faultCondition,
                                      longDescription=csvFaultDict["Long Description"],
                                      shortDescription=csvFaultDict["Short Description"],
-                                     prefix=prefix, button_level=csvFaultDict["Button Type"],
+                                     button_level=csvFaultDict["Button Type"],
                                      button_command=csvFaultDict["Button Path"],
                                      macros=self.edm_macro_string,
                                      button_text=csvFaultDict["Three Letter Code"],

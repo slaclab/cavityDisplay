@@ -9,8 +9,8 @@ class PvInvalid(Exception):
 
 
 class Fault:
-    def __init__(self, tlc, severity, suffix, okValue, faultValue, longDescription,
-                 shortDescription, prefix, button_level, button_command, macros,
+    def __init__(self, tlc, severity, pv, okValue, faultValue, longDescription,
+                 shortDescription, button_level, button_command, macros,
                  button_text, button_macro):
         self.tlc = tlc
         self.severity = int(severity)
@@ -18,14 +18,13 @@ class Fault:
         self.shortDescription = shortDescription
         self.okValue = float(okValue) if okValue else None
         self.faultValue = float(faultValue) if faultValue else None
-        self.suffix = suffix
         self.button_level = button_level
         self.button_command = button_command
         self.macros = macros
         self.button_text = button_text
         self.button_macro = button_macro
 
-        self.pv: PV = PV(prefix + suffix, connection_timeout=PV_TIMEOUT)
+        self.pv: PV = PV(pv, connection_timeout=PV_TIMEOUT)
 
     def isFaulted(self):
         """

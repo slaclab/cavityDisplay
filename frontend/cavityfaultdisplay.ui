@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>527</width>
-    <height>772</height>
+    <width>841</width>
+    <height>793</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -103,13 +103,13 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>485</width>
-        <height>658</height>
+        <width>799</width>
+        <height>679</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <layout class="QVBoxLayout" name="cavityfaultslayout"/>
+        <layout class="QGridLayout" name="cavityfaultslayout"/>
        </item>
       </layout>
      </widget>

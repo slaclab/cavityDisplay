@@ -9,24 +9,38 @@ class PvInvalid(Exception):
 
 
 class Fault:
-    def __init__(self, tlc, severity, pv, okValue, faultValue, longDescription,
-                 shortDescription, button_level, button_command, macros,
-                 button_text, button_macro):
+    def __init__(
+        self,
+        tlc,
+        severity,
+        pv,
+        ok_value,
+        fault_value,
+        long_description,
+        short_description,
+        button_level,
+        button_command,
+        macros,
+        button_text,
+        button_macro,
+        action,
+    ):
         self.tlc = tlc
         self.severity = int(severity)
-        self.longDescription = longDescription
-        self.shortDescription = shortDescription
-        self.okValue = float(okValue) if okValue else None
-        self.faultValue = float(faultValue) if faultValue else None
+        self.longDescription = long_description
+        self.shortDescription = short_description
+        self.okValue = float(ok_value) if ok_value else None
+        self.faultValue = float(fault_value) if fault_value else None
         self.button_level = button_level
         self.button_command = button_command
         self.macros = macros
         self.button_text = button_text
         self.button_macro = button_macro
+        self.action = action
 
         self.pv: PV = PV(pv, connection_timeout=PV_TIMEOUT)
 
-    def isFaulted(self):
+    def is_faulted(self):
         """
         Dug through the pyepics source code to find the severity values:
         class AlarmSeverity(DefaultIntEnum):
@@ -46,5 +60,7 @@ class Fault:
 
         else:
             print(self)
-            raise Exception("Fault has neither \'Fault if equal to\' nor"
-                            " \'OK if equal to\' parameter")
+            raise Exception(
+                "Fault has neither 'Fault if equal to' nor"
+                " 'OK if equal to' parameter"
+            )

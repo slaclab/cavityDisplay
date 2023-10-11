@@ -88,8 +88,8 @@ class DisplayCavity(Cavity):
     def create_faults(self):
         for csvFaultDict in CSV_FAULTS:
             level = csvFaultDict["Level"]
-            rack = csvFaultDict["Rack"]
             suffix = csvFaultDict["PV Suffix"]
+            rack = csvFaultDict["Rack"]
 
             if level == "RACK":
                 # Rack A cavities don't care about faults for Rack B and vice versa
@@ -120,6 +120,11 @@ class DisplayCavity(Cavity):
                 pv = self.pv_addr(suffix)
 
             elif level == "CM":
+                cm_type = csvFaultDict["CM Type"]
+                if (cm_type == "1.3" and self.cryomodule.is_harmonic_linearizer) or (
+                    cm_type == "3.9" and not self.cryomodule.is_harmonic_linearizer
+                ):
+                    continue
                 pv = self.cryomodule.pv_addr(suffix)
 
             elif level == "ALL":

@@ -1,6 +1,8 @@
 from collections import OrderedDict
 
 from epics import caput
+
+from fault import Fault, PvInvalid
 from lcls_tools.superconducting.scLinac import (
     Cavity,
     CryoDict,
@@ -11,8 +13,6 @@ from lcls_tools.superconducting.scLinac import (
     SSA,
     StepperTuner,
 )
-
-from fault import Fault, PvInvalid
 from utils import (
     CSV_FAULTS,
     DESCRIPTION_SUFFIX,
@@ -36,16 +36,16 @@ class SpreadsheetError(Exception):
 
 class DisplayCryomodule(Cryomodule):
     def __init__(
-        self,
-        cryo_name,
-        linac_object,
-        cavity_class=Cavity,
-        magnet_class=Magnet,
-        rack_class=Rack,
-        is_harmonic_linearizer=False,
-        ssa_class=SSA,
-        stepper_class=StepperTuner,
-        piezo_class=Piezo,
+            self,
+            cryo_name,
+            linac_object,
+            cavity_class=Cavity,
+            magnet_class=Magnet,
+            rack_class=Rack,
+            is_harmonic_linearizer=False,
+            ssa_class=SSA,
+            stepper_class=StepperTuner,
+            piezo_class=Piezo,
     ):
         super().__init__(
             cryo_name,
@@ -71,12 +71,12 @@ class DisplayCryomodule(Cryomodule):
 
 class DisplayCavity(Cavity):
     def __init__(
-        self,
-        cavityNum,
-        rackObject,
-        ssaClass=DisplaySSA,
-        stepperClass=StepperTuner,
-        piezoClass=Piezo,
+            self,
+            cavityNum,
+            rackObject,
+            ssaClass=DisplaySSA,
+            stepperClass=StepperTuner,
+            piezoClass=Piezo,
     ):
         super(DisplayCavity, self).__init__(cavityNum, rackObject, ssaClass=ssaClass)
         self.statusPV: str = self.pv_addr(STATUS_SUFFIX)
@@ -121,11 +121,18 @@ class DisplayCavity(Cavity):
 
             elif level == "CM":
                 cm_type = csvFaultDict["CM Type"]
+                prefix = csvFaultDict["PV Prefix"].format(
+                    LINAC=self.linac.name,
+                    CRYOMODULE=self.cryomodule.name,
+                    CAVITY=self.number
+                )
+
                 if (cm_type == "1.3" and self.cryomodule.is_harmonic_linearizer) or (
-                    cm_type == "3.9" and not self.cryomodule.is_harmonic_linearizer
+                        cm_type == "3.9" and not self.cryomodule.is_harmonic_linearizer
                 ):
                     continue
-                pv = self.cryomodule.pv_addr(suffix)
+                pv = prefix + suffix
+                print(pv)
 
             elif level == "ALL":
                 prefix = csvFaultDict["PV Prefix"]

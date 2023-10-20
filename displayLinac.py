@@ -132,7 +132,6 @@ class DisplayCavity(Cavity):
                 ):
                     continue
                 pv = prefix + suffix
-                print(pv)
 
             elif level == "ALL":
                 prefix = csvFaultDict["PV Prefix"]
@@ -144,6 +143,7 @@ class DisplayCavity(Cavity):
             tlc = csvFaultDict["Three Letter Code"]
             ok_condition = csvFaultDict["OK If Equal To"]
             fault_condition = csvFaultDict["Faulted If Equal To"]
+            csv_prefix = csvFaultDict["PV Prefix"]
 
             key = displayHash(
                 rack=rack,
@@ -151,6 +151,7 @@ class DisplayCavity(Cavity):
                 okCondition=ok_condition,
                 tlc=tlc,
                 suffix=suffix,
+                prefix=csv_prefix
             )
 
             # setting key of faults dictionary to be row number b/c it's unique (i.e. not repeated)

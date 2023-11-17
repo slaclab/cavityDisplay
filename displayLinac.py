@@ -120,16 +120,17 @@ class DisplayCavity(Cavity):
                 pv = self.pv_addr(suffix)
 
             elif level == "CM":
-                cm_type = csvFaultDict["CM Type"]
+                spreadsheet_fault_cm_type = csvFaultDict["CM Type"]
                 prefix = csvFaultDict["PV Prefix"].format(
                     LINAC=self.linac.name,
                     CRYOMODULE=self.cryomodule.name,
                     CAVITY=self.number
                 )
 
-                if (cm_type == "1.3" and self.cryomodule.is_harmonic_linearizer) or (
-                        cm_type == "3.9" and not self.cryomodule.is_harmonic_linearizer
+                if (spreadsheet_fault_cm_type == "1.3" and self.cryomodule.is_harmonic_linearizer) or (
+                        spreadsheet_fault_cm_type == "3.9" and not self.cryomodule.is_harmonic_linearizer
                 ):
+                    print("continue statement: ", prefix, )
                     continue
                 pv = prefix + suffix
 

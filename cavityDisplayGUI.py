@@ -19,74 +19,75 @@ class CavityDisplayGUI(Display):
             parent=parent, args=args, ui_filename="frontend/cavityDisplay.ui"
         )
 
-        embeddedDisplays: List[PyDMEmbeddedDisplay] = [
+        embedded_displays: List[PyDMEmbeddedDisplay] = [
             self.ui.L0B,
             self.ui.L1B,
             self.ui.L2B,
             self.ui.L3B,
         ]
 
-        for index, linacEmbeddedDisplay in enumerate(embeddedDisplays):
+        for index, linacEmbeddedDisplay in enumerate(embedded_displays):
             linacEmbeddedDisplay.loadWhenShown = False
 
-            linacHorizLayout = linacEmbeddedDisplay.findChild(QHBoxLayout)
-            totalCryosInLinac = linacHorizLayout.count()
+            linac_h_layout = linacEmbeddedDisplay.findChild(QHBoxLayout)
+            cryomodules_in_linac = linac_h_layout.count()
 
             # linac will be a list of cryomodules
-            cryoDisplayList: List[Display] = []
-            for itemIndex in range(totalCryosInLinac):
-                cryoDisplayList.append(linacHorizLayout.itemAt(itemIndex).widget())
+            cryo_display_list: List[Display] = []
+            for itemIndex in range(cryomodules_in_linac):
+                cryo_display_list.append(linac_h_layout.itemAt(itemIndex).widget())
 
-            for cryomoduleDisplay in cryoDisplayList:
-                cryomoduleLabel: QLabel = cryomoduleDisplay.children()[1]
+            for cryomoduleDisplay in cryo_display_list:
+                cryomodule_label: QLabel = cryomoduleDisplay.children()[1]
 
-                cmTemplateRepeater: PyDMTemplateRepeater = cryomoduleDisplay.children()[
-                    2
-                ]
-
-                cryomoduleObject = CRYOMODULE_OBJECTS[str(cryomoduleLabel.text())]
-
-                cavityWidgetList: List[CavityWidget] = cmTemplateRepeater.findChildren(
-                    CavityWidget
+                cm_template_repeater: PyDMTemplateRepeater = (
+                    cryomoduleDisplay.children()[2]
                 )
 
-                rfStatusBarList: List[PyDMByteIndicator] = []
-                ssaStatusBarList: List[PyDMByteIndicator] = []
-                statusBarList = cmTemplateRepeater.findChildren(PyDMByteIndicator)
-                for statusBar in statusBarList:
-                    if "RFSTATE" in statusBar.accessibleName():
-                        rfStatusBarList.append(statusBar)
-                    elif "SSA" in statusBar.accessibleName():
-                        ssaStatusBarList.append(statusBar)
+                cryomodule_object = CRYOMODULE_OBJECTS[str(cryomodule_label.text())]
 
-                for cavityWidget, rfStatusBar, ssaStatusBar in zip(
-                    cavityWidgetList, rfStatusBarList, ssaStatusBarList
+                cavity_widget_list: List[
+                    CavityWidget
+                ] = cm_template_repeater.findChildren(CavityWidget)
+
+                rf_status_bar_list: List[PyDMByteIndicator] = []
+                ssa_status_bar_list: List[PyDMByteIndicator] = []
+                status_bar_list = cm_template_repeater.findChildren(PyDMByteIndicator)
+
+                for statusBar in status_bar_list:
+                    if "RFSTATE" in statusBar.accessibleName():
+                        rf_status_bar_list.append(statusBar)
+                    elif "SSA" in statusBar.accessibleName():
+                        ssa_status_bar_list.append(statusBar)
+
+                for cavity_widget, rf_status_bar, ssa_status_bar in zip(
+                    cavity_widget_list, rf_status_bar_list, ssa_status_bar_list
                 ):
-                    cavityObject: Cavity = cryomoduleObject.cavities[
-                        int(cavityWidget.cavityText)
+                    cavity_object: Cavity = cryomodule_object.cavities[
+                        int(cavity_widget.cavityText)
                     ]
 
-                    print(f"Creating {cavityObject} widgets")
+                    print(f"Creating {cavity_object} widgets")
 
-                    severityPV: str = cavityObject.pv_addr(SEVERITY_SUFFIX)
-                    statusPV: str = cavityObject.pv_addr(STATUS_SUFFIX)
-                    descriptionPV: str = cavityObject.pv_addr(DESCRIPTION_SUFFIX)
-                    rfStatePV: str = cavityObject.rf_state_pv_obj.pvname
-                    ssaPV: str = cavityObject.ssa.status_pv
+                    severity_pv: str = cavity_object.pv_addr(SEVERITY_SUFFIX)
+                    status_pv: str = cavity_object.pv_addr(STATUS_SUFFIX)
+                    description_pv: str = cavity_object.pv_addr(DESCRIPTION_SUFFIX)
+                    rf_state_pv: str = cavity_object.rf_state_pv_obj.pvname
+                    ssa_pv: str = cavity_object.ssa.status_pv
 
-                    rfStatusBar.channel = rfStatePV
-                    ssaStatusBar.channel = ssaPV
+                    rf_status_bar.channel = rf_state_pv
+                    ssa_status_bar.channel = ssa_pv
 
-                    cavityWidget.channel = statusPV
-                    cavityWidget.severity_channel = severityPV
-                    cavityWidget.description_channel = descriptionPV
-                    cavityWidget.cavityNumber = cavityObject.number
-                    cavityWidget.cmName = cavityObject.cryomodule.name
+                    cavity_widget.channel = status_pv
+                    cavity_widget.severity_channel = severity_pv
+                    cavity_widget.description_channel = description_pv
+                    cavity_widget.cavityNumber = cavity_object.number
+                    cavity_widget.cmName = cavity_object.cryomodule.name
 
                     rule = [
                         {
                             "channels": [
-                                {"channel": ssaPV, "trigger": True, "use_enum": True}
+                                {"channel": ssa_pv, "trigger": True, "use_enum": True}
                             ],
                             "property": "Opacity",
                             "expression": "ch[0] == 'SSA On'",
@@ -95,4 +96,4 @@ class CavityDisplayGUI(Display):
                         }
                     ]
 
-                    ssaStatusBar.rules = json.dumps(rule)
+                    ssa_status_bar.rules = json.dumps(rule)

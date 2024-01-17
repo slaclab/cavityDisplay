@@ -1,7 +1,7 @@
 from datetime import datetime
 from time import sleep
 
-from lcls_tools.common.pyepics_tools.pyepics_utils import PV
+from lcls_tools.common.controls.pyepics.utils import PV
 from lcls_tools.superconducting.sc_linac_utils import ALL_CRYOMODULES
 
 from displayLinac import DISPLAY_CRYOMODULES, DisplayCryomodule
@@ -19,7 +19,7 @@ while True:
     if DEBUG:
         delta = (datetime.now() - start).total_seconds()
         sleep(BACKEND_SLEEP_TIME - delta if delta < BACKEND_SLEEP_TIME else 0)
-    
+
     try:
         WATCHER_PV.put(WATCHER_PV.get() + 1)
     except TypeError as e:

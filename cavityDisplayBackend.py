@@ -15,7 +15,7 @@ while True:
     for cryomoduleName in ALL_CRYOMODULES:
         cryomodule: DisplayCryomodule = DISPLAY_CRYOMODULES[cryomoduleName]
         for cavity in cryomodule.cavities.values():
-            cavity.runThroughFaults()
+            cavity.run_through_faults()
     if DEBUG:
         delta = (datetime.now() - start).total_seconds()
         sleep(BACKEND_SLEEP_TIME - delta if delta < BACKEND_SLEEP_TIME else 0)

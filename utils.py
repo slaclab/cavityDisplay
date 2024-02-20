@@ -16,13 +16,18 @@ for row in DictReader(open("faults.csv", encoding="utf-8-sig")):
         CSV_FAULTS.append(row)
 
 
-def displayHash(
-    rack: str, faultCondition: str, okCondition: str, tlc: str, suffix: str, prefix: str
+def display_hash(
+    rack: str,
+    fault_condition: str,
+    ok_condition: str,
+    tlc: str,
+    suffix: str,
+    prefix: str,
 ):
     return (
         hash(rack)
-        ^ hash(faultCondition)
-        ^ hash(okCondition)
+        ^ hash(fault_condition)
+        ^ hash(ok_condition)
         ^ hash(tlc)
         ^ hash(suffix)
         ^ hash(prefix)

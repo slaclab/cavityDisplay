@@ -18,7 +18,7 @@ from utils import (
     DESCRIPTION_SUFFIX,
     SEVERITY_SUFFIX,
     STATUS_SUFFIX,
-    displayHash,
+    display_hash,
 )
 
 
@@ -36,16 +36,16 @@ class SpreadsheetError(Exception):
 
 class DisplayCryomodule(Cryomodule):
     def __init__(
-            self,
-            cryo_name,
-            linac_object,
-            cavity_class=Cavity,
-            magnet_class=Magnet,
-            rack_class=Rack,
-            is_harmonic_linearizer=False,
-            ssa_class=SSA,
-            stepper_class=StepperTuner,
-            piezo_class=Piezo,
+        self,
+        cryo_name,
+        linac_object,
+        cavity_class=Cavity,
+        magnet_class=Magnet,
+        rack_class=Rack,
+        is_harmonic_linearizer=False,
+        ssa_class=SSA,
+        stepper_class=StepperTuner,
+        piezo_class=Piezo,
     ):
         super().__init__(
             cryo_name,
@@ -71,12 +71,12 @@ class DisplayCryomodule(Cryomodule):
 
 class DisplayCavity(Cavity):
     def __init__(
-            self,
-            cavityNum,
-            rackObject,
-            ssaClass=DisplaySSA,
-            stepperClass=StepperTuner,
-            piezoClass=Piezo,
+        self,
+        cavityNum,
+        rackObject,
+        ssaClass=DisplaySSA,
+        stepperClass=StepperTuner,
+        piezoClass=Piezo,
     ):
         super(DisplayCavity, self).__init__(cavityNum, rackObject, ssaClass=ssaClass)
         self.statusPV: str = self.pv_addr(STATUS_SUFFIX)
@@ -124,11 +124,11 @@ class DisplayCavity(Cavity):
                 prefix = csvFaultDict["PV Prefix"].format(
                     LINAC=self.linac.name,
                     CRYOMODULE=self.cryomodule.name,
-                    CAVITY=self.number
+                    CAVITY=self.number,
                 )
 
                 if (cm_type == "1.3" and self.cryomodule.is_harmonic_linearizer) or (
-                        cm_type == "3.9" and not self.cryomodule.is_harmonic_linearizer
+                    cm_type == "3.9" and not self.cryomodule.is_harmonic_linearizer
                 ):
                     continue
                 pv = prefix + suffix
@@ -145,13 +145,13 @@ class DisplayCavity(Cavity):
             fault_condition = csvFaultDict["Faulted If Equal To"]
             csv_prefix = csvFaultDict["PV Prefix"]
 
-            key = displayHash(
+            key = display_hash(
                 rack=rack,
-                faultCondition=fault_condition,
-                okCondition=ok_condition,
+                fault_condition=fault_condition,
+                ok_condition=ok_condition,
                 tlc=tlc,
                 suffix=suffix,
-                prefix=csv_prefix
+                prefix=csv_prefix,
             )
 
             # setting key of faults dictionary to be row number b/c it's unique (i.e. not repeated)
@@ -171,22 +171,22 @@ class DisplayCavity(Cavity):
                 action=csvFaultDict["Recommended Corrective Actions"],
             )
 
-    def runThroughFaults(self):
-        isOkay = True
-        invalid = False
+    def run_through_faults(self):
+        is_okay: bool = True
+        invalid: bool = False
 
         for fault in self.faults.values():
             try:
                 if fault.is_faulted():
-                    isOkay = False
+                    is_okay = False
                     break
             except PvInvalid as e:
                 print(e, " is disconnected")
-                isOkay = False
+                is_okay = False
                 invalid = True
                 break
 
-        if isOkay:
+        if is_okay:
             caput(self.statusPV, str(self.number))
             caput(self.severityPV, 0)
             caput(self.descriptionPV, " ")

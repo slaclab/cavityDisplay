@@ -8,7 +8,7 @@ from pydm.widgets.drawing import PyDMDrawingPolygon
 from qtpy.QtCore import Property as qtProperty, QRect, Qt, Slot
 
 from cavityFaultDisplay import CavityFaultDisplay
-from lcls_tools.common.pydm_tools.displayUtils import showDisplay
+from lcls_tools.common.frontend.display.util import showDisplay
 
 GREEN_FILL_COLOR = QColor(9, 141, 0)
 YELLOW_FILL_COLOR = QColor(244, 230, 67)
@@ -37,7 +37,7 @@ SHAPE_PARAMETER_DICT = {
     2: ShapeParameters(RED_FILL_COLOR, BLACK_TEXT_COLOR, 6, 0),
     3: ShapeParameters(PURPLE_FILL_COLOR, BLACK_TEXT_COLOR, 20, 0),
     4: ShapeParameters(GRAY_FILL_COLOR, BLACK_TEXT_COLOR, 10, 0),
-    5: ShapeParameters(DARK_GRAY_COLOR, BLACK_TEXT_COLOR, 10, 0),
+    5: ShapeParameters(DARK_GRAY_COLOR, WHITE_TEXT_COLOR, 10, 0),
 }
 
 

@@ -8,7 +8,7 @@ from pydm import Display
 from pydm.widgets import PyDMLabel, PyDMRelatedDisplayButton, PyDMShellCommand
 
 sys.path.insert(0, "..")
-from displayLinac import DISPLAY_CRYOMODULES
+from displayLinac import DISPLAY_MACHINE
 from fault import Fault, PvInvalid
 
 
@@ -33,7 +33,9 @@ class CavityFaultDisplay(Display):
         cavity_number = cavity_number
         self.ui.label.setText(f"CM{cryomodule_name} Cavity {cavity_number} Faults")
 
-        cavity_object = DISPLAY_CRYOMODULES[cryomodule_name].cavities[cavity_number]
+        cavity_object = DISPLAY_MACHINE.cryomodules[cryomodule_name].cavities[
+            cavity_number
+        ]
 
         faults: Dict[str, Fault] = cavity_object.faults
 

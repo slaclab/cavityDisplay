@@ -17,18 +17,18 @@ for row in DictReader(open("faults.csv", encoding="utf-8-sig")):
 
 
 def display_hash(
-    rack: str,
-    fault_condition: str,
-    ok_condition: str,
-    tlc: str,
-    suffix: str,
-    prefix: str,
+        rack: str,
+        fault_condition: str,
+        ok_condition: str,
+        tlc: str,
+        suffix: str,
+        prefix: str,
 ):
     return (
-        hash(rack)
-        ^ hash(fault_condition)
-        ^ hash(ok_condition)
-        ^ hash(tlc)
-        ^ hash(suffix)
-        ^ hash(prefix)
+            hash(rack)
+            ^ hash(fault_condition)
+            ^ hash(ok_condition)
+            ^ hash(tlc)
+            ^ hash(suffix)
+            ^ hash(prefix)
     )

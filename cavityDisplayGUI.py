@@ -3,7 +3,7 @@ import sys
 from typing import List
 
 from PyQt5.QtWidgets import QHBoxLayout, QLabel
-from lcls_tools.superconducting.scLinac import CRYOMODULE_OBJECTS, Cavity
+from lcls_tools.superconducting.sc_linac import MACHINE, Cavity
 from pydm import Display
 from pydm.widgets import PyDMByteIndicator, PyDMEmbeddedDisplay, PyDMTemplateRepeater
 
@@ -44,7 +44,7 @@ class CavityDisplayGUI(Display):
                     cryomoduleDisplay.children()[2]
                 )
 
-                cryomodule_object = CRYOMODULE_OBJECTS[str(cryomodule_label.text())]
+                cryomodule_object = MACHINE.cryomodules[str(cryomodule_label.text())]
 
                 cavity_widget_list: List[
                     CavityWidget

@@ -1,18 +1,18 @@
 from collections import OrderedDict
 
 from epics import caput
-
-from fault import Fault, PvInvalid
-from lcls_tools.superconducting.scLinac import (
+from lcls_tools.superconducting.sc_linac import (
     Cavity,
-    CryoDict,
     Cryomodule,
     Magnet,
     Piezo,
     Rack,
     SSA,
     StepperTuner,
+    Machine,
 )
+
+from fault import Fault, PvInvalid
 from utils import (
     CSV_FAULTS,
     DESCRIPTION_SUFFIX,
@@ -48,11 +48,8 @@ class DisplayCryomodule(Cryomodule):
         piezo_class=Piezo,
     ):
         super().__init__(
-            cryo_name,
-            linac_object,
-            cavity_class=DisplayCavity,
-            is_harmonic_linearizer=is_harmonic_linearizer,
-            ssa_class=DisplaySSA,
+            cryo_name=cryo_name,
+            linac_object=linac_object,
         )
         for cavity in self.cavities.values():
             cavity.create_faults()
@@ -72,13 +69,12 @@ class DisplayCryomodule(Cryomodule):
 class DisplayCavity(Cavity):
     def __init__(
         self,
-        cavityNum,
-        rackObject,
-        ssaClass=DisplaySSA,
-        stepperClass=StepperTuner,
-        piezoClass=Piezo,
+        cavity_num,
+        rack_object,
     ):
-        super(DisplayCavity, self).__init__(cavityNum, rackObject, ssaClass=ssaClass)
+        super(DisplayCavity, self).__init__(
+            cavity_num=cavity_num, rack_object=rack_object
+        )
         self.statusPV: str = self.pv_addr(STATUS_SUFFIX)
         self.severityPV: str = self.pv_addr(SEVERITY_SUFFIX)
         self.descriptionPV: str = self.pv_addr(DESCRIPTION_SUFFIX)
@@ -93,7 +89,7 @@ class DisplayCavity(Cavity):
 
             if level == "RACK":
                 # Rack A cavities don't care about faults for Rack B and vice versa
-                if rack != self.rack.rackName:
+                if rack != self.rack.rack_name:
                     # Takes us to the next iteration of the for loop
                     continue
 
@@ -102,7 +98,7 @@ class DisplayCavity(Cavity):
                 prefix = csvFaultDict["PV Prefix"].format(
                     LINAC=self.linac.name,
                     CRYOMODULE=self.cryomodule.name,
-                    RACK=self.rack.rackName,
+                    RACK=self.rack.rack_name,
                     CAVITY=self.number,
                 )
                 pv = prefix + suffix
@@ -199,6 +195,6 @@ class DisplayCavity(Cavity):
                 caput(self.severityPV, 3)
 
 
-DISPLAY_CRYOMODULES = CryoDict(
-    ssaClass=DisplaySSA, cavityClass=DisplayCavity, cryomoduleClass=DisplayCryomodule
+DISPLAY_MACHINE = Machine(
+    ssa_class=DisplaySSA, cavity_class=DisplayCavity, cryomodule_class=DisplayCryomodule
 )

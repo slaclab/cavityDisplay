@@ -154,7 +154,7 @@ def mock_open(*args, **kwargs):
 
 # These import states try to read from faults.csv which causes an error
 with mock.patch("builtins.open", mock_open):
-    from cavityDisplay.display_linac import DISPLAY_MACHINE, DisplayCavity
+    from display_linac import DISPLAY_MACHINE, DisplayCavity
 
 
 class TestDisplayCavity(TestCase):

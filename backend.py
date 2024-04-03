@@ -1,10 +1,9 @@
 from datetime import datetime
 from time import sleep
 
+from display_linac import DISPLAY_MACHINE, DisplayCryomodule
 from lcls_tools.common.controls.pyepics.utils import PV
 from lcls_tools.superconducting.sc_linac_utils import ALL_CRYOMODULES
-
-from displayLinac import DISPLAY_MACHINE, DisplayCryomodule
 from utils import BACKEND_SLEEP_TIME, DEBUG
 
 WATCHER_PV: PV = PV("PHYS:SYS0:1:SC_CAV_FAULT_HEARTBEAT")

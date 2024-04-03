@@ -3,10 +3,10 @@ import sys
 from typing import List
 
 from PyQt5.QtWidgets import QHBoxLayout, QLabel
-from lcls_tools.superconducting.sc_linac import MACHINE, Cavity
 from pydm import Display
 from pydm.widgets import PyDMByteIndicator, PyDMEmbeddedDisplay, PyDMTemplateRepeater
 
+from lcls_tools.superconducting.sc_linac import Cavity, MACHINE
 from utils import DESCRIPTION_SUFFIX, SEVERITY_SUFFIX, STATUS_SUFFIX
 
 sys.path.insert(0, "./frontend")
@@ -26,10 +26,10 @@ class CavityDisplayGUI(Display):
             self.ui.L3B,
         ]
 
-        for index, linacEmbeddedDisplay in enumerate(embedded_displays):
-            linacEmbeddedDisplay.loadWhenShown = False
+        for index, linac_embedded_display in enumerate(embedded_displays):
+            linac_embedded_display.loadWhenShown = False
 
-            linac_h_layout = linacEmbeddedDisplay.findChild(QHBoxLayout)
+            linac_h_layout = linac_embedded_display.findChild(QHBoxLayout)
             cryomodules_in_linac = linac_h_layout.count()
 
             # linac will be a list of cryomodules
@@ -37,11 +37,11 @@ class CavityDisplayGUI(Display):
             for itemIndex in range(cryomodules_in_linac):
                 cryo_display_list.append(linac_h_layout.itemAt(itemIndex).widget())
 
-            for cryomoduleDisplay in cryo_display_list:
-                cryomodule_label: QLabel = cryomoduleDisplay.children()[1]
+            for cryomodule_display in cryo_display_list:
+                cryomodule_label: QLabel = cryomodule_display.children()[1]
 
                 cm_template_repeater: PyDMTemplateRepeater = (
-                    cryomoduleDisplay.children()[2]
+                    cryomodule_display.children()[2]
                 )
 
                 cryomodule_object = MACHINE.cryomodules[str(cryomodule_label.text())]

@@ -2,7 +2,7 @@ import sys
 from typing import Dict
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QLabel, QSizePolicy, QGridLayout
+from PyQt5.QtWidgets import QGridLayout, QLabel, QSizePolicy
 from edmbutton import PyDMEDMDisplayButton
 from pydm import Display
 from pydm.widgets import PyDMLabel, PyDMRelatedDisplayButton, PyDMShellCommand
@@ -82,7 +82,7 @@ class CavityFaultDisplay(Display):
             code_label.setAlignment(Qt.AlignCenter)
 
             short_description_label = QLabel()
-            short_description_label.setText(fault.shortDescription)
+            short_description_label.setText(fault.short_description)
             short_description_label.setSizePolicy(
                 QSizePolicy.Maximum, QSizePolicy.Maximum
             )
@@ -152,7 +152,7 @@ class EnumLabel(PyDMLabel):
     def value_changed(self, new_value):
         super(EnumLabel, self).value_changed(new_value)
         try:
-            if self.fault.is_faulted():
+            if self.fault.is_currently_faulted():
                 self.setText("FAULTED")
                 self.setStyleSheet(
                     "background-color: rgb(255,0,0); font-weight: "

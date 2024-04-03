@@ -27,9 +27,9 @@ class FaultCounter:
             return 1
 
 
-class PvInvalidError(Exception):
+class PVInvalidError(Exception):
     def __init__(self, message):
-        super(PvInvalidError, self).__init__(message)
+        super(PVInvalidError, self).__init__(message)
 
 
 class Fault:
@@ -77,7 +77,7 @@ class Fault:
             INVALID = 3
         """
         if obj.severity == 3 or obj.status is None:
-            raise PvInvalidError(self.pv.pvname)
+            raise PVInvalidError(self.pv.pvname)
 
         if self.ok_value is not None:
             return obj.val != self.ok_value
@@ -115,7 +115,7 @@ class Fault:
                     counter.fault_count += 1
                 else:
                     counter.ok_count += 1
-            except PvInvalidError:
+            except PVInvalidError:
                 counter.invalid_count += 1
 
         return counter

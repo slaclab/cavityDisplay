@@ -7,7 +7,7 @@ from pydm import Display, PyDMChannel
 from pydm.widgets.drawing import PyDMDrawingPolygon
 from qtpy.QtCore import Property as qtProperty, QRect, Qt, Slot
 
-from cavityFaultDisplay import CavityFaultDisplay
+from cavity_fault_display import CavityFaultDisplay
 from lcls_tools.common.frontend.display.util import showDisplay
 
 GREEN_FILL_COLOR = QColor(9, 141, 0)

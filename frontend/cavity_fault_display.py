@@ -9,7 +9,7 @@ from pydm.widgets import PyDMLabel, PyDMRelatedDisplayButton, PyDMShellCommand
 
 sys.path.insert(0, "..")
 from display_linac import DISPLAY_MACHINE
-from fault import Fault
+from fault import Fault, PVInvalidError
 
 
 class PyDMFaultButton(PyDMRelatedDisplayButton):
@@ -27,7 +27,9 @@ class PyDMFaultButton(PyDMRelatedDisplayButton):
 
 class CavityFaultDisplay(Display):
     def __init__(self, cavity_number, cmName, parent=None, args=None):
-        super().__init__(parent=parent, args=args, ui_filename="cavityfaultdisplay.ui")
+        super().__init__(
+            parent=parent, args=args, ui_filename="cavity_fault_display.ui"
+        )
 
         cryomodule_name = cmName
         cavity_number = cavity_number
@@ -168,7 +170,7 @@ class EnumLabel(PyDMLabel):
                 )
                 self.codeLabel.setStyleSheet("font-weight:plain;")
 
-        except PvInvalid:
+        except PVInvalidError:
             self.setText("INVALID")
             self.setStyleSheet(
                 "background-color: rgb(255,0,255);font-weight: bold;"

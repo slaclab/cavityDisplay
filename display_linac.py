@@ -4,7 +4,7 @@ from typing import Dict
 
 from epics import caput
 
-from fault import Fault, FaultCounter, PvInvalidError
+from fault import Fault, FaultCounter, PVInvalidError
 from lcls_tools.superconducting.sc_linac import Cavity, Cryomodule, Machine, SSA
 from utils import (
     CSV_FAULTS,
@@ -174,7 +174,7 @@ class DisplayCavity(Cavity):
                 if fault.is_currently_faulted():
                     is_okay = False
                     break
-            except PvInvalidError as e:
+            except PVInvalidError as e:
                 print(e, " is disconnected")
                 is_okay = False
                 invalid = True

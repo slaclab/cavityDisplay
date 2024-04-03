@@ -16,7 +16,7 @@ from cavityWidget import CavityWidget
 class CavityDisplayGUI(Display):
     def __init__(self, parent=None, args=None):
         super().__init__(
-            parent=parent, args=args, ui_filename="frontend/cavityDisplay.ui"
+            parent=parent, args=args, ui_filename="frontend/cavity_display.ui"
         )
 
         embedded_displays: List[PyDMEmbeddedDisplay] = [

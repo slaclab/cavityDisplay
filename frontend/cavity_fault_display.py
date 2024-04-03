@@ -8,8 +8,8 @@ from pydm import Display
 from pydm.widgets import PyDMLabel, PyDMRelatedDisplayButton, PyDMShellCommand
 
 sys.path.insert(0, "..")
-from displayLinac import DISPLAY_MACHINE
-from fault import Fault, PvInvalid
+from display_linac import DISPLAY_MACHINE
+from fault import Fault
 
 
 class PyDMFaultButton(PyDMRelatedDisplayButton):

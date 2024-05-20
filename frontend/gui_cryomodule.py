@@ -1,7 +1,7 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QVBoxLayout, QLabel
 
-from lcls_tools.superconducting.sc_cryomodule import Cryomodule
+from lcls_tools.superconducting.sc_linac import Cryomodule
 
 
 class GUICryomodule(Cryomodule):

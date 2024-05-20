@@ -35,7 +35,7 @@ class CavityDisplayGUI(Display):
         self.header.addWidget(heartbeat_counter)
         self.header.addStretch()
 
-        self.decoder = PyDMRelatedDisplayButton(filename="decoder.py")
+        self.decoder = PyDMRelatedDisplayButton(filename="frontend/decoder.py")
         self.decoder.setText("Three Letter Codes")
         self.decoder.openInNewWindow = True
         self.header.addWidget(self.decoder)

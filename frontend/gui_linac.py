@@ -1,6 +1,6 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QGroupBox, QHBoxLayout
+from PyQt5.QtWidgets import QGroupBox, QHBoxLayout, QSizePolicy
 
 from lcls_tools.superconducting.sc_linac import Linac
 
@@ -21,6 +21,7 @@ class GUILinac(Linac):
         )
 
         self.groupbox = QGroupBox()
+        self.groupbox.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
         self.groupbox.setStyleSheet(
             "color: rgb(255, 255, 255); background-color: rgb(40, 40, 40);"
         )

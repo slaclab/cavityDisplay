@@ -7,6 +7,9 @@ from pydm import Display, PyDMChannel
 from pydm.widgets.drawing import PyDMDrawingPolygon
 from qtpy.QtCore import Property as qtProperty, QRect, Qt, Slot
 
+from frontend.cavity_fault_display import CavityFaultDisplay
+from lcls_tools.common.frontend.display.util import showDisplay
+
 GREEN_FILL_COLOR = QColor(9, 141, 0)
 YELLOW_FILL_COLOR = QColor(244, 230, 67)
 RED_FILL_COLOR = QColor(150, 0, 0)

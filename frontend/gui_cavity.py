@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QSizePolicy
 from frontend.cavity_widget import CavityWidget
 from pydm.widgets import PyDMByteIndicator
 
-from lcls_tools.superconducting.sc_cavity import Cavity
+from lcls_tools.superconducting.sc_linac import Cavity
 
 
 class GUICavity(Cavity):
@@ -28,7 +28,7 @@ class GUICavity(Cavity):
         self.ssa_bar.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
         self.ssa_bar.showLabels = False
         self.ssa_bar.channel = self.ssa.status_pv
-        self.ssa_bar.sizeHint()
+        self.ssa_bar.setFixedHeight(5)
 
         self.rf_bar = PyDMByteIndicator()
         self.rf_bar.setAccessibleName("RFSTATE")
@@ -37,7 +37,7 @@ class GUICavity(Cavity):
         self.rf_bar.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
         self.rf_bar.showLabels = False
         self.rf_bar.channel = self.rf_state_pv
-        self.rf_bar.setFixedHeight(1)
+        self.rf_bar.setFixedHeight(5)
 
         self.hor_layout.addWidget(self.ssa_bar)
         self.hor_layout.addWidget(self.rf_bar)

@@ -3,62 +3,27 @@ from datetime import datetime
 from typing import Dict
 
 from epics import caput
+from backend.fault import Fault, FaultCounter, PVInvalidError
 
-from fault import Fault, FaultCounter, PVInvalidError
-from lcls_tools.superconducting.sc_linac import Cavity, Cryomodule, Machine, SSA
-from utils import (
-    CSV_FAULTS,
+
+from lcls_tools.superconducting.sc_linac import Cavity
+from utils.utils import (
+    STATUS_SUFFIX,
     DESCRIPTION_SUFFIX,
     SEVERITY_SUFFIX,
-    STATUS_SUFFIX,
+    parse_csv,
+    SpreadsheetError,
     display_hash,
 )
 
 
-class DisplaySSA(SSA):
-    def __init__(self, cavity):
-        super().__init__(cavity)
-        self.alarm_sevr_pv: str = self.pv_addr("AlarmSummary.SEVR")
-
-
-class SpreadsheetError(Exception):
-    def __init__(self, message):
-        self.message = message
-        super().__init__(self.message)
-
-
-class DisplayCryomodule(Cryomodule):
-    def __init__(
-        self,
-        cryo_name,
-        linac_object,
-    ):
-        super().__init__(
-            cryo_name=cryo_name,
-            linac_object=linac_object,
-        )
-        for cavity in self.cavities.values():
-            cavity.create_faults()
-
-    @property
-    def pydm_macros(self):
-        """
-        Currenlty only used for NIRP fault, but I think we can just keep adding
-        to this list
-        :return:
-        """
-        return "AREA={linac_name},CM={cm_name},RFNAME=CM{cm_name}".format(
-            linac_name=self.linac.name, cm_name=self.name
-        )
-
-
-class DisplayCavity(Cavity):
+class BackendCavity(Cavity):
     def __init__(
         self,
         cavity_num,
         rack_object,
     ):
-        super(DisplayCavity, self).__init__(
+        super(BackendCavity, self).__init__(
             cavity_num=cavity_num, rack_object=rack_object
         )
         self.status_pv: str = self.pv_addr(STATUS_SUFFIX)
@@ -68,7 +33,7 @@ class DisplayCavity(Cavity):
         self.faults: OrderedDict[int, Fault] = OrderedDict()
 
     def create_faults(self):
-        for csv_fault_dict in CSV_FAULTS:
+        for csv_fault_dict in parse_csv():
             level = csv_fault_dict["Level"]
             suffix = csv_fault_dict["PV Suffix"]
             rack = csv_fault_dict["Rack"]
@@ -191,8 +156,3 @@ class DisplayCavity(Cavity):
                 caput(self.severity_pv, fault.severity)
             else:
                 caput(self.severity_pv, 3)
-
-
-DISPLAY_MACHINE = Machine(
-    ssa_class=DisplaySSA, cavity_class=DisplayCavity, cryomodule_class=DisplayCryomodule
-)

@@ -2,18 +2,21 @@ from csv import DictReader
 
 from typing import Dict, List
 
+DEBUG = True
+BACKEND_SLEEP_TIME = 10
+
 STATUS_SUFFIX = "CUDSTATUS"
 SEVERITY_SUFFIX = "CUDSEVR"
 DESCRIPTION_SUFFIX = "CUDDESC"
 RF_STATUS_SUFFIX = "RFSTATE"
 
-DEBUG = True
-BACKEND_SLEEP_TIME = 10
 
-CSV_FAULTS: List[Dict] = []
-for row in DictReader(open("faults.csv", encoding="utf-8-sig")):
-    if row["PV Suffix"]:
-        CSV_FAULTS.append(row)
+def parse_csv() -> List[Dict]:
+    faults: List[Dict] = []
+    for row in DictReader(open("utils/faults.csv", encoding="utf-8-sig")):
+        if row["PV Suffix"]:
+            faults.append(row)
+    return faults
 
 
 def display_hash(
@@ -32,3 +35,9 @@ def display_hash(
         ^ hash(suffix)
         ^ hash(prefix)
     )
+
+
+class SpreadsheetError(Exception):
+    def __init__(self, message):
+        self.message = message
+        super().__init__(self.message)

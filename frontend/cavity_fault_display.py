@@ -1,15 +1,13 @@
-import sys
 from typing import Dict
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QGridLayout, QLabel, QSizePolicy
+# sys.path.insert(0, "..")
+from display_linac import DISPLAY_MACHINE
 from edmbutton import PyDMEDMDisplayButton
+from fault import Fault, PVInvalidError
 from pydm import Display
 from pydm.widgets import PyDMLabel, PyDMRelatedDisplayButton, PyDMShellCommand
-
-sys.path.insert(0, "..")
-from display_linac import DISPLAY_MACHINE
-from fault import Fault, PVInvalidError
 
 
 class PyDMFaultButton(PyDMRelatedDisplayButton):

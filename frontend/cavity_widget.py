@@ -7,9 +7,6 @@ from pydm import Display, PyDMChannel
 from pydm.widgets.drawing import PyDMDrawingPolygon
 from qtpy.QtCore import Property as qtProperty, QRect, Qt, Slot
 
-from cavity_fault_display import CavityFaultDisplay
-from lcls_tools.common.frontend.display.util import showDisplay
-
 GREEN_FILL_COLOR = QColor(9, 141, 0)
 YELLOW_FILL_COLOR = QColor(244, 230, 67)
 RED_FILL_COLOR = QColor(150, 0, 0)
@@ -59,13 +56,13 @@ class CavityWidget(PyDMDrawingPolygon):
         self.alarmSensitiveBorder = False
         self.alarmSensitiveContent = False
         self._faultDisplay: Display = None
-        self.clicked.connect(self.show_fault_display)
+        # self.clicked.connect(self.show_fault_display)
         self.cavityNumber = None
         self.cmName = None
         self.setCursor(QCursor(Qt.PointingHandCursor))
 
-    def show_fault_display(self):
-        showDisplay(self.faultDisplay)
+    # def show_fault_display(self):
+    #     showDisplay(self.faultDisplay)
 
     # The following two functions were copy/pasted from stack overflow
     def mousePressEvent(self, event):
@@ -83,16 +80,16 @@ class CavityWidget(PyDMDrawingPolygon):
             self.clicked.emit()
         self.pressPos = None
 
-    @property
-    def faultDisplay(self):
-        if not self._faultDisplay:
-            self._faultDisplay = CavityFaultDisplay(
-                cavity_number=self.cavityNumber, cmName=self.cmName
-            )
-            self._faultDisplay.setWindowTitle(
-                f"CM{self.cmName} Cavity {self.cavityNumber} Faults"
-            )
-        return self._faultDisplay
+    # @property
+    # def faultDisplay(self):
+    #     if not self._faultDisplay:
+    #         self._faultDisplay = CavityFaultDisplay(
+    #             cavity_number=self.cavityNumber, cmName=self.cmName
+    #         )
+    #         self._faultDisplay.setWindowTitle(
+    #             f"CM{self.cmName} Cavity {self.cavityNumber} Faults"
+    #         )
+    #     return self._faultDisplay
 
     @qtProperty(str)
     def cavityText(self):

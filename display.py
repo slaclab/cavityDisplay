@@ -1,99 +1,56 @@
-import json
-import sys
-from typing import List
-
-from PyQt5.QtWidgets import QHBoxLayout, QLabel
+from PyQt5.QtGui import QColor
+from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout
 from pydm import Display
-from pydm.widgets import PyDMByteIndicator, PyDMEmbeddedDisplay, PyDMTemplateRepeater
+from pydm.widgets import PyDMByteIndicator, PyDMLabel, PyDMRelatedDisplayButton
 
-from lcls_tools.superconducting.sc_linac import Cavity, MACHINE
-from utils import DESCRIPTION_SUFFIX, SEVERITY_SUFFIX, STATUS_SUFFIX
-
-sys.path.insert(0, "./frontend")
-from cavityWidget import CavityWidget
+from frontend.gui_cavity import GUICavity
+from frontend.gui_cryomodule import GUICryomodule
+from frontend.gui_linac import GUILinac
+from lcls_tools.superconducting.sc_linac import Machine
 
 
 class CavityDisplayGUI(Display):
     def __init__(self, parent=None, args=None):
-        super().__init__(
-            parent=parent, args=args, ui_filename="frontend/cavity_display.ui"
+        super().__init__(parent, args)
+        self.display_machine = Machine(
+            linac_class=GUILinac, cryomodule_class=GUICryomodule, cavity_class=GUICavity
         )
 
-        embedded_displays: List[PyDMEmbeddedDisplay] = [
-            self.ui.L0B,
-            self.ui.L1B,
-            self.ui.L2B,
-            self.ui.L3B,
-        ]
+        self.header = QHBoxLayout()
+        heartbeat_indicator = PyDMByteIndicator(
+            init_channel="ALRM:SYS0:SC_CAV_FAULT:ALHBERR"
+        )
+        heartbeat_indicator.onColor = QColor(255, 0, 0)
+        heartbeat_indicator.offColor = QColor(0, 255, 0)
+        heartbeat_indicator.showLabels = False
+        heartbeat_indicator.circles = True
+        heartbeat_indicator.showLabels = False
 
-        for index, linac_embedded_display in enumerate(embedded_displays):
-            linac_embedded_display.loadWhenShown = False
+        heartbeat_label = PyDMLabel(init_channel="ALRM:SYS0:SC_CAV_FAULT:ALHBERR")
 
-            linac_h_layout = linac_embedded_display.findChild(QHBoxLayout)
-            cryomodules_in_linac = linac_h_layout.count()
+        heartbeat_counter = PyDMLabel(init_channel="PHYS:SYS0:1:SC_CAV_FAULT_HEARTBEAT")
 
-            # linac will be a list of cryomodules
-            cryo_display_list: List[Display] = []
-            for itemIndex in range(cryomodules_in_linac):
-                cryo_display_list.append(linac_h_layout.itemAt(itemIndex).widget())
+        self.header.addWidget(heartbeat_indicator)
+        self.header.addWidget(heartbeat_label)
+        self.header.addWidget(heartbeat_counter)
+        self.header.addStretch()
 
-            for cryomodule_display in cryo_display_list:
-                cryomodule_label: QLabel = cryomodule_display.children()[1]
+        self.decoder = PyDMRelatedDisplayButton(filename="decoder.py")
+        self.decoder.setText("Three Letter Codes")
+        self.decoder.openInNewWindow = True
+        self.header.addWidget(self.decoder)
 
-                cm_template_repeater: PyDMTemplateRepeater = (
-                    cryomodule_display.children()[2]
-                )
+        self.setWindowTitle("SRF Cavity Display")
 
-                cryomodule_object = MACHINE.cryomodules[str(cryomodule_label.text())]
+        self.vlayout = QVBoxLayout()
+        self.vlayout.addLayout(self.header)
+        self.setLayout(self.vlayout)
 
-                cavity_widget_list: List[
-                    CavityWidget
-                ] = cm_template_repeater.findChildren(CavityWidget)
+        self.top_half = QHBoxLayout()
+        self.vlayout.addLayout(self.top_half)
 
-                rf_status_bar_list: List[PyDMByteIndicator] = []
-                ssa_status_bar_list: List[PyDMByteIndicator] = []
-                status_bar_list = cm_template_repeater.findChildren(PyDMByteIndicator)
+        for i in range(0, 3):
+            gui_linac: GUILinac = self.display_machine.linacs[i]
+            self.top_half.addWidget(gui_linac.groupbox)
 
-                for statusBar in status_bar_list:
-                    if "RFSTATE" in statusBar.accessibleName():
-                        rf_status_bar_list.append(statusBar)
-                    elif "SSA" in statusBar.accessibleName():
-                        ssa_status_bar_list.append(statusBar)
-
-                for cavity_widget, rf_status_bar, ssa_status_bar in zip(
-                    cavity_widget_list, rf_status_bar_list, ssa_status_bar_list
-                ):
-                    cavity_object: Cavity = cryomodule_object.cavities[
-                        int(cavity_widget.cavityText)
-                    ]
-
-                    print(f"Creating {cavity_object} widgets")
-
-                    severity_pv: str = cavity_object.pv_addr(SEVERITY_SUFFIX)
-                    status_pv: str = cavity_object.pv_addr(STATUS_SUFFIX)
-                    description_pv: str = cavity_object.pv_addr(DESCRIPTION_SUFFIX)
-                    rf_state_pv: str = cavity_object.rf_state_pv_obj.pvname
-                    ssa_pv: str = cavity_object.ssa.status_pv
-
-                    rf_status_bar.channel = rf_state_pv
-                    ssa_status_bar.channel = ssa_pv
-
-                    cavity_widget.channel = status_pv
-                    cavity_widget.severity_channel = severity_pv
-                    cavity_widget.description_channel = description_pv
-                    cavity_widget.cavityNumber = cavity_object.number
-                    cavity_widget.cmName = cavity_object.cryomodule.name
-
-                    rule = [
-                        {
-                            "channels": [
-                                {"channel": ssa_pv, "trigger": True, "use_enum": True}
-                            ],
-                            "property": "Opacity",
-                            "expression": "ch[0] == 'SSA On'",
-                            "initial_value": "0",
-                            "name": "show",
-                        }
-                    ]
-
-                    ssa_status_bar.rules = json.dumps(rule)
+        self.vlayout.addWidget(self.display_machine.linacs[3].groupbox)

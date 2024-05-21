@@ -15,6 +15,9 @@ def make_line(shape=QFrame.VLine):
     return line
 
 
+DISPLAY_MACHINE = Machine(cryomodule_class=GUICryomodule, cavity_class=GUICavity)
+
+
 class CavityDisplayGUI(Display):
     def __init__(self, parent=None, args=None):
         super().__init__(parent, args)
@@ -24,10 +27,6 @@ class CavityDisplayGUI(Display):
         self.setPalette(pal)
 
         self.setStyleSheet("color: rgb(255, 255, 255);")
-
-        self.display_machine = Machine(
-            cryomodule_class=GUICryomodule, cavity_class=GUICavity
-        )
 
         self.header = QHBoxLayout()
         heartbeat_indicator = PyDMByteIndicator(
@@ -70,14 +69,14 @@ class CavityDisplayGUI(Display):
         self.vlayout.addWidget(make_line(QFrame.HLine))
 
         for i in range(0, 3):
-            gui_linac = self.display_machine.linacs[i]
+            gui_linac = DISPLAY_MACHINE.linacs[i]
             for gui_cm in gui_linac.cryomodules.values():
                 self.top_half.addLayout(gui_cm.vlayout)
 
             if i != 2:
                 self.top_half.addWidget(make_line())
 
-        l3b = self.display_machine.linacs[3]
+        l3b = DISPLAY_MACHINE.linacs[3]
         for gui_cm in l3b.cryomodules.values():
             self.bottom_half.addLayout(gui_cm.vlayout)
 

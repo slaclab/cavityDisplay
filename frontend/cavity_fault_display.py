@@ -4,9 +4,19 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QGridLayout, QLabel, QSizePolicy
 
 from edmbutton import PyDMEDMDisplayButton
+
+from backend.backend_cavity import BackendCavity
+from backend.backend_cryomodule import BackendCryomodule
+from backend.backend_ssa import BackendSSA
 from backend.fault import Fault, PVInvalidError
 from pydm import Display
 from pydm.widgets import PyDMLabel, PyDMRelatedDisplayButton, PyDMShellCommand
+
+from lcls_tools.superconducting.sc_linac import Machine
+
+BACKEND_MACHINE = Machine(
+    cavity_class=BackendCavity, cryomodule_class=BackendCryomodule, ssa_class=BackendSSA
+)
 
 
 class PyDMFaultButton(PyDMRelatedDisplayButton):
@@ -32,7 +42,7 @@ class CavityFaultDisplay(Display):
         cavity_number = cavity_number
         self.ui.label.setText(f"CM{cryomodule_name} Cavity {cavity_number} Faults")
 
-        cavity_object = DISPLAY_MACHINE.cryomodules[cryomodule_name].cavities[
+        cavity_object = BACKEND_MACHINE.cryomodules[cryomodule_name].cavities[
             cavity_number
         ]
 

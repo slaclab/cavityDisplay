@@ -21,6 +21,8 @@ class GUICavity(Cavity):
         self.cavity_widget.setAccessibleName("cavity_widget")
         self.cavity_widget.cavityText = str(cavity_num)
         self.cavity_widget.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.cavity_widget.cmName = self.cryomodule.name
+        self.cavity_widget.cavityNumber = cavity_num
 
         self.hor_layout = QHBoxLayout()
 

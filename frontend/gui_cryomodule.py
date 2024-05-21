@@ -1,7 +1,13 @@
+from typing import TYPE_CHECKING
+
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QVBoxLayout, QLabel
 
 from lcls_tools.superconducting.sc_linac import Cryomodule
+
+
+if TYPE_CHECKING:
+    from lcls_tools.superconducting.sc_linac import Linac
 
 
 class GUICryomodule(Cryomodule):

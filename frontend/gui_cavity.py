@@ -1,4 +1,5 @@
 import json
+from typing import TYPE_CHECKING
 
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QSizePolicy
@@ -6,6 +7,9 @@ from frontend.cavity_widget import CavityWidget
 from pydm.widgets import PyDMByteIndicator
 
 from lcls_tools.superconducting.sc_linac import Cavity
+
+if TYPE_CHECKING:
+    from lcls_tools.superconducting.sc_linac import Rack
 
 
 class GUICavity(Cavity):
@@ -15,7 +19,6 @@ class GUICavity(Cavity):
         self.cavity_widget = CavityWidget()
         self.cavity_widget.setMinimumSize(10, 10)
         self.cavity_widget.setAccessibleName("cavity_widget")
-        self.cavity_widget.setStyleSheet("background-color: rgb(40, 40, 40);")
         self.cavity_widget.cavityText = str(cavity_num)
         self.cavity_widget.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
 

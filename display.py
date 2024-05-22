@@ -64,7 +64,6 @@ class CavityDisplayGUI(Display):
         self.top_half = QHBoxLayout()
         self.bottom_half = QHBoxLayout()
 
-        # self.top_half.addWidget(make_line())
         self.vlayout.addLayout(self.top_half)
         self.vlayout.addWidget(make_line(QFrame.HLine))
 

@@ -2,7 +2,14 @@ from collections import OrderedDict
 from dataclasses import dataclass
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QHBoxLayout, QLabel, QSizePolicy, QVBoxLayout
+from PyQt5.QtWidgets import (
+    QHBoxLayout,
+    QLabel,
+    QSizePolicy,
+    QVBoxLayout,
+    QScrollArea,
+    QGroupBox,
+)
 from pydm import Display
 
 from utils.utils import parse_csv
@@ -17,78 +24,82 @@ class Row:
     genShortDesc: str
 
 
-for faultRowDict in parse_csv():
-    tlc = faultRowDict["Three Letter Code"]
-    rows[tlc] = Row(
-        tlc=tlc,
-        longDesc=faultRowDict["Long Description"],
-        genShortDesc=faultRowDict["Generic Short Description for Decoder"],
-    )
-
-sortedFaultRows = OrderedDict([(tlc, rows[tlc]) for tlc in sorted(rows.keys())])
-
-
 class DecoderDisplay(Display):
     def __init__(self, parent=None, args=None, macros=None):
-        super().__init__(
-            parent=parent, args=args, ui_filename="decoder.ui", macros=macros
+        super().__init__(parent, args, macros)
+
+        for faultRowDict in parse_csv():
+            tlc = faultRowDict["Three Letter Code"]
+            rows[tlc] = Row(
+                tlc=tlc,
+                longDesc=faultRowDict["Long Description"],
+                genShortDesc=faultRowDict["Generic Short Description for Decoder"],
+            )
+
+        sorted_fault_rows = OrderedDict(
+            [(tlc, rows[tlc]) for tlc in sorted(rows.keys())]
         )
 
-        verticalLayout: QVBoxLayout = self.ui.tlc_layout
+        self.setWindowTitle("Three Letter Codes")
+        vlayout = QVBoxLayout()
+        self.scroll_area = QScrollArea()
+        vlayout.addWidget(self.scroll_area)
+        self.setLayout(vlayout)
+
+        self.groupbox = QGroupBox()
+        self.scroll_area.setWidget(self.groupbox)
+
+        scroll_area_layout: QVBoxLayout = QVBoxLayout()
+        self.groupbox.setLayout(scroll_area_layout)
 
         # Long description header
-        headerLayout = QHBoxLayout()
-        descriptionHeaderLabel = QLabel()
-        descriptionHeaderLabel.setText("Description")
-        descriptionHeaderLabel.setMinimumSize(200, 30)
-        descriptionHeaderLabel.setStyleSheet("text-decoration: underline")
+        header_layout = QHBoxLayout()
+        description_header_label = QLabel("Description")
+        description_header_label.setMinimumSize(200, 30)
+        description_header_label.setStyleSheet("text-decoration: underline")
 
         # Name (aka short description) header
-        nameHeaderLabel = QLabel()
-        nameHeaderLabel.setText("Name")
-        nameHeaderLabel.setMinimumSize(200, 30)
-        nameHeaderLabel.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
-        nameHeaderLabel.setStyleSheet("text-decoration: underline")
+        name_header_label = QLabel("Name")
+        name_header_label.setMinimumSize(200, 30)
+        name_header_label.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
+        name_header_label.setStyleSheet("text-decoration: underline")
 
         # Three-Letter Code header
-        codeHeaderLabel = QLabel()
-        codeHeaderLabel.setText("Code")
-        codeHeaderLabel.setMinimumSize(30, 30)
-        codeHeaderLabel.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
-        codeHeaderLabel.setStyleSheet("text-decoration: underline")
+        code_header_label = QLabel("Code")
+        code_header_label.setMinimumSize(30, 30)
+        code_header_label.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
+        code_header_label.setStyleSheet("text-decoration: underline")
 
-        headerLayout.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
+        header_layout.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
 
-        headerLayout.addWidget(codeHeaderLabel)
-        headerLayout.addWidget(nameHeaderLabel)
-        headerLayout.addWidget(descriptionHeaderLabel)
-        headerLayout.setSpacing(50)
+        header_layout.addWidget(code_header_label)
+        header_layout.addWidget(name_header_label)
+        header_layout.addWidget(description_header_label)
+        header_layout.setSpacing(50)
 
-        verticalLayout.addLayout(headerLayout)
+        scroll_area_layout.addLayout(header_layout)
 
-        for row in sortedFaultRows.values():
-            horizontalLayout = QHBoxLayout()
-            descriptionLabel = QLabel()
-            descriptionLabel.setText(row.longDesc)
-            descriptionLabel.setMinimumSize(300, 50)
-            descriptionLabel.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
-            descriptionLabel.setWordWrap(True)
+        for row in sorted_fault_rows.values():
+            horizontal_layout = QHBoxLayout()
+            description_label = QLabel(row.longDesc)
+            description_label.setMinimumSize(300, 50)
+            description_label.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
+            description_label.setWordWrap(True)
 
-            codeLabel = QLabel()
-            codeLabel.setText(row.tlc)
-            codeLabel.setMinimumSize(30, 30)
-            codeLabel.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
+            code_label = QLabel(row.tlc)
+            code_label.setMinimumSize(30, 30)
+            code_label.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
 
-            nameLabel = QLabel()
-            nameLabel.setText(row.genShortDesc)
-            nameLabel.setMinimumSize(200, 50)
-            nameLabel.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
-            nameLabel.setWordWrap(True)
+            name_label = QLabel()
+            name_label.setText(row.genShortDesc)
+            name_label.setMinimumSize(200, 50)
+            name_label.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Maximum)
+            name_label.setWordWrap(True)
 
-            horizontalLayout.addWidget(codeLabel)
-            horizontalLayout.addWidget(nameLabel)
-            horizontalLayout.addWidget(descriptionLabel)
+            horizontal_layout.addWidget(code_label)
+            horizontal_layout.addWidget(name_label)
+            horizontal_layout.addWidget(description_label)
 
-            horizontalLayout.setSpacing(50)
-            horizontalLayout.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
-            verticalLayout.addLayout(horizontalLayout)
+            horizontal_layout.setSpacing(50)
+            horizontal_layout.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+            scroll_area_layout.addLayout(horizontal_layout)

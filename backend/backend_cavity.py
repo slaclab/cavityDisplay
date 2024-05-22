@@ -31,6 +31,7 @@ class BackendCavity(Cavity):
         self.description_pv: str = self.pv_addr(DESCRIPTION_SUFFIX)
 
         self.faults: OrderedDict[int, Fault] = OrderedDict()
+        self.create_faults()
 
     def create_faults(self):
         for csv_fault_dict in parse_csv():

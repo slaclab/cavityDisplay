@@ -11,8 +11,6 @@ class BackendCryomodule(Cryomodule):
             cryo_name=cryo_name,
             linac_object=linac_object,
         )
-        for cavity in self.cavities.values():
-            cavity.create_faults()
 
     @property
     def pydm_macros(self):

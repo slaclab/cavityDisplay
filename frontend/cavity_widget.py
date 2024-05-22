@@ -7,8 +7,10 @@ from pydm import Display, PyDMChannel
 from pydm.widgets.drawing import PyDMDrawingPolygon
 from qtpy.QtCore import Property as qtProperty, QRect, Qt, Slot
 
-from frontend.cavity_fault_display import CavityFaultDisplay
+from backend.backend_cryomodule import BackendCryomodule
+from frontend.cavity_fault_display import FaultCavity
 from lcls_tools.common.frontend.display.util import showDisplay
+from lcls_tools.superconducting.sc_linac import Machine
 
 GREEN_FILL_COLOR = QColor(9, 141, 0)
 YELLOW_FILL_COLOR = QColor(244, 230, 67)
@@ -21,6 +23,8 @@ LIMEGREEN_FILL_COLOR = QColor(92, 253, 92)
 BLACK_TEXT_COLOR = QColor(0, 0, 0)
 DARK_GRAY_COLOR = QColor(40, 40, 40)
 WHITE_TEXT_COLOR = QColor(250, 250, 250)
+
+FAULT_MACHINE = Machine(cavity_class=FaultCavity, cryomodule_class=BackendCryomodule)
 
 
 @dataclass
@@ -86,12 +90,10 @@ class CavityWidget(PyDMDrawingPolygon):
     @property
     def faultDisplay(self):
         if not self._faultDisplay:
-            self._faultDisplay = CavityFaultDisplay(
-                cavity_number=self.cavityNumber, cmName=self.cmName
-            )
-            self._faultDisplay.setWindowTitle(
-                f"CM{self.cmName} Cavity {self.cavityNumber} Faults"
-            )
+            fault_cavity: FaultCavity = FAULT_MACHINE.cryomodules[self.cmName].cavities[
+                self.cavityNumber
+            ]
+            self._faultDisplay = fault_cavity.display
         return self._faultDisplay
 
     @qtProperty(str)

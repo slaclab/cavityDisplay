@@ -147,12 +147,9 @@ csv_cm_row = [
 
 
 def mock_open(*args, **kwargs):
-    if args[0] == "utils/faults.csv":
-        data = [",".join(csv_keys), ",".join(csv_rack_row)]
-        # mocked open for path "foo"
-        return mock.mock_open(read_data="\n".join(data))(*args, **kwargs)
-    # unpatched version for every other path
-    return builtin_open(*args, **kwargs)
+    data = [",".join(csv_keys), ",".join(csv_rack_row)]
+    # mocked open for path "foo"
+    return mock.mock_open(read_data="\n".join(data))(*args, **kwargs)
 
 
 # These import states try to read from faults.csv which causes an error

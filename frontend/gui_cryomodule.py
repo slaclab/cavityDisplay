@@ -5,7 +5,6 @@ from PyQt5.QtWidgets import QVBoxLayout, QLabel
 
 from lcls_tools.superconducting.sc_linac import Cryomodule
 
-
 if TYPE_CHECKING:
     from lcls_tools.superconducting.sc_linac import Linac
 
@@ -20,5 +19,6 @@ class GUICryomodule(Cryomodule):
             "background-color: rgb(35, 35, 35); color: rgb(255, 255, 255);"
         )
         self.vlayout.addWidget(self.label)
+        print(f"Adding cavity widgets to cm{self.name}")
         for gui_cavity in self.cavities.values():
             self.vlayout.addLayout(gui_cavity.vert_layout)

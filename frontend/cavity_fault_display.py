@@ -1,5 +1,4 @@
-import os
-from typing import Dict, Optional
+from typing import Optional
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
@@ -11,16 +10,14 @@ from PyQt5.QtWidgets import (
     QAbstractScrollArea,
     QGroupBox,
 )
-
 from edmbutton import PyDMEDMDisplayButton
+from pydm import Display
+from pydm.widgets import PyDMLabel, PyDMRelatedDisplayButton, PyDMShellCommand
 
 from backend.backend_cavity import BackendCavity
 from backend.backend_cryomodule import BackendCryomodule
 from backend.backend_ssa import BackendSSA
-from backend.fault import Fault, PVInvalidError
-from pydm import Display
-from pydm.widgets import PyDMLabel, PyDMRelatedDisplayButton, PyDMShellCommand
-
+from backend.fault import PVInvalidError
 from lcls_tools.superconducting.sc_linac import Machine
 
 BACKEND_MACHINE = Machine(

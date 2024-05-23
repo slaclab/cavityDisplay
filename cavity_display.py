@@ -1,10 +1,15 @@
-from PyQt5.QtGui import QColor, QPalette
-from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QFrame
-from pydm import Display
-from pydm.widgets import PyDMByteIndicator, PyDMLabel, PyDMRelatedDisplayButton
+from functools import partial
 
+from PyQt5.QtGui import QColor, QPalette, QCursor
+from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QFrame, QPushButton
+from pydm import Display
+from pydm.utilities import IconFont
+from pydm.widgets import PyDMByteIndicator, PyDMLabel
+
+from frontend.decoder import DecoderDisplay
 from frontend.gui_cavity import GUICavity
 from frontend.gui_cryomodule import GUICryomodule
+from lcls_tools.common.frontend.display.util import showDisplay
 from lcls_tools.superconducting.sc_linac import Machine
 
 
@@ -47,8 +52,14 @@ class CavityDisplayGUI(Display):
         self.header.addWidget(heartbeat_counter)
         self.header.addStretch()
 
-        self.decoder = PyDMRelatedDisplayButton(filename="frontend/decoder.py")
-        self.decoder.setText("Three Letter Code Decoder")
+        self.decoder_window: DecoderDisplay = DecoderDisplay()
+
+        self.decoder = QPushButton("Three Letter Code Decoder")
+        self.decoder.clicked.connect(partial(showDisplay, self.decoder_window))
+
+        icon = IconFont().icon("file")
+        self.decoder.setIcon(icon)
+        self.decoder.setCursor(QCursor(icon.pixmap(16, 16)))
         self.decoder.openInNewWindow = True
         self.decoder.setStyleSheet(
             "background-color: rgb(35, 35, 35); color: rgb(255, 255, 255);"

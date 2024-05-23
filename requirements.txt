@@ -1,0 +1,18 @@
+typing
+time
+pydm
+numpy
+qtpy
+edmbutton
+pyyaml
+pydantic
+h5py
+requests
+scipy
+meme
+scikit-learn
+matplotlib
+setuptools
+PyQt5
+edmbutton @ git+https://github.com/slaclab/edmbutton.git
+lcls-tools @ git+https://github.com/slaclab/lcls-tools.git

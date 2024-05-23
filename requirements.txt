@@ -2,7 +2,6 @@ typing
 pydm
 numpy
 qtpy
-edmbutton
 pyyaml
 pydantic
 h5py

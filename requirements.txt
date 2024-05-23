@@ -1,5 +1,4 @@
 typing
-time
 pydm
 numpy
 qtpy
@@ -9,7 +8,6 @@ pydantic
 h5py
 requests
 scipy
-meme
 scikit-learn
 matplotlib
 setuptools

@@ -1,3 +1,4 @@
+import sys
 from collections import OrderedDict
 from dataclasses import dataclass
 
@@ -9,6 +10,8 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QScrollArea,
     QGroupBox,
+    QApplication,
+    QAbstractScrollArea,
 )
 from pydm import Display
 
@@ -44,10 +47,14 @@ class DecoderDisplay(Display):
         vlayout = QVBoxLayout()
         self.scroll_area = QScrollArea()
         vlayout.addWidget(self.scroll_area)
+
         self.setLayout(vlayout)
 
         self.groupbox = QGroupBox()
         self.scroll_area.setWidget(self.groupbox)
+        self.scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.scroll_area.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
+        self.scroll_area.setWidgetResizable(True)
 
         scroll_area_layout: QVBoxLayout = QVBoxLayout()
         self.groupbox.setLayout(scroll_area_layout)
@@ -83,7 +90,9 @@ class DecoderDisplay(Display):
             horizontal_layout = QHBoxLayout()
             description_label = QLabel(row.longDesc)
             description_label.setMinimumSize(300, 50)
-            description_label.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
+            description_label.setSizePolicy(
+                QSizePolicy.MinimumExpanding, QSizePolicy.Minimum
+            )
             description_label.setWordWrap(True)
 
             code_label = QLabel(row.tlc)
@@ -103,3 +112,13 @@ class DecoderDisplay(Display):
             horizontal_layout.setSpacing(50)
             horizontal_layout.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
             scroll_area_layout.addLayout(horizontal_layout)
+
+
+def main():
+    app = QApplication(sys.argv)
+    decoder = DecoderDisplay()
+    sys.exit(app.exec_())
+
+
+if __name__ == "__main__":
+    main()

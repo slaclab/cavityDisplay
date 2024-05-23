@@ -1,3 +1,4 @@
+import os
 from typing import Dict, Optional
 
 from PyQt5.QtCore import Qt
@@ -113,14 +114,16 @@ class FaultCavity(BackendCavity):
             self._display = Display()
             self._display.setWindowTitle(f"{self} Faults")
             vlayout = QVBoxLayout()
-            vlayout.addWidget(PyDMRelatedDisplayButton(filename="frontend/decoder.py"))
+
             self._display.setLayout(vlayout)
+
             scroll_area = QScrollArea()
             scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
             scroll_area.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
             scroll_area.setWidgetResizable(True)
             vlayout.addWidget(scroll_area)
             scroll_area.setWidget(groupbox)
+
         return self._display
 
     def make_header(self) -> QGridLayout:

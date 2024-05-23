@@ -1,3 +1,4 @@
+import os
 from csv import DictReader
 
 from typing import Dict, List
@@ -12,8 +13,10 @@ RF_STATUS_SUFFIX = "RFSTATE"
 
 
 def parse_csv() -> List[Dict]:
+    this_dir = os.path.dirname(__file__)
+    path = os.path.join(this_dir, "faults.csv")
     faults: List[Dict] = []
-    for row in DictReader(open("utils/faults.csv", encoding="utf-8-sig")):
+    for row in DictReader(open(path, encoding="utf-8-sig")):
         if row["PV Suffix"]:
             faults.append(row)
     return faults

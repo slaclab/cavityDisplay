@@ -48,7 +48,7 @@ class CavityDisplayGUI(Display):
         self.header.addStretch()
 
         self.decoder = PyDMRelatedDisplayButton(filename="frontend/decoder.py")
-        self.decoder.setText("Three Letter Codes")
+        self.decoder.setText("Three Letter Code Decoder")
         self.decoder.openInNewWindow = True
         self.decoder.setStyleSheet(
             "background-color: rgb(35, 35, 35); color: rgb(255, 255, 255);"

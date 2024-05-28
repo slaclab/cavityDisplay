@@ -1,8 +1,14 @@
 from functools import partial
 
 from PyQt5.QtGui import QColor, QPalette, QCursor
-from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QFrame, QPushButton
-from pydm import Display
+from PyQt5.QtWidgets import (
+    QHBoxLayout,
+    QVBoxLayout,
+    QFrame,
+    QPushButton,
+    QApplication,
+    QWidget,
+)
 from pydm.utilities import IconFont
 from pydm.widgets import PyDMByteIndicator, PyDMLabel
 
@@ -11,10 +17,13 @@ from frontend.gui_machine import GUIMachine
 from frontend.utils import make_line
 from lcls_tools.common.frontend.display.util import showDisplay
 
+app = QApplication([])
 
-class CavityDisplayGUI(Display):
-    def __init__(self, parent=None, args=None):
-        super().__init__(parent, args)
+
+class CavityDisplayGUI(QWidget):
+    def __init__(self, parent=None, *args, **kwargs):
+        super().__init__(parent, *args, **kwargs)
+
         self.gui_machine = GUIMachine()
         self.setAutoFillBackground(True)
         pal = QPalette()
@@ -65,3 +74,8 @@ class CavityDisplayGUI(Display):
         self.vlayout.addLayout(self.gui_machine.top_half)
         self.vlayout.addWidget(make_line(QFrame.HLine))
         self.vlayout.addLayout(self.gui_machine.bottom_half)
+
+
+window = CavityDisplayGUI()
+window.show()
+app.exec()

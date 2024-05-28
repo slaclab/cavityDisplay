@@ -1,6 +1,5 @@
 from unittest import TestCase, mock
 
-
 from lcls_tools.superconducting.sc_linac import Machine
 
 builtin_open = open  # save the unpatched version
@@ -155,17 +154,13 @@ def mock_open(*args, **kwargs):
 # These import states try to read from faults.csv which causes an error
 with mock.patch("builtins.open", mock_open):
     from backend.backend_cavity import BackendCavity
-    from backend.backend_ssa import BackendSSA
-    from backend.backend_cryomodule import BackendCryomodule
 
     DISPLAY_MACHINE = Machine(
-        ssa_class=BackendSSA,
         cavity_class=BackendCavity,
-        cryomodule_class=BackendCryomodule,
     )
 
 
-class TestDisplayCavity(TestCase):
+class TestBackendCavity(TestCase):
     def test_create_faults_rack(self):
         cm01 = DISPLAY_MACHINE.cryomodules["01"]
         cavity1: BackendCavity = cm01.cavities[1]

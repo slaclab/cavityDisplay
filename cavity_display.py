@@ -7,25 +7,15 @@ from pydm.utilities import IconFont
 from pydm.widgets import PyDMByteIndicator, PyDMLabel
 
 from frontend.decoder import DecoderDisplay
-from frontend.gui_cavity import GUICavity
-from frontend.gui_cryomodule import GUICryomodule
+from frontend.gui_machine import GUIMachine
+from frontend.utils import make_line
 from lcls_tools.common.frontend.display.util import showDisplay
-from lcls_tools.superconducting.sc_linac import Machine
-
-
-def make_line(shape=QFrame.VLine):
-    line = QFrame()
-    line.setFrameShape(shape)
-    line.setStyleSheet("background-color: rgb(255, 255, 255);")
-    return line
-
-
-DISPLAY_MACHINE = Machine(cryomodule_class=GUICryomodule, cavity_class=GUICavity)
 
 
 class CavityDisplayGUI(Display):
     def __init__(self, parent=None, args=None):
         super().__init__(parent, args)
+        self.gui_machine = GUIMachine()
         self.setAutoFillBackground(True)
         pal = QPalette()
         pal.setColor(QPalette.Window, QColor(40, 40, 40))
@@ -72,22 +62,6 @@ class CavityDisplayGUI(Display):
         self.vlayout.addLayout(self.header)
         self.setLayout(self.vlayout)
 
-        self.top_half = QHBoxLayout()
-        self.bottom_half = QHBoxLayout()
-
-        self.vlayout.addLayout(self.top_half)
+        self.vlayout.addLayout(self.gui_machine.top_half)
         self.vlayout.addWidget(make_line(QFrame.HLine))
-
-        for i in range(0, 3):
-            gui_linac = DISPLAY_MACHINE.linacs[i]
-            for gui_cm in gui_linac.cryomodules.values():
-                self.top_half.addLayout(gui_cm.vlayout)
-
-            if i != 2:
-                self.top_half.addWidget(make_line())
-
-        l3b = DISPLAY_MACHINE.linacs[3]
-        for gui_cm in l3b.cryomodules.values():
-            self.bottom_half.addLayout(gui_cm.vlayout)
-
-        self.vlayout.addLayout(self.bottom_half)
+        self.vlayout.addLayout(self.gui_machine.bottom_half)

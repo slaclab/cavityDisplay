@@ -22,3 +22,14 @@ class GUICryomodule(Cryomodule):
         print(f"Adding cavity widgets to cm{self.name}")
         for gui_cavity in self.cavities.values():
             self.vlayout.addLayout(gui_cavity.vert_layout)
+
+    @property
+    def pydm_macros(self):
+        """
+        Currenlty only used for NIRP fault, but I think we can just keep adding
+        to this list
+        :return:
+        """
+        return "AREA={linac_name},CM={cm_name},RFNAME=CM{cm_name}".format(
+            linac_name=self.linac.name, cm_name=self.name
+        )

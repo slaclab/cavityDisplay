@@ -21,6 +21,9 @@ from lcls_tools.common.frontend.display.util import showDisplay
 class CavityDisplayGUI(Display):
     def __init__(self, parent=None, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
+        self.setStyleSheet(
+            "background-color: rgb(35, 35, 35); color: rgb(255, 255, 255); font-size: 15pt;"
+        )
 
         self.gui_machine = GUIMachine()
 
@@ -51,9 +54,9 @@ class CavityDisplayGUI(Display):
         self.decoder.setIcon(icon)
         self.decoder.setCursor(QCursor(icon.pixmap(16, 16)))
         self.decoder.openInNewWindow = True
-        self.decoder.setStyleSheet(
-            "background-color: rgb(35, 35, 35); color: rgb(255, 255, 255);"
-        )
+        # self.decoder.setStyleSheet(
+        #     "background-color: rgb(35, 35, 35); color: rgb(255, 255, 255);"
+        # )
         self.header.addWidget(self.decoder)
 
         self.setWindowTitle("SRF Cavity Display")
@@ -69,8 +72,8 @@ class CavityDisplayGUI(Display):
         self.groupbox_vlayout.addLayout(self.gui_machine.bottom_half)
 
         self.groupbox = QGroupBox()
-        self.groupbox.setStyleSheet(
-            "background-color: rgb(35, 35, 35); color: rgb(255, 255, 255);"
-        )
+        # self.groupbox.setStyleSheet(
+        #     "background-color: rgb(35, 35, 35); color: rgb(255, 255, 255);"
+        # )
         self.groupbox.setLayout(self.groupbox_vlayout)
         self.vlayout.addWidget(self.groupbox)

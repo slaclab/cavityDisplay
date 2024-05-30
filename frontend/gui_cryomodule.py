@@ -15,9 +15,6 @@ class GUICryomodule(Cryomodule):
         self.vlayout = QVBoxLayout()
         self.label = QLabel(cryo_name)
         self.label.setAlignment(Qt.AlignCenter)
-        self.label.setStyleSheet(
-            "background-color: rgb(35, 35, 35); color: rgb(255, 255, 255);"
-        )
         self.vlayout.addWidget(self.label)
         print(f"Adding cavity widgets to cm{self.name}")
         for gui_cavity in self.cavities.values():

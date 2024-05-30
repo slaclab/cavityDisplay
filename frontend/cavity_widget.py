@@ -2,19 +2,19 @@ from dataclasses import dataclass
 from typing import Optional
 
 import numpy as np
-from PyQt5.QtCore import pyqtSignal, QPoint
+from PyQt5.QtCore import pyqtSignal, QPoint, QRectF
 from PyQt5.QtGui import (
     QColor,
     QCursor,
-    QFont,
     QFontMetrics,
     QPainter,
     QPen,
     QMouseEvent,
+    QTextOption,
 )
 from pydm import Display, PyDMChannel
 from pydm.widgets.drawing import PyDMDrawingPolygon
-from qtpy.QtCore import Property as qtProperty, QRect, Qt, Slot
+from qtpy.QtCore import Property as qtProperty, Qt, Slot
 
 GREEN_FILL_COLOR = QColor(9, 141, 0)
 YELLOW_FILL_COLOR = QColor(244, 230, 67)
@@ -66,6 +66,7 @@ class CavityWidget(PyDMDrawingPolygon):
         self.alarmSensitiveContent = False
         self._faultDisplay: Display = None
         self.setCursor(QCursor(Qt.PointingHandCursor))
+        self.setContentsMargins(0, 0, 0, 0)
 
     # The following two functions were copy/pasted from stack overflow
     def mousePressEvent(self, event: QMouseEvent):
@@ -152,27 +153,34 @@ class CavityWidget(PyDMDrawingPolygon):
 
     def draw_item(self, painter: QPainter):
         super(CavityWidget, self).draw_item(painter)
-        x, y, w, h = self.get_bounds()
-        rect = QRect(int(x), int(y), w, h)
+        x, y, w, h = self.get_bounds(maxsize=True)
+        rectf = QRectF(x, y, w, h)
         fm = QFontMetrics(painter.font())
+
         if self._cavity_text:
-            sx = rect.width() / fm.width(self._cavity_text)
-            sy = rect.height() / fm.height()
+
+            sx = rectf.width() / fm.horizontalAdvance(self._cavity_text)
+
+            try:
+                int(self._cavity_text)
+                sx = sx / 2
+            except ValueError:
+                pass
+
+            sy = rectf.height() / fm.height()
 
             painter.save()
-            painter.translate(rect.center())
+            painter.translate(rectf.center())
             painter.scale(sx, sy)
-            painter.translate(-rect.center())
+            painter.translate(-rectf.center())
 
             # Text color
             pen = QPen(QColor(240, 240, 240))
             pen.setWidth(5)
 
-            font = QFont()
-            font.setUnderline(self._underline)
-            painter.setFont(font)
-
             painter.setPen(pen)
-            painter.drawText(rect, Qt.AlignCenter, self._cavity_text)
+            text_option = QTextOption()
+            text_option.setAlignment(Qt.AlignCenter)
+            painter.drawText(rectf, self._cavity_text, text_option)
             painter.setPen(self._pen)
             painter.restore()

@@ -3,9 +3,8 @@ from datetime import datetime
 from typing import Dict
 
 from epics import caput
+
 from backend.fault import Fault, FaultCounter, PVInvalidError
-
-
 from lcls_tools.superconducting.sc_linac import Cavity
 from utils.utils import (
     STATUS_SUFFIX,
@@ -147,7 +146,7 @@ class BackendCavity(Cavity):
                 break
 
         if is_okay:
-            caput(self.status_pv, str(self.number))
+            caput(self.status_pv, f"{self.number}")
             caput(self.severity_pv, 0)
             caput(self.description_pv, " ")
         else:

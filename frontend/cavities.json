@@ -1,8 +1,0 @@
-[ {"cavityNumber":1, "TLC_Text":"TLC1", "cavityNumberName":"cav1"}, 
-{"cavityNumber":2, "TLC_Text":"TLC2", "cavityNumberName":"cav2"},
-{"cavityNumber":3, "TLC_Text":"TLC3", "cavityNumberName":"cav3"},
-{"cavityNumber":4, "TLC_Text":"TLC4", "cavityNumberName":"cav4"},
-{"cavityNumber":5, "TLC_Text":"TLC5", "cavityNumberName":"cav5"},
-{"cavityNumber":6, "TLC_Text":"TLC6", "cavityNumberName":"cav6"},
-{"cavityNumber":7, "TLC_Text":"TLC7", "cavityNumberName":"cav7"},
-{"cavityNumber":8, "TLC_Text":"TLC8", "cavityNumberName":"cav8"} ]

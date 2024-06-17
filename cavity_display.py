@@ -65,6 +65,7 @@ class CavityDisplayGUI(Display):
         self.setLayout(self.vlayout)
 
         self.groupbox_vlayout.addLayout(self.gui_machine.top_half)
+        self.groupbox_vlayout.addSpacing(10)
         self.groupbox_vlayout.addWidget(make_line(QFrame.HLine))
         self.groupbox_vlayout.addLayout(self.gui_machine.bottom_half)
 

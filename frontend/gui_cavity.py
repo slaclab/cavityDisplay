@@ -12,13 +12,13 @@ from PyQt5.QtWidgets import (
     QAbstractScrollArea,
     QLabel,
 )
+from backend.backend_cavity import BackendCavity
 from edmbutton import PyDMEDMDisplayButton
+from frontend.cavity_widget import CavityWidget
+from frontend.utils import make_header, EnumLabel, PyDMFaultButton
 from pydm import Display
 from pydm.widgets import PyDMByteIndicator, PyDMShellCommand, PyDMRelatedDisplayButton
 
-from backend.backend_cavity import BackendCavity
-from frontend.cavity_widget import CavityWidget
-from frontend.utils import make_header, EnumLabel, PyDMFaultButton
 from lcls_tools.common.frontend.display.util import showDisplay
 
 if TYPE_CHECKING:
@@ -95,7 +95,7 @@ class GUICavity(BackendCavity):
 
             short_description_label = QLabel(fault.short_description)
             short_description_label.setSizePolicy(
-                QSizePolicy.Maximum, QSizePolicy.Maximum
+                QSizePolicy.Maximum, QSizePolicy.Preferred
             )
             short_description_label.setAlignment(Qt.AlignLeft)
             short_description_label.setWordWrap(True)

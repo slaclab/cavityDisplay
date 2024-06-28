@@ -15,7 +15,6 @@ from PyQt5.QtWidgets import (
 from dataclasses import dataclass
 from pydm import Display
 
-sys.path.insert(0, '.')
 from utils.utils import parse_csv
 
 rows = {}
@@ -24,9 +23,9 @@ rows = {}
 @dataclass
 class Row:
     tlc: str
-    longDesc: str
-    genShortDesc: str
-    correctiveAction: str
+    long_desc: str
+    gen_short_desc: str
+    corrective_action: str
 
 
 class DecoderDisplay(Display):
@@ -37,9 +36,9 @@ class DecoderDisplay(Display):
             tlc = faultRowDict["Three Letter Code"]
             rows[tlc] = Row(
                 tlc=tlc,
-                longDesc=faultRowDict["Long Description"],
-                genShortDesc=faultRowDict["Generic Short Description for Decoder"],
-                correctiveAction=faultRowDict["Recommended Corrective Actions"]
+                long_desc=faultRowDict["Long Description"],
+                gen_short_desc=faultRowDict["Generic Short Description for Decoder"],
+                corrective_action=faultRowDict["Recommended Corrective Actions"]
             )
 
         sorted_fault_rows = OrderedDict(
@@ -99,7 +98,7 @@ class DecoderDisplay(Display):
 
         for row in sorted_fault_rows.values():
             horizontal_layout = QHBoxLayout()
-            description_label = QLabel(row.longDesc)
+            description_label = QLabel(row.long_desc)
             description_label.setMinimumSize(100, 50)
             description_label.setSizePolicy(
                 QSizePolicy.Minimum, QSizePolicy.Minimum
@@ -111,12 +110,12 @@ class DecoderDisplay(Display):
             code_label.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
 
             name_label = QLabel()
-            name_label.setText(row.genShortDesc)
+            name_label.setText(row.gen_short_desc)
             name_label.setMinimumSize(100, 50)
             name_label.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
             name_label.setWordWrap(True)
 
-            action_label = QLabel(row.correctiveAction)
+            action_label = QLabel(row.corrective_action)
             action_label.setMinimumSize(100, 50)
             action_label.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
             action_label.setWordWrap(True)

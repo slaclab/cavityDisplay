@@ -1,6 +1,4 @@
 import json
-from typing import TYPE_CHECKING, Optional
-
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import (
@@ -12,13 +10,14 @@ from PyQt5.QtWidgets import (
     QAbstractScrollArea,
     QLabel,
 )
-from backend.backend_cavity import BackendCavity
 from edmbutton import PyDMEDMDisplayButton
-from frontend.cavity_widget import CavityWidget
-from frontend.utils import make_header, EnumLabel, PyDMFaultButton
 from pydm import Display
 from pydm.widgets import PyDMByteIndicator, PyDMShellCommand, PyDMRelatedDisplayButton
+from typing import TYPE_CHECKING, Optional
 
+from backend.backend_cavity import BackendCavity
+from frontend.cavity_widget import CavityWidget
+from frontend.utils import make_header, EnumLabel, PyDMFaultButton
 from lcls_tools.common.frontend.display.util import showDisplay
 
 if TYPE_CHECKING:

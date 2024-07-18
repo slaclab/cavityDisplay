@@ -1,5 +1,3 @@
-from functools import partial
-
 from PyQt5.QtGui import QColor, QCursor
 from PyQt5.QtWidgets import (
     QHBoxLayout,
@@ -8,6 +6,7 @@ from PyQt5.QtWidgets import (
     QPushButton,
     QGroupBox,
 )
+from functools import partial
 from pydm import Display
 from pydm.utilities import IconFont
 from pydm.widgets import PyDMByteIndicator, PyDMLabel

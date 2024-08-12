@@ -10,7 +10,8 @@ from lcls_tools.superconducting.sc_linac_utils import ALL_CRYOMODULES
 
 DISPLAY_MACHINE = Machine(cavity_class=BackendCavity)
 
-cavity = DISPLAY_MACHINE.cryomodules["H2"].cavities[2]
+
+# cavity = DISPLAY_MACHINE.cryomodules["H2"].cavities[2]
 
 
 class FaultCounter(Display):
@@ -20,6 +21,7 @@ class FaultCounter(Display):
         input_h_layout = QHBoxLayout()
 
         self.plot_window = pg.plot()
+
         main_v_layout.addLayout(input_h_layout)
         main_v_layout.addWidget(self.plot_window)
         self.setLayout(main_v_layout)
@@ -30,7 +32,7 @@ class FaultCounter(Display):
         self.cav_combo_box = QComboBox()
 
         end_date_time = QDateTime.currentDateTime()
-        min_date_time = QDateTime.addSecs(end_date_time, 10 * -60)
+        min_date_time = QDateTime.addSecs(end_date_time, 30 * -60)
 
         start_text = QLabel("Start:")
         self.start_selector = QDateTimeEdit()
@@ -92,6 +94,7 @@ class FaultCounter(Display):
         bargraph = pg.BarGraphItem(x=x_vals_ints, height=self.y_data, width=0.6, brush="g")
 
         ax = self.plot_window.getAxis("bottom")
+        print(type(ax))
         ax.setTicks([ticks])
         self.plot_window.showGrid(x=False, y=True, alpha=0.6)
         self.plot_window.addItem(bargraph)

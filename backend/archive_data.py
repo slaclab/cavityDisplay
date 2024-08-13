@@ -92,6 +92,7 @@ class FaultCounter(Display):
         bargraph = pg.BarGraphItem(x0=0, y=x_vals_ints, height=0.6, width=self.y_data, brush='b')
 
         ax = self.plot_window.getAxis("left")
+        self.plot_window.setWindowTitle("title")
         ax.setTicks([ticks])
         self.plot_window.showGrid(x=True, y=False, alpha=0.6)
         self.plot_window.addItem(bargraph)

@@ -11,9 +11,6 @@ from lcls_tools.superconducting.sc_linac_utils import ALL_CRYOMODULES
 DISPLAY_MACHINE = Machine(cavity_class=BackendCavity)
 
 
-# cavity = DISPLAY_MACHINE.cryomodules["H2"].cavities[2]
-
-
 class FaultCounter(Display):
     def __init__(self):
         super().__init__()
@@ -87,28 +84,14 @@ class FaultCounter(Display):
         ticks = []
         x_vals_ints = []
         for idx, x_val in enumerate(self.x_data):
-            ticks.append((idx, x_val))
-            x_vals_ints.append(idx)
+            ticks.append((idx + 1, x_val))
+            x_vals_ints.append(idx + 1)
 
         # Create pyqt5graph bar graph item with green bars
-        bargraph = pg.BarGraphItem(x=x_vals_ints, height=self.y_data, width=0.6, brush="g")
+        # bargraph = pg.BarGraphItem(x=x_vals_ints, height=self.y_data, width=0.6, brush="g")
+        bargraph = pg.BarGraphItem(x0=0, y=x_vals_ints, height=0.6, width=self.y_data, brush='b')
 
-        ax = self.plot_window.getAxis("bottom")
-        print(type(ax))
+        ax = self.plot_window.getAxis("left")
         ax.setTicks([ticks])
-        self.plot_window.showGrid(x=False, y=True, alpha=0.6)
+        self.plot_window.showGrid(x=True, y=False, alpha=0.6)
         self.plot_window.addItem(bargraph)
-
-
-'''
-
-
-chart_display = Display()
-chart_display.setWindowTitle("Bar Chart")
-vert_layout = QVBoxLayout()
-plot_window = pg.plot()
-vert_layout.addWidget(plot_window)
-chart_display.setLayout(vert_layout)
-
-showDisplay(chart_display)
-'''

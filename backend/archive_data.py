@@ -76,6 +76,8 @@ class FaultCounter(Display):
         start = self.start_selector.dateTime().toPyDateTime()
         end = self.end_selector.dateTime().toPyDateTime()
 
+        print(start, end)
+
         # Ex. result is a dictionary with key=fault pv string, value=FaultCounter(fault_count=0, ok_count=1, invalid_count=0)
         result: Dict[str, FaultCounter] = cavity.get_fault_counts(
             start, end

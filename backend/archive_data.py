@@ -5,6 +5,7 @@ from pydm import Display
 from typing import Dict
 
 from backend.backend_cavity import BackendCavity
+from frontend.cavity_widget import RED_FILL_COLOR, PURPLE_FILL_COLOR, DARK_GRAY_COLOR
 from lcls_tools.superconducting.sc_linac import Machine
 from lcls_tools.superconducting.sc_linac_utils import ALL_CRYOMODULES
 
@@ -18,6 +19,7 @@ class FaultCounter(Display):
         input_h_layout = QHBoxLayout()
 
         self.plot_window = pg.plot()
+        self.plot_window.setBackground(DARK_GRAY_COLOR)
 
         main_v_layout.addLayout(input_h_layout)
         main_v_layout.addWidget(self.plot_window)
@@ -29,7 +31,8 @@ class FaultCounter(Display):
         self.cav_combo_box = QComboBox()
 
         end_date_time = QDateTime.currentDateTime()
-        min_date_time = QDateTime.addSecs(end_date_time, 30 * -60)
+        intermediate_time = QDateTime.addSecs(end_date_time, -30 * 60)  # 30 min
+        min_date_time = QDateTime.addYears(end_date_time, -3)  # 3 years
 
         start_text = QLabel("Start:")
         self.start_selector = QDateTimeEdit()
@@ -37,7 +40,8 @@ class FaultCounter(Display):
         self.end_selector = QDateTimeEdit()
 
         self.start_selector.setMinimumDateTime(min_date_time)
-        self.end_selector.setMinimumDateTime(end_date_time)
+        self.start_selector.setDateTime(intermediate_time)
+        self.end_selector.setDateTime(end_date_time)
 
         self.plot_button = QPushButton()
         self.plot_button.setText("Update Bar Chart")
@@ -66,6 +70,8 @@ class FaultCounter(Display):
 
         self.x_data = []
         self.y_data = []
+        self.num_of_faults = []
+        self.num_of_invalids = []
 
         start = self.start_selector.dateTime().toPyDateTime()
         end = self.end_selector.dateTime().toPyDateTime()
@@ -77,6 +83,9 @@ class FaultCounter(Display):
         for tlc, counter_obj in result.items():
             self.x_data.append(tlc)  # x axis
             self.y_data.append(counter_obj.sum_fault_count)  # y axis
+            self.num_of_faults.append(counter_obj.fault_count)
+            self.num_of_invalids.append(counter_obj.invalid_count)
+            print(tlc, counter_obj.fault_count, counter_obj.invalid_count)
 
     def update_plot(self):
         self.get_data()
@@ -87,12 +96,13 @@ class FaultCounter(Display):
             ticks.append((idx + 1, x_val))
             x_vals_ints.append(idx + 1)
 
-        # Create pyqt5graph bar graph item with green bars
-        # bargraph = pg.BarGraphItem(x=x_vals_ints, height=self.y_data, width=0.6, brush="g")
-        bargraph = pg.BarGraphItem(x0=0, y=x_vals_ints, height=0.6, width=self.y_data, brush='b')
+        # Create pyqt5graph bar graph for faults, then stack invalid faults on same bars
+        bargraph = pg.BarGraphItem(x0=0, y=x_vals_ints, height=0.6, width=self.num_of_faults, brush=RED_FILL_COLOR)
+        self.plot_window.addItem(bargraph)
+        bargraph = pg.BarGraphItem(x0=self.num_of_faults, y=x_vals_ints, height=0.6, width=self.num_of_invalids,
+                                   brush=PURPLE_FILL_COLOR)
 
         ax = self.plot_window.getAxis("left")
-        self.plot_window.setWindowTitle("title")
         ax.setTicks([ticks])
         self.plot_window.showGrid(x=True, y=False, alpha=0.6)
         self.plot_window.addItem(bargraph)

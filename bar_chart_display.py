@@ -3,6 +3,8 @@ from PyQt5.QtWidgets import QVBoxLayout
 # from PyQt5.QtChart import QChart, QChartView, QBarSet, QPercentBarSeries, QBarCategoryAxis
 from pydm import Display
 
+from frontend.cavity_widget import GREEN_FILL_COLOR
+
 
 class BarChart(Display):
     def __init__(self, parent=None, args=None):
@@ -29,8 +31,8 @@ class BarChart(Display):
             x_vals_ints.append(idx)
 
         # Attempting to stack bar chart
-        bottom = [0, 0, 0, 0]
-        bargraph = pg.BarGraphItem(x=x_vals_ints, height=y_vals_faults, width=0.6, brush='g')
+        print(type(GREEN_FILL_COLOR))
+        bargraph = pg.BarGraphItem(x=x_vals_ints, height=y_vals_faults, width=0.6, brush=GREEN_FILL_COLOR)
         self.plot_window.addItem(bargraph)
         bargraph = pg.BarGraphItem(x=x_vals_ints, height=y_vals_invalid, y0=y_vals_faults, width=0.6, brush='b')
         self.plot_window.addItem(bargraph)

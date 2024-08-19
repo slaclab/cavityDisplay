@@ -36,8 +36,11 @@ class FaultCounter(Display):
 
         start_text = QLabel("Start:")
         self.start_selector = QDateTimeEdit()
+        self.start_selector.setCalendarPopup(True)
+
         end_text = QLabel("End:")
         self.end_selector = QDateTimeEdit()
+        self.end_selector.setCalendarPopup(True)
 
         self.start_selector.setMinimumDateTime(min_date_time)
         self.start_selector.setDateTime(intermediate_time)
@@ -90,6 +93,7 @@ class FaultCounter(Display):
             print(tlc, counter_obj.fault_count, counter_obj.invalid_count)
 
     def update_plot(self):
+        self.plot_window.clear()
         self.get_data()
 
         ticks = []

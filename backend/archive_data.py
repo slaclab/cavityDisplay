@@ -1,6 +1,14 @@
 import pyqtgraph as pg
 from PyQt5.QtCore import QDateTime
-from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QComboBox, QDateTimeEdit, QPushButton, QLabel, QCheckBox
+from PyQt5.QtWidgets import (
+    QVBoxLayout,
+    QHBoxLayout,
+    QComboBox,
+    QDateTimeEdit,
+    QPushButton,
+    QLabel,
+    QCheckBox
+)
 from pydm import Display
 from typing import Dict
 
@@ -48,9 +56,7 @@ class FaultCounter(Display):
         self.start_selector.setDateTime(intermediate_time)
         self.end_selector.setDateTime(end_date_time)
 
-        REMOVE_POT = False
         self.pot_checkbox = QCheckBox(text="Check to remove POT fault counts from plot")
-        self.pot_checkbox.stateChanged.connect(self.removePOT, REMOVE_POT)
 
         self.plot_button = QPushButton()
         self.plot_button.setText("Update Bar Chart")
@@ -86,19 +92,20 @@ class FaultCounter(Display):
         start = self.start_selector.dateTime().toPyDateTime()
         end = self.end_selector.dateTime().toPyDateTime()
 
-        # Ex. result is a dictionary with key=fault pv string, value=FaultCounter(fault_count=0, ok_count=1, invalid_count=0)
+        # Ex. result is a dictionary with:
+        # Ex. key = fault pv string
+        # Ex. value = FaultCounter(fault_count=0, ok_count=1, invalid_count=0)
         result: Dict[str, FaultCounter] = cavity.get_fault_counts(
             start, end
         )
 
         for tlc, counter_obj in result.items():
-            if REMOVE_POT == True and tlc == 'POT':
+            if self.pot_checkbox.isChecked() and tlc == 'POT':
                 continue
             else:
                 self.y_data.append(tlc)
                 self.num_of_faults.append(counter_obj.fault_count)
                 self.num_of_invalids.append(counter_obj.invalid_count)
-            print(tlc, counter_obj.fault_count, counter_obj.invalid_count)
 
     def update_plot(self):
         self.plot_window.clear()
@@ -120,15 +127,3 @@ class FaultCounter(Display):
         ax.setTicks([ticks])
         self.plot_window.showGrid(x=True, y=False, alpha=0.6)
         self.plot_window.addItem(bargraph)
-
-    def removePOT(self, REMOVE_POT_FLAG):
-        if self.pot_checkbox.isChecked():
-            REMOVE_POT_FLAG = True
-            print("Remove POT faults")
-            self.pot_checkbox.setText("POT faults removed, uncheck to include them again")
-            return (REMOVE_POT_FLAG)
-        else:
-            REMOVE_POT_FLAG = False
-            print("Not checked")
-            self.pot_checkbox.setText("Check to remove POT fault counts from plot")
-            return (REMOVE_POT_FLAG)

@@ -19,34 +19,24 @@ class BarChart(Display):
 
         self.setLayout(vertLayout_Form)
 
-        # TODO Remove these hardcoded x_vals and y_vals
-        x_vals = ['OFF', 'PZO', 'MGT', 'AOT']
-        y_vals_faults = [1, 6, 2, 1]
-        y_vals_invalid = [10, 11, 12, 1]
-        x_vals_ints = []
+        # TODO Remove these hardcoded x_vals and y_data
+        x_vals_faults = [2, 4, 6, 8]
+        x_vals_invalid = [10, 12, 14, 16]
+
+        y_data = ['OFF', 'PZO', 'MGT', 'AOT']
 
         ticks = []
-        for idx, x_val in enumerate(x_vals):
-            ticks.append((idx, x_val))
-            x_vals_ints.append(idx)
+        y_vals_ints = []
+        for idy, y_val in enumerate(y_data):
+            ticks.append((idy, y_val))
+            y_vals_ints.append(idy)
 
         # Attempting to stack bar chart
-        print(type(GREEN_FILL_COLOR))
-        bargraph = pg.BarGraphItem(x=x_vals_ints, height=y_vals_faults, width=0.6, brush=GREEN_FILL_COLOR)
+        bargraph = pg.BarGraphItem(x0=0, y=y_vals_ints, height=0.6, width=x_vals_faults, brush=GREEN_FILL_COLOR)
         self.plot_window.addItem(bargraph)
-        bargraph = pg.BarGraphItem(x=x_vals_ints, height=y_vals_invalid, y0=y_vals_faults, width=0.6, brush='b')
+        bargraph = pg.BarGraphItem(x0=x_vals_faults, y=y_vals_ints, height=0.6, width=x_vals_invalid, brush='b')
         self.plot_window.addItem(bargraph)
 
-        '''
-        # Create pyqt5graph bar graph item with green bars
-        bargraph = pg.BarGraphItem(x=x_vals_ints, height=y_vals_faults, width=0.6, brush='g')
-        # bargraph = pg.BarGraphItem(x0=0, y=x_vals_ints, height=0.6, width=y_vals, brush='b')
-
-        # ax = self.plot_window.getAxis('left')
-        ax = self.plot_window.getAxis('bottom')
+        ax = self.plot_window.getAxis('left')
         ax.setTicks([ticks])
         self.plot_window.showGrid(x=False, y=True, alpha=0.6)
-
-        # Add bargraph to plot window
-        self.plot_window.addItem(bargraph)
-        '''

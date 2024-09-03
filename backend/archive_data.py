@@ -1,6 +1,6 @@
 import pyqtgraph as pg
 from PyQt5.QtCore import QDateTime
-from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QComboBox, QDateTimeEdit, QPushButton, QLabel
+from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QComboBox, QDateTimeEdit, QPushButton, QLabel, QCheckBox
 from pydm import Display
 from typing import Dict
 
@@ -15,6 +15,8 @@ DISPLAY_MACHINE = Machine(cavity_class=BackendCavity)
 class FaultCounter(Display):
     def __init__(self):
         super().__init__()
+        self.setWindowTitle("Fault Counter")
+
         main_v_layout = QVBoxLayout()
         input_h_layout = QHBoxLayout()
 
@@ -46,6 +48,10 @@ class FaultCounter(Display):
         self.start_selector.setDateTime(intermediate_time)
         self.end_selector.setDateTime(end_date_time)
 
+        REMOVE_POT = False
+        self.pot_checkbox = QCheckBox(text="Check to remove POT fault counts from plot")
+        self.pot_checkbox.stateChanged.connect(self.removePOT, REMOVE_POT)
+
         self.plot_button = QPushButton()
         self.plot_button.setText("Update Bar Chart")
 
@@ -58,11 +64,13 @@ class FaultCounter(Display):
         input_h_layout.addWidget(end_text)
         input_h_layout.addWidget(self.end_selector)
         input_h_layout.addWidget(self.plot_button)
+        main_v_layout.addWidget(self.pot_checkbox)
 
         self.cm_combo_box.addItems(ALL_CRYOMODULES)
         self.cav_combo_box.addItems([str(i) for i in range(1, 9)])
 
-        self.x_data = None
+        self.num_of_faults = []
+        self.num_of_invalids = []
         self.y_data = None
 
         self.plot_button.clicked.connect(self.update_plot)
@@ -71,25 +79,25 @@ class FaultCounter(Display):
         cavity: BackendCavity = DISPLAY_MACHINE.cryomodules[self.cm_combo_box.currentText()].cavities[
             int(self.cav_combo_box.currentText())]
 
-        self.x_data = []
-        self.y_data = []
         self.num_of_faults = []
         self.num_of_invalids = []
+        self.y_data = []
 
         start = self.start_selector.dateTime().toPyDateTime()
         end = self.end_selector.dateTime().toPyDateTime()
-
-        print(start, end)
 
         # Ex. result is a dictionary with key=fault pv string, value=FaultCounter(fault_count=0, ok_count=1, invalid_count=0)
         result: Dict[str, FaultCounter] = cavity.get_fault_counts(
             start, end
         )
+
         for tlc, counter_obj in result.items():
-            self.x_data.append(tlc)  # x axis
-            self.y_data.append(counter_obj.sum_fault_count)  # y axis
-            self.num_of_faults.append(counter_obj.fault_count)
-            self.num_of_invalids.append(counter_obj.invalid_count)
+            if REMOVE_POT == True and tlc == 'POT':
+                continue
+            else:
+                self.y_data.append(tlc)
+                self.num_of_faults.append(counter_obj.fault_count)
+                self.num_of_invalids.append(counter_obj.invalid_count)
             print(tlc, counter_obj.fault_count, counter_obj.invalid_count)
 
     def update_plot(self):
@@ -97,18 +105,30 @@ class FaultCounter(Display):
         self.get_data()
 
         ticks = []
-        x_vals_ints = []
-        for idx, x_val in enumerate(self.x_data):
-            ticks.append((idx + 1, x_val))
-            x_vals_ints.append(idx + 1)
+        y_vals_ints = []
+        for idy, y_val in enumerate(self.y_data):
+            ticks.append((idy, y_val))
+            y_vals_ints.append(idy)
 
         # Create pyqt5graph bar graph for faults, then stack invalid faults on same bars
-        bargraph = pg.BarGraphItem(x0=0, y=x_vals_ints, height=0.6, width=self.num_of_faults, brush=RED_FILL_COLOR)
+        bargraph = pg.BarGraphItem(x0=0, y=y_vals_ints, height=0.6, width=self.num_of_faults, brush=RED_FILL_COLOR)
         self.plot_window.addItem(bargraph)
-        bargraph = pg.BarGraphItem(x0=self.num_of_faults, y=x_vals_ints, height=0.6, width=self.num_of_invalids,
+        bargraph = pg.BarGraphItem(x0=self.num_of_faults, y=y_vals_ints, height=0.6, width=self.num_of_invalids,
                                    brush=PURPLE_FILL_COLOR)
 
         ax = self.plot_window.getAxis("left")
         ax.setTicks([ticks])
         self.plot_window.showGrid(x=True, y=False, alpha=0.6)
         self.plot_window.addItem(bargraph)
+
+    def removePOT(self, REMOVE_POT_FLAG):
+        if self.pot_checkbox.isChecked():
+            REMOVE_POT_FLAG = True
+            print("Remove POT faults")
+            self.pot_checkbox.setText("POT faults removed, uncheck to include them again")
+            return (REMOVE_POT_FLAG)
+        else:
+            REMOVE_POT_FLAG = False
+            print("Not checked")
+            self.pot_checkbox.setText("Check to remove POT fault counts from plot")
+            return (REMOVE_POT_FLAG)

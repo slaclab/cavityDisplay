@@ -20,10 +20,10 @@ from lcls_tools.superconducting.sc_linac_utils import ALL_CRYOMODULES
 DISPLAY_MACHINE = Machine(cavity_class=BackendCavity)
 
 
-class FaultCounter(Display):
+class FaultCountDisplay(Display):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Fault Counter")
+        self.setWindowTitle("Fault Count Display")
 
         main_v_layout = QVBoxLayout()
         input_h_layout = QHBoxLayout()

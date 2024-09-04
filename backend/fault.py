@@ -90,19 +90,19 @@ class Fault:
         if obj.severity == 3 or obj.status is None:
             raise PVInvalidError(self.pv.pvname)
 
+        # "is not None" means it has a value.
+        # self.ok_value = value stated in spreadsheet
         if self.ok_value is not None:
-            # "is not None" means it has a value. It is not a blank, no value
-            # ok_value = value stated in spreadsheet
             # obj.value = actual reading value from pv
-            return obj.val != self.ok_value
             # Does the actual value NOT match the spreadsheet value?
             # If they don't match, return TRUE
             # return "FALSE" means is_okay, not faulted
+            return obj.val != self.ok_value
 
         elif self.fault_value is not None:
-            return obj.val == self.fault_value
             # return "FALSE" means not faulted
             # return "TRUE" means faulted
+            return obj.val == self.fault_value
 
         else:
             print(self)
@@ -137,6 +137,4 @@ class Fault:
             except PVInvalidError:
                 counter.invalid_count += 1
 
-        # print("PV: ", self.pv.pvname, "\tCounter:", counter, counter.fault_count, counter.ok_count,
-        #      counter.invalid_count)
         return counter

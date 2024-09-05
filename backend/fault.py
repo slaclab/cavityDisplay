@@ -75,7 +75,8 @@ class Fault:
         self.pv: PV = PV(pv, connection_timeout=PV_TIMEOUT)
 
     def is_currently_faulted(self):
-        # returns "FALSE" if not faulted. aka Are you faulted? FALSE! All good here
+        # returns "TRUE" if faulted
+        # returns "FALSE" if not faulted
         return self.is_faulted(self.pv)
 
     def is_faulted(self, obj: Union[PV, ArchiverValue]):
@@ -90,18 +91,16 @@ class Fault:
         if obj.severity == 3 or obj.status is None:
             raise PVInvalidError(self.pv.pvname)
 
-        # "is not None" means it has a value.
-        # self.ok_value = value stated in spreadsheet
+        # self.ok_value is the value stated in spreadsheet
+        # obj.value is the actual reading value from pv
         if self.ok_value is not None:
-            # obj.value = actual reading value from pv
-            # Does the actual value NOT match the spreadsheet value?
-            # If they don't match, return TRUE
+            # return "TRUE" means they do NOT match
             # return "FALSE" means is_okay, not faulted
             return obj.val != self.ok_value
 
         elif self.fault_value is not None:
-            # return "FALSE" means not faulted
             # return "TRUE" means faulted
+            # return "FALSE" means not faulted
             return obj.val == self.fault_value
 
         else:

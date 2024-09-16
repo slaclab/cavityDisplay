@@ -123,10 +123,12 @@ class BackendCavity(Cavity):
     ) -> Dict[str, FaultCounter]:
         result: Dict[str, FaultCounter] = defaultdict(FaultCounter)
 
-        # Using max function to get the maximum fault or invalid count for duplicate TLCs
-        # i.e. MGT tlc has three PVs associated with it (X, Y, and Q) but we
-        # only want the fault and invalid count for whichever PV had the
-        # greatest number of faults
+        """
+        Using max function to get the maximum fault or invalid count for duplicate TLCs
+            i.e. MGT tlc has three PVs associated with it (X, Y, and Q) but we
+            only want the fault and invalid count for whichever PV had the
+            greatest number of faults
+        """
         for fault in self.faults.values():
             result[fault.tlc] = max(result[fault.tlc], fault.get_fault_count_over_time_range(
                 start_time=start_time, end_time=end_time

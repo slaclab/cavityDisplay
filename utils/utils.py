@@ -1,6 +1,5 @@
 import os
 from csv import DictReader
-
 from typing import Dict, List
 
 DEBUG = False
